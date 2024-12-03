@@ -93,6 +93,7 @@ export default function initGame() {
     player.move(player.direction.scale(player.speed));
   });
 
+
   const npc = k.add([
     k.sprite("characters", { anim: "npc-left" }),
     k.area(),
@@ -124,5 +125,16 @@ export default function initGame() {
     }
 
     store.set(isTextBoxVisibleAtom, true);
+  });
+
+  player.onHover(() => {
+    store.set(textBoxContentAtom, "Why are you hovering over your own player, doesn't make any sense");
+    store.set(isTextBoxVisibleAtom, true);
+  });
+  player.onHoverEnd(() => {
+    store.set(isTextBoxVisibleAtom, false);
+  });
+  npc.onHoverEnd(() => {
+    store.set(isTextBoxVisibleAtom, false);
   });
 }
