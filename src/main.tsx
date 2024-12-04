@@ -3,8 +3,8 @@ import { createRoot } from "react-dom/client";
 import { Provider } from "jotai";
 import { store } from "./store.js";
 
-import ReactUI from "./ReactUI.jsx";
-import initGame from "./initGame.js";
+import ReactUI from "./ReactUI";
+import initGame from "./initGame";
 
 import "./index.css";
 
@@ -16,7 +16,7 @@ new ResizeObserver(() => {
     Math.min(
       ui.parentElement.offsetWidth / ui.offsetWidth,
       ui.parentElement.offsetHeight / ui.offsetHeight
-    )
+    ).toString()
   );
 }).observe(ui.parentElement);
 
