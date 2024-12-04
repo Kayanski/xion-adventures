@@ -67,6 +67,7 @@ common = { workspace = true }
 cw721-base = { workspace = true, features = ["library"] }
 cw721-metadata-onchain = { workspace = true, branch = "dev" }
 cw721 = { workspace = true, branch = "dev" }
+map-generation = { workspace = true }
 
 
 [dev-dependencies]

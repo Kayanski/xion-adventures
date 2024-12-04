@@ -1,4 +1,4 @@
-use crate::ibc::{self, TRANSFER_CALLBACK};
+use crate::ibc::{self};
 use crate::msg::HubMigrateMsg;
 use crate::{
     error::HubError,
@@ -25,7 +25,7 @@ const HUB: Hub = Hub::new(HUB_ID, HUB_VERSION, None)
     .with_execute(handlers::execute_handler)
     .with_query(handlers::query_handler)
     .with_replies(&[])
-    .with_ibc_callbacks(&[(TRANSFER_CALLBACK, ibc::transfer::transfer_callback)])
+    .with_ibc_callback(ibc::transfer::transfer_callback)
     .with_module_ibc(ibc::module_ibc::receive_module_ibc);
 
 // Export handlers
@@ -80,6 +80,10 @@ pub mod interface {
         fn module_version<'a>() -> &'a str {
             HUB.version()
         }
+
+        fn dependencies<'a>() -> &'a [abstract_adapter::objects::dependency::StaticDependency] {
+            &[]
+        }
     }
 
     impl<Chain: CwEnv> From<Contract<Chain>> for CosmosAdventuresHub<Chain> {
@@ -96,7 +100,7 @@ pub mod interface {
         fn dependency_install_configs(
             _configuration: Self::DependenciesConfig,
         ) -> Result<
-            Vec<abstract_adapter::std::manager::ModuleInstallConfig>,
+            Vec<abstract_adapter::std::account::ModuleInstallConfig>,
             abstract_interface::AbstractInterfaceError,
         > {
             Ok(vec![])

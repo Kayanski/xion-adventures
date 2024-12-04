@@ -8,6 +8,7 @@ edition = "2021"
 
 [dependencies]
 anyhow = "1.0.93"
-cosmwasm-std = "2.1.4"
+cosmwasm-schema.workspace = true
+cosmwasm-std.workspace = true
 noise = { version = "0.8.0", features = ["images"] }
 serde_json = "1.0.133"

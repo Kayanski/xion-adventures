@@ -1,8 +1,8 @@
-use abstract_adapter::std::objects::AccountId;
+use abstract_adapter::{objects::TruncatedChainId, std::objects::AccountId};
 use cosmwasm_schema::QueryResponses;
+use cw721::msg::NftExtensionMsg;
 
 use crate::contract::Hub;
-use cw721_metadata_onchain::{Extension, Metadata};
 
 // This is used for type safety and re-exporting the contract endpoint structs.
 abstract_adapter::adapter_msg_types!(Hub, HubExecuteMsg, HubQueryMsg);
@@ -16,12 +16,12 @@ pub struct HubInstantiateMsg {
 
 /// App execute messages
 #[cosmwasm_schema::cw_serde]
-#[cfg_attr(feature = "interface", derive(cw_orch::ExecuteFns))]
+#[derive(cw_orch::ExecuteFns)]
 pub enum HubExecuteMsg {
     /// Transfer the NFT cross-chain
     IbcTransfer {
         token_id: String,
-        recipient_chain: String,
+        recipient_chain: TruncatedChainId,
     },
 
     /// Mint a new lost token on this contract   
@@ -29,7 +29,7 @@ pub enum HubExecuteMsg {
     Mint {
         module_id: String,
         token_uri: String,
-        metadata: Metadata,
+        metadata: NftExtensionMsg,
     },
 
     /// Change the metadata of an NFT
@@ -44,7 +44,7 @@ pub enum HubIbcMsg {
         local_account_id: AccountId,
         token_id: String,
         token_uri: Option<String>,
-        extension: Extension,
+        extension: NftExtensionMsg,
     },
 }
 
@@ -55,9 +55,7 @@ pub enum HubIbcCallbackMsg {
 
 /// App query messages
 #[cosmwasm_schema::cw_serde]
-#[cfg_attr(feature = "interface", derive(cw_orch::QueryFns))]
-#[cfg_attr(feature = "interface", impl_into(QueryMsg))]
-#[derive(QueryResponses)]
+#[derive(cw_orch::QueryFns, QueryResponses)]
 pub enum HubQueryMsg {
     #[returns(ConfigResponse)]
     Config {},

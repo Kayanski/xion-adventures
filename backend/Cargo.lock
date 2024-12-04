@@ -1228,6 +1228,7 @@ dependencies = [
  "cw721-metadata-onchain",
  "dotenv",
  "env_logger",
+ "map-generation",
  "schemars",
  "semver",
  "thiserror",
@@ -3547,6 +3548,7 @@ name = "map-generation"
 version = "0.1.0"
 dependencies = [
  "anyhow",
+ "cosmwasm-schema 2.1.4",
  "cosmwasm-std 2.1.4",
  "noise",
  "serde_json",

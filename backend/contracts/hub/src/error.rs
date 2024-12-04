@@ -1,5 +1,5 @@
-use abstract_adapter::std::AbstractError;
 use abstract_adapter::AdapterError;
+use abstract_adapter::{objects::registry::RegistryError, std::AbstractError};
 use abstract_sdk::AbstractSdkError;
 use cosmwasm_std::{Instantiate2AddressError, StdError};
 use cw_asset::AssetError;
@@ -27,7 +27,7 @@ pub enum HubError {
     AdapterError(#[from] AdapterError),
 
     #[error("{0}")]
-    VersionControl(#[from] VersionControlError),
+    Registry(#[from] RegistryError),
 
     #[error("{0}")]
     Instantiate2Address(#[from] Instantiate2AddressError),

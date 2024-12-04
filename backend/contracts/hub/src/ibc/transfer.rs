@@ -1,6 +1,8 @@
-use abstract_adapter::std::ibc::{CallbackResult, IbcResponseMsg};
-use abstract_sdk::AbstractResponse;
-use cosmwasm_std::{from_json, wasm_execute, DepsMut, Env, MessageInfo};
+use abstract_sdk::{
+    std::ibc::{Callback, IbcResult},
+    AbstractResponse,
+};
+use cosmwasm_std::{from_json, wasm_execute, DepsMut, Env};
 
 use crate::{
     contract::{Hub, HubResult},
@@ -13,22 +15,20 @@ use cw721_metadata_onchain::ExecuteMsg;
 pub fn transfer_callback(
     deps: DepsMut,
     _env: Env,
-    _info: MessageInfo,
     adapter: Hub,
-    callback: IbcResponseMsg,
+    callback: Callback,
+    result: IbcResult,
 ) -> HubResult {
     // We burn the token that was successfully transfered (if so)
 
-    let msg = match callback.result {
-        CallbackResult::Execute {
+    let msg = match result {
+        IbcResult::Execute {
             initiator_msg: _,
             result,
         } => {
             result.map_err(HubError::Transfer)?;
 
-            let msg: HubIbcCallbackMsg = from_json(callback.msg.ok_or(HubError::Transfer(
-                "There needs to be a message on callback".to_string(),
-            ))?)?;
+            let msg: HubIbcCallbackMsg = from_json(callback.msg)?;
 
             let token_id = match msg {
                 HubIbcCallbackMsg::BurnToken { token_id } => token_id,
@@ -41,7 +41,7 @@ pub fn transfer_callback(
             )?;
             Ok(burn_msg)
         }
-        CallbackResult::FatalError(error) => Err(HubError::Transfer(error)),
+        IbcResult::FatalError(error) => Err(HubError::Transfer(error)),
         _ => unreachable!(),
     }?;
 
