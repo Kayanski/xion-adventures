@@ -1,0 +1,42 @@
+[workspace]
+members = ["contracts/*", "packages/*"]
+
+[workspace.dependencies]
+
+# Internal
+map-generation = { path = "./packages/map-generation" }
+common = { path = "./packages/common" }
+
+
+# Dependencies for interface
+cw-orch = { version = "0.27.0" }
+
+# External
+dotenv = "0.15.0"
+env_logger = "0.10.0"
+clap = { version = "4.3.7", features = ["derive"] }
+thiserror = { version = "1.0.50" }
+schemars = "0.8"
+semver = { version = "1.0" }
+anyhow = "1.0.79"
+
+# Cosmwasm
+cosmwasm-std = { version = "2.1.4" }
+cosmwasm-schema = { version = "2.1.4" }
+cw-controllers = { version = "2.0.0" }
+cw-storage-plus = "2.0.0"
+cw-asset = { version = "4.0.0" }
+
+# NFTs
+cw721-base = { git = "https://github.com/mintthemoon/cw-nfts", branch = "dev" }
+cw721-metadata-onchain = { git = "https://github.com/mintthemoon/cw-nfts", branch = "dev" }
+cw721 = { git = "https://github.com/mintthemoon/cw-nfts", branch = "dev" }
+
+
+# Abstract
+abstract-app = { version = "0.24.1" }
+abstract-adapter = { version = "0.24.1" }
+abstract-sdk = { version = "0.24.1" }
+abstract-ibc-host = { version = "0.24.1" }
+abstract-interface = { version = "0.24.1" }
+abstract-client = { version = "0.24.1" }

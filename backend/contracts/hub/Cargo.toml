@@ -1,0 +1,79 @@
+[package]
+name = "cosmos-adventures-hub"
+version = "0.0.1"
+authors = [
+  "CyberHoward <cyberhoward@protonmail.com>",
+  "Adair <adair@abstract.money>",
+  "Abstract Money <contact@abstract.money>",
+]
+edition = "2021"
+homepage = ""
+documentation = ""
+repository = ""
+license = "GPL-3.0-or-later"
+keywords = ["cosmos", "cosmwasm", "abstractsdk"]
+resolver = "2"
+
+exclude = ["contract.wasm", "hash.txt"]
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[[example]]
+name = "schema"
+required-features = ["schema"]
+
+[[example]]
+name = "local_daemon"
+required-features = ["daemon"]
+
+[[example]]
+name = "publish"
+required-features = ["daemon"]
+
+[features]
+default = ["export"]
+export = []
+schema = ["abstract-adapter/schema"]
+interface = [
+  "export",
+  "dep:abstract-interface",
+  "dep:abstract-client",
+  "dep:semver",
+]
+daemon = ["interface", "cw-orch/daemon"]
+
+[dependencies]
+cosmwasm-std = { workspace = true }
+cosmwasm-schema = { workspace = true }
+cw-controllers = { workspace = true }
+cw-storage-plus = { workspace = true }
+thiserror = { workspace = true }
+schemars = { workspace = true }
+cw-asset = { workspace = true }
+
+abstract-adapter = { workspace = true }
+abstract-sdk = { workspace = true }
+abstract-ibc-host = { workspace = true, default-features = false }
+
+# Dependencies for interface
+cw-orch = { workspace = true }
+abstract-interface = { workspace = true, optional = true }
+abstract-client = { workspace = true, optional = true }
+
+semver = { workspace = true, optional = true }
+common = { workspace = true }
+
+cw721-base = { workspace = true, features = ["library"] }
+cw721-metadata-onchain = { workspace = true, branch = "dev" }
+cw721 = { workspace = true, branch = "dev" }
+
+
+[dev-dependencies]
+cosmos-adventures-hub = { path = ".", features = ["interface"] }
+abstract-client = { workspace = true }
+abstract-adapter = { workspace = true, features = ["test-utils"] }
+dotenv = "0.15.0"
+env_logger = "0.10.0"
+cw-orch = { workspace = true }
+clap = { version = "4.3.7", features = ["derive"] }
