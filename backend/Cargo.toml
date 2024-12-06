@@ -1,9 +1,18 @@
 [workspace]
-members = ["contracts/*", "packages/*"]
+members = [
+    "contracts/hub",
+    "contracts/modules/*",
+    "contracts/nft",
+    "packages/*",
+]
+resolver = "2"
 
 [workspace.dependencies]
 
 # Internal
+xion-adventures-hub = { path = "./contracts/hub" }
+nft = { path = "./contracts/nft" }
+game-handler = { path = "./contracts/modules/game_handler" }
 map-generation = { path = "./packages/map-generation" }
 common = { path = "./packages/common" }
 
@@ -34,9 +43,9 @@ cw721 = { git = "https://github.com/mintthemoon/cw-nfts", branch = "dev" }
 
 
 # Abstract
-abstract-app = { version = "0.24.1" }
-abstract-adapter = { version = "0.24.1" }
-abstract-sdk = { version = "0.24.1" }
-abstract-ibc-host = { version = "0.24.1" }
-abstract-interface = { version = "0.24.1" }
-abstract-client = { version = "0.24.1" }
+abstract-app = { git = "https://github.com/AbstractSDK/abstract/", rev = "d7e7e04" }
+abstract-adapter = { git = "https://github.com/AbstractSDK/abstract/", rev = "d7e7e04" }
+abstract-sdk = { git = "https://github.com/AbstractSDK/abstract/", rev = "d7e7e04" }
+abstract-ibc-host = { git = "https://github.com/AbstractSDK/abstract/", rev = "d7e7e04", default-features = false }
+abstract-interface = { git = "https://github.com/AbstractSDK/abstract/", rev = "d7e7e04" }
+abstract-client = { git = "https://github.com/AbstractSDK/abstract/", rev = "d7e7e04" }

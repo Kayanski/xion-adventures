@@ -8,8 +8,8 @@ use abstract_ibc_host::endpoints::packet::client_to_host_module_account_id;
 use abstract_sdk::{std::ibc::ModuleIbcInfo, AccountVerification};
 use common::NAMESPACE;
 use cosmwasm_std::{from_json, wasm_execute, Binary, DepsMut, Env, Response};
-use cw721::msg::NftExtensionMsg;
-use cw721_metadata_onchain::ExecuteMsg;
+use nft::msg::ExecuteMsg;
+use nft::XionAdventuresExtensionMsg;
 
 pub fn receive_module_ibc(
     deps: DepsMut,
@@ -57,7 +57,7 @@ fn internal_ibc_mint_token(
     account_id: AccountId,
     token_id: String,
     token_uri: Option<String>,
-    extension: NftExtensionMsg,
+    extension: XionAdventuresExtensionMsg,
 ) -> HubResult {
     // We get the new owner address
     // This corresponds to an distant account or a local account depending on local_account_id.trace
@@ -84,7 +84,7 @@ fn internal_ibc_mint_token(
     };
 
     let resolved_account = hub
-        .account_registry(deps.as_ref(), &env)?
+        .account_registry(deps.as_ref())?
         .account(&target_account)?;
 
     // The admin of the NFT is the contract here
@@ -94,7 +94,7 @@ fn internal_ibc_mint_token(
             token_id,
             owner: resolved_account.addr().to_string(),
             token_uri,
-            extension: Some(extension),
+            extension,
         },
         vec![],
     )?;

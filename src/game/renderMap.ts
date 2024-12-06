@@ -12,7 +12,6 @@ import {
   PosComp,
   ScaleComp,
   SpriteComp,
-  Vec2,
   ZComp,
 } from "kaplay";
 import {

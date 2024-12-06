@@ -10,7 +10,6 @@ use crate::{
     msg::HubIbcCallbackMsg,
     state::NFT,
 };
-use cw721_metadata_onchain::ExecuteMsg;
 
 pub fn transfer_callback(
     deps: DepsMut,
@@ -36,7 +35,7 @@ pub fn transfer_callback(
 
             let burn_msg = wasm_execute(
                 NFT.load(deps.storage)?,
-                &ExecuteMsg::Burn { token_id },
+                &nft::msg::ExecuteMsg::Burn { token_id },
                 vec![],
             )?;
             Ok(burn_msg)

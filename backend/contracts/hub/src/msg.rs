@@ -1,6 +1,6 @@
 use abstract_adapter::{objects::TruncatedChainId, std::objects::AccountId};
 use cosmwasm_schema::QueryResponses;
-use cw721::msg::NftExtensionMsg;
+use nft::XionAdventuresExtensionMsg;
 
 use crate::contract::Hub;
 
@@ -17,6 +17,7 @@ pub struct HubInstantiateMsg {
 /// App execute messages
 #[cosmwasm_schema::cw_serde]
 #[derive(cw_orch::ExecuteFns)]
+#[allow(clippy::large_enum_variant)]
 pub enum HubExecuteMsg {
     /// Transfer the NFT cross-chain
     IbcTransfer {
@@ -29,12 +30,17 @@ pub enum HubExecuteMsg {
     Mint {
         module_id: String,
         token_uri: String,
-        metadata: NftExtensionMsg,
+        metadata: XionAdventuresExtensionMsg,
+        recipient: Option<AccountId>,
     },
 
     /// Change the metadata of an NFT
     /// This is an authorized endpoint that is only callable by another app in the same namespace
-    ModifyMetadata {},
+    ModifyMetadata {
+        module_id: String,
+        token_id: String,
+        metadata: XionAdventuresExtensionMsg,
+    },
 }
 
 #[cosmwasm_schema::cw_serde]
@@ -44,7 +50,7 @@ pub enum HubIbcMsg {
         local_account_id: AccountId,
         token_id: String,
         token_uri: Option<String>,
-        extension: NftExtensionMsg,
+        extension: XionAdventuresExtensionMsg,
     },
 }
 

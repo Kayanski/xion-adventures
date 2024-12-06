@@ -1,13 +1,14 @@
 use abstract_adapter::AdapterError;
-use abstract_adapter::std::{objects::version_control::VersionControlError, AbstractError};
+use abstract_adapter::{objects::registry::RegistryError, std::AbstractError};
 use abstract_sdk::AbstractSdkError;
+use common::vec2::Vec2;
 use cosmwasm_std::{Instantiate2AddressError, StdError};
 use cw_asset::AssetError;
 use cw_controllers::AdminError;
 use thiserror::Error;
 
 #[derive(Error, Debug, PartialEq)]
-pub enum MinterError {
+pub enum GameHandlerError {
     #[error("{0}")]
     Std(#[from] StdError),
 
@@ -27,7 +28,7 @@ pub enum MinterError {
     AdapterError(#[from] AdapterError),
 
     #[error("{0}")]
-    VersionControl(#[from] VersionControlError),
+    Registry(#[from] RegistryError),
 
     #[error("{0}")]
     Instantiate2Address(#[from] Instantiate2AddressError),
@@ -43,4 +44,10 @@ pub enum MinterError {
 
     #[error("You have minted too muchtokens already. Limit: {0}")]
     TooMuchMinted(usize),
+
+    #[error("Your player has moved too quickly, only 1 tile at a time ! ({0})")]
+    PlayerCantMoveThatFast(Vec2),
+
+    #[error("Your player has moved in a forbidden direction !")]
+    PlayerCantMoveHere(),
 }

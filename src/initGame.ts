@@ -1,5 +1,12 @@
-import { createMap, seaFrame, terrainFrame, treeFrame } from "./map/renderMap";
-import { backgroundSpritesX, backgroundSpritesY, playerZ } from "./constants";
+import { createMap, seaFrame, terrainFrame, treeFrame } from "./game/renderMap";
+import {
+  backgroundSpritesX,
+  backgroundSpritesY,
+  frontZ,
+  maxMovementLength,
+  playerZ,
+  tileScreenSize,
+} from "./constants";
 import {
   AnchorComp,
   AreaComp,
@@ -12,7 +19,15 @@ import {
   ZComp,
 } from "kaplay";
 import initKaplay from "./kaplayCtx";
-import { isTextBoxVisibleAtom, store, textBoxContentAtom } from "./store";
+import {
+  currentPositionAtom,
+  isTextBoxVisibleAtom,
+  movementsTrackerAtom,
+  store,
+  textBoxContentAtom,
+  walletOpeningCommand,
+} from "./store";
+import { movementTrackerUpdate } from "./game/playerUpdate";
 
 export type Player = GameObj<
   | PosComp
@@ -44,6 +59,9 @@ function stringToBytes(val: string) {
 export default async function initGame() {
   const DIAGONAL_FACTOR = 1 / Math.sqrt(2);
   const k = initKaplay();
+  k.onMousePress(() => {
+    console.log("Kaboom canvas clicked!");
+  });
 
   let map = k.load(
     fetch("/mapTest.json")
@@ -84,6 +102,7 @@ export default async function initGame() {
     sliceY: backgroundSpritesY,
     sliceX: backgroundSpritesX,
   });
+  k.loadSprite("wallet", "./wallet.png", {});
   k.loadSprite("characters", "./characters.png", {
     sliceY: 2,
     sliceX: 8,
@@ -103,7 +122,7 @@ export default async function initGame() {
     },
   });
 
-  let mapObject = await createMap(k, map);
+  await createMap(k, map);
 
   const player: Player = k.add([
     k.sprite("characters", { anim: "down-idle" }),
@@ -164,51 +183,97 @@ export default async function initGame() {
       player.play(`${player.getCurAnim()?.name}-idle`);
     }
 
-    let movement: Vec2;
+    if (player.direction.eq(k.vec2(0, 0))) {
+      return;
+    }
+
+    let playerMovement: Vec2;
 
     if (player.direction.x && player.direction.y) {
-      movement = player.direction.scale(DIAGONAL_FACTOR * player.speed);
+      playerMovement = player.direction.scale(DIAGONAL_FACTOR * player.speed);
     } else {
-      movement = player.direction.scale(player.speed);
+      playerMovement = player.direction.scale(player.speed);
     }
-
     k.camPos(player.pos);
 
-    player.move(movement);
+    player.move(playerMovement);
+
+    movementTrackerUpdate(k, player);
   });
 
-  const npc = mapObject.add([
-    k.sprite("characters", { anim: "npc-left" }),
+  k.onClick("player", () => {
+    // store.set(isTextBoxVisibleAtom, true);
+    store.set(
+      textBoxContentAtom,
+      `This text box is made with React.js!${player.pos}`
+    );
+  });
+
+  // const npc = mapObject.add([
+  //   k.sprite("characters", { anim: "npc-left" }),
+  //   k.area(),
+  //   k.body({ isStatic: true }),
+  //   k.anchor("center"),
+  //   k.scale(8),
+  //   k.pos(1480, 500),
+  // ]);
+
+  // npc.onCollide("player", (player) => {
+  //   if (player.direction.eq(k.vec2(0, -1))) {
+  //     store.set(textBoxContentAtom, "Beautiful day, isn't it?");
+  //     npc.play("npc-down");
+  //   }
+
+  //   if (player.direction.eq(k.vec2(0, 1))) {
+  //     npc.play("npc-up");
+  //     store.set(textBoxContentAtom, "Those rocks are heavy!");
+  //   }
+
+  //   if (player.direction.eq(k.vec2(1, 0))) {
+  //     npc.play("npc-left");
+  //     store.set(textBoxContentAtom, "This text box is made with React.js!");
+  //   }
+
+  //   if (player.direction.eq(k.vec2(-1, 0))) {
+  //     store.set(textBoxContentAtom, "Is the water too cold?");
+  //     npc.play("npc-right");
+  //   }
+
+  //   store.set(isTextBoxVisibleAtom, true);
+  // });
+
+  /// Drawing the wallet button (menu) in the future
+
+  k.add([
+    k.rect(walletRectSize, walletRectSize, {
+      radius: [walletRadius, walletRadius, walletRadius, walletRadius],
+    }),
+    k.fixed(),
+    k.pos(12, 12),
+    k.outline(1, k.Color.BLACK),
+    k.z(frontZ),
+  ]);
+  k.add([
+    k.sprite("wallet"),
+    k.scale(1),
+    k.pos(
+      k.vec2(
+        12 + (walletRectSize - walletSize) / 2,
+        12 + (walletRectSize - walletSize) / 2
+      )
+    ),
+    k.fixed(),
+    k.z(frontZ),
     k.area(),
-    k.body({ isStatic: true }),
-    k.anchor("center"),
-    k.scale(8),
-    k.pos(1480, 500),
+    "wallet",
   ]);
 
-  mapObject;
-
-  npc.onCollide("player", (player) => {
-    if (player.direction.eq(k.vec2(0, -1))) {
-      store.set(textBoxContentAtom, "Beautiful day, isn't it?");
-      npc.play("npc-down");
-    }
-
-    if (player.direction.eq(k.vec2(0, 1))) {
-      npc.play("npc-up");
-      store.set(textBoxContentAtom, "Those rocks are heavy!");
-    }
-
-    if (player.direction.eq(k.vec2(1, 0))) {
-      npc.play("npc-left");
-      store.set(textBoxContentAtom, "This text box is made with React.js!");
-    }
-
-    if (player.direction.eq(k.vec2(-1, 0))) {
-      store.set(textBoxContentAtom, "Is the water too cold?");
-      npc.play("npc-right");
-    }
-
-    store.set(isTextBoxVisibleAtom, true);
+  k.onClick("wallet", () => {
+    console.log("clicking on wallet no ?");
+    store.set(walletOpeningCommand, true);
   });
 }
+
+const walletSize = 50;
+const walletRectSize = 60;
+const walletRadius = 20;

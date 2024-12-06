@@ -3,18 +3,19 @@ use crate::error::HubError;
 use crate::helpers::next_token_id_mut;
 use crate::msg::{HubExecuteMsg, HubIbcCallbackMsg, HubIbcMsg};
 use crate::state::NFT;
-use abstract_adapter::objects::TruncatedChainId;
+use abstract_adapter::objects::{AccountId, TruncatedChainId};
 use abstract_adapter::std::ibc::Callback;
 use abstract_adapter::std::objects::module::ModuleInfo;
 use abstract_adapter::std::{ibc_client, IBC_CLIENT};
 use abstract_sdk::features::{AccountIdentification, ModuleIdentification};
-use abstract_sdk::{AbstractResponse, AccountAction, Execution, ModuleInterface};
+use abstract_sdk::{
+    AbstractResponse, AccountAction, AccountVerification, Execution, ModuleInterface,
+};
 use common::NAMESPACE;
 use cosmwasm_std::{ensure_eq, to_json_binary, wasm_execute, DepsMut, Env, MessageInfo};
-use cw721::msg::{NftExtensionMsg, NftInfoResponse, OwnerOfResponse};
-use cw721::NftExtension;
-use cw721_metadata_onchain::ExecuteMsg;
-use cw721_metadata_onchain::QueryMsg;
+use cw721::msg::{NftInfoResponse, OwnerOfResponse};
+use nft::msg::{ExecuteMsg, QueryMsg};
+use nft::{XionAdventuresExtension, XionAdventuresExtensionMsg};
 
 pub fn execute_handler(
     deps: DepsMut,
@@ -32,8 +33,15 @@ pub fn execute_handler(
             module_id,
             token_uri,
             metadata,
-        } => mint(deps, info, env, module_id, token_uri, metadata, adapter),
-        HubExecuteMsg::ModifyMetadata {} => todo!(),
+            recipient,
+        } => mint(
+            deps, env, info, module_id, token_uri, metadata, adapter, recipient,
+        ),
+        HubExecuteMsg::ModifyMetadata {
+            module_id,
+            token_id,
+            metadata,
+        } => modify_metadata(deps, env, info, adapter, module_id, token_id, metadata),
     }
 }
 
@@ -76,7 +84,7 @@ fn ibc_transfer(
 
     // We send an IBC mint message from to the distant chain
     // We query the NFT metadata
-    let nft: NftInfoResponse<NftExtension> = deps.querier.query_wasm_smart(
+    let nft: NftInfoResponse<XionAdventuresExtension> = deps.querier.query_wasm_smart(
         NFT.load(deps.storage)?,
         &QueryMsg::NftInfo {
             token_id: token_id.clone(),
@@ -107,14 +115,16 @@ fn ibc_transfer(
         .add_message(ibc_msg))
 }
 
+#[allow(clippy::too_many_arguments)]
 fn mint(
     mut deps: DepsMut,
-    info: MessageInfo,
     env: Env,
+    info: MessageInfo,
     module_id: String,
     token_uri: String,
-    metadata: NftExtensionMsg,
+    metadata: XionAdventuresExtensionMsg,
     adapter: Hub,
+    recipient: Option<AccountId>,
 ) -> HubResult {
     // This endpoint is permissionned because we're the hub, only authorized installed modules can call this
     let module_addr = adapter.modules(deps.as_ref()).module_address(&module_id)?;
@@ -122,7 +132,13 @@ fn mint(
     let namespace = ModuleInfo::from_id_latest(&module_id)?.namespace;
     ensure_eq!(namespace.as_str(), NAMESPACE, HubError::WrongNamespace {});
 
-    let account = adapter.account(deps.as_ref())?;
+    let account = if let Some(recipient) = recipient {
+        adapter
+            .account_registry(deps.as_ref(),)?
+            .account(&recipient)?
+    } else {
+        adapter.account(deps.as_ref())?
+    };
 
     // We mint the token to the recipient
     let token_id = next_token_id_mut(deps.branch(), env)?;
@@ -132,10 +148,40 @@ fn mint(
             token_id,
             owner: account.addr().to_string(),
             token_uri: Some(token_uri),
-            extension: Some(metadata),
+            extension: metadata,
         },
         vec![],
     )?;
 
     Ok(adapter.response("mint-lost-nft").add_message(mint_msg))
+}
+
+#[allow(clippy::too_many_arguments)]
+fn modify_metadata(
+    deps: DepsMut,
+    _env: Env,
+    info: MessageInfo,
+    adapter: Hub,
+    module_id: String,
+    token_id: String,
+    metadata: XionAdventuresExtensionMsg,
+) -> HubResult {
+    // This endpoint is permissionned because we're the hub, only authorized installed modules can call this
+    let module_addr = adapter.modules(deps.as_ref()).module_address(&module_id)?;
+    ensure_eq!(module_addr, info.sender, HubError::Unauthorized {});
+    let namespace = ModuleInfo::from_id_latest(&module_id)?.namespace;
+    ensure_eq!(namespace.as_str(), NAMESPACE, HubError::WrongNamespace {});
+
+    // We modify the metadata on the token
+    let modify_msg = wasm_execute(
+        NFT.load(deps.storage)?,
+        &ExecuteMsg::UpdateNftInfo {
+            token_id,
+            token_uri: None,
+            extension: metadata,
+        },
+        vec![],
+    )?;
+
+    Ok(adapter.response("modify-metadata").add_message(modify_msg))
 }

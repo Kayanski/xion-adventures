@@ -1,5 +1,5 @@
 [package]
-name = "cosmos-adventures-hub"
+name = "xion-adventures-hub"
 version = "0.0.1"
 authors = [
   "CyberHoward <cyberhoward@protonmail.com>",
@@ -35,12 +35,7 @@ required-features = ["daemon"]
 default = ["export"]
 export = []
 schema = ["abstract-adapter/schema"]
-interface = [
-  "export",
-  "dep:abstract-interface",
-  "dep:abstract-client",
-  "dep:semver",
-]
+interface = ["export", "dep:abstract-interface", "dep:semver"]
 daemon = ["interface", "cw-orch/daemon"]
 
 [dependencies]
@@ -52,28 +47,26 @@ thiserror = { workspace = true }
 schemars = { workspace = true }
 cw-asset = { workspace = true }
 
-abstract-adapter = { workspace = true }
-abstract-sdk = { workspace = true }
+abstract-adapter = { workspace = true, default-features = false }
+abstract-sdk = { workspace = true, default-features = false }
 abstract-ibc-host = { workspace = true, default-features = false }
 
 # Dependencies for interface
 cw-orch = { workspace = true }
 abstract-interface = { workspace = true, optional = true }
-abstract-client = { workspace = true, optional = true }
 
 semver = { workspace = true, optional = true }
 common = { workspace = true }
 
-cw721-base = { workspace = true, features = ["library"] }
-cw721-metadata-onchain = { workspace = true, branch = "dev" }
-cw721 = { workspace = true, branch = "dev" }
+cw721 = { workspace = true }
 map-generation = { workspace = true }
+nft = { version = "0.1.0", path = "../nft", features = ["library"] }
 
 
 [dev-dependencies]
-cosmos-adventures-hub = { path = ".", features = ["interface"] }
+xion-adventures-hub = { path = ".", features = ["interface"] }
 abstract-client = { workspace = true }
-abstract-adapter = { workspace = true, features = ["test-utils"] }
+# abstract-adapter = { workspace = true, features = ["test-utils"] }
 dotenv = "0.15.0"
 env_logger = "0.10.0"
 cw-orch = { workspace = true }

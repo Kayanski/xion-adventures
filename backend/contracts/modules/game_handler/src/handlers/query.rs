@@ -1,16 +1,16 @@
-use crate::contract::{Minter, MinterResult};
-use crate::msg::{ConfigResponse, MinterQueryMsg};
+use crate::contract::{GameHandler, GameHandlerResult};
+use crate::msg::{ConfigResponse, GameHandlerQueryMsg};
 use crate::state::CONFIG;
 use cosmwasm_std::{to_json_binary, Binary, Deps, Env, StdResult};
 
 pub fn query_handler(
     deps: Deps,
     _env: Env,
-    _app: &Minter,
-    msg: MinterQueryMsg,
-) -> MinterResult<Binary> {
+    _app: &GameHandler,
+    msg: GameHandlerQueryMsg,
+) -> GameHandlerResult<Binary> {
     match msg {
-        MinterQueryMsg::Config {} => to_json_binary(&query_config(deps)?),
+        GameHandlerQueryMsg::Config {} => to_json_binary(&query_config(deps)?),
     }
     .map_err(Into::into)
 }

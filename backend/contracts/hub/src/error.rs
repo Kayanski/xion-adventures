@@ -1,6 +1,7 @@
 use abstract_adapter::AdapterError;
 use abstract_adapter::{objects::registry::RegistryError, std::AbstractError};
 use abstract_sdk::AbstractSdkError;
+use common::player_location::PlayerLocation;
 use cosmwasm_std::{Instantiate2AddressError, StdError};
 use cw_asset::AssetError;
 use cw_controllers::AdminError;
@@ -40,4 +41,13 @@ pub enum HubError {
 
     #[error("Ibc Transfer failed {0}")]
     Transfer(String),
+
+    #[error("Tile not available {tile}")]
+    TileUnavailable { tile: PlayerLocation },
+}
+
+impl From<HubError> for AbstractSdkError {
+    fn from(value: HubError) -> Self {
+        Self::generic_err(format!("Hub error : {}", value))
+    }
 }

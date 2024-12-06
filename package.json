@@ -10,16 +10,21 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@abstract-money/provider-xion": "^4.0.3",
+    "@abstract-money/react": "^2.3.6",
+    "@burnt-labs/abstraxion": "^1.0.0-alpha.54",
+    "@burnt-labs/ui": "^0.1.0-alpha.15",
+    "@tanstack/react-query": "^4.36.1",
     "framer-motion": "^11.11.9",
     "jotai": "^2.10.1",
     "kaplay": "^4000.0.0-alpha.10",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.11.1",
-    "@types/react": "^18.3.10",
-    "@types/react-dom": "^18.3.0",
+    "@types/react": "18.2.10",
+    "@types/react-dom": "18.2.0",
     "@vitejs/plugin-react": "^4.3.2",
     "eslint": "^9.11.1",
     "eslint-plugin-react": "^7.37.0",
@@ -27,6 +32,7 @@
     "eslint-plugin-react-refresh": "^0.4.12",
     "globals": "^15.9.0",
     "typescript": "^5.7.2",
-    "vite": "^5.4.8"
+    "vite": "^5.4.8",
+    "vite-plugin-node-polyfills": "^0.22.0"
   }
 }

@@ -9,40 +9,41 @@
 //! ```
 use abstract_adapter::objects::namespace::Namespace;
 use abstract_client::{AbstractClient, Publisher};
-use app::{contract::APP_ID, AppInterface};
 use clap::Parser;
 use cw_orch::{
     anyhow,
-    daemon::{ChainInfo, Daemon},
+    daemon::Daemon,
     environment::TxHandler,
-    prelude::{networks::parse_network, DaemonBuilder},
+    prelude::{networks::parse_network, ChainInfo, DaemonBuilder},
     tokio::runtime::Runtime,
+};
+use xion_adventures_hub::{
+    contract::HUB_ID,
+    msg::{HubInstantiateMsg, InstantiateMsg},
+    HubInterface,
 };
 
 fn publish(networks: Vec<ChainInfo>) -> anyhow::Result<()> {
     // run for each requested network
     for network in networks {
         // Setup
-        let rt = Runtime::new()?;
-        let chain = DaemonBuilder::default()
-            .handle(rt.handle())
-            .chain(network)
-            .build()?;
+        let chain = Daemon::builder(network).build()?;
 
-        let app_namespace = Namespace::from_id(APP_ID)?;
+        let app_namespace = Namespace::from_id(HUB_ID)?;
 
         // Create an [`AbstractClient`]
         let abstract_client: AbstractClient<Daemon> = AbstractClient::new(chain.clone())?;
 
         // Get the [`Publisher`] that owns the namespace, otherwise create a new one and claim the namespace
-        let publisher: Publisher<_> = abstract_client.publisher_builder(app_namespace).build()?;
-
-        if publisher.account().owner()? != chain.sender() {
-            panic!("The current sender can not publish to this namespace. Please use the wallet that owns the Account that owns the Namespace.")
-        }
+        let publisher = abstract_client
+            .fetch_or_build_account(app_namespace, |b| b.namespace(app_namespace))?
+            .publisher()?;
 
         // Publish the App to the Abstract Platform
-        publisher.publish_app::<AppInterface<Daemon>>()?;
+        publisher.publish_adapter::<HubInterface<Daemon>>(&HubInstantiateMsg {
+            admin_account: publisher.account().id(),
+            nft_code_id: todo!(),
+        })?;
     }
     Ok(())
 }
