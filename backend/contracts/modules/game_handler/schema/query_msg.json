@@ -23,7 +23,7 @@
       ],
       "properties": {
         "module": {
-          "$ref": "#/definitions/HubQueryMsg"
+          "$ref": "#/definitions/GameHandlerQueryMsg"
         }
       },
       "additionalProperties": false
@@ -85,7 +85,7 @@
         }
       ]
     },
-    "HubQueryMsg": {
+    "GameHandlerQueryMsg": {
       "description": "App query messages",
       "oneOf": [
         {
@@ -95,19 +95,6 @@
           ],
           "properties": {
             "config": {
-              "type": "object",
-              "additionalProperties": false
-            }
-          },
-          "additionalProperties": false
-        },
-        {
-          "type": "object",
-          "required": [
-            "next_token_id"
-          ],
-          "properties": {
-            "next_token_id": {
               "type": "object",
               "additionalProperties": false
             }

@@ -3,11 +3,10 @@ import { createRoot } from "react-dom/client";
 import { Provider } from "jotai";
 import { store } from "./store.js";
 
-import ReactUI from "./ReactUI";
+import ReactUI from "./ReactUI.js";
 import initGame from "./initGame";
 
 import "./index.css";
-import { AbstraxionProvider } from "@burnt-labs/abstraxion";
 
 const ui = document.getElementById("ui");
 
@@ -30,48 +29,10 @@ const treasuryConfig = {
   // restUrl: "https://api.xion-mainnet-1.burnt.com:443",
 };
 
-import {
-  QueryClient, QueryClientProvider
-
-} from '@tanstack/react-query'
-import { AbstractProvider, createConfig } from '@abstract-money/react'
-import { xionProvider } from '@abstract-money/provider-xion'
-
-const client = new QueryClient()
-const config = createConfig({
-  apiUrl: 'https://testnet.api.abstract.money/graphql',
-  provider: xionProvider
-})
-
-const YOUR_CONTRACT_ADDRESS = 'xion1...xyz';
-
-const ABSTRAXION_CONFIG = {
-  contracts: [
-    // Usually, you would have a list of different contracts here
-    {
-      address: YOUR_CONTRACT_ADDRESS,
-      amounts: [{ denom: 'uxion', amount: "1000000" }],
-    },
-  ],
-  bank: [
-    {
-      denom: 'uxion',
-      amount: "1000000",
-    },
-  ],
-};
-
-
 createRoot(document.getElementById("ui")).render(
   <StrictMode>
     <Provider store={store}>
-      <AbstraxionProvider config={ABSTRAXION_CONFIG}>
-        <QueryClientProvider client={client}>
-          <AbstractProvider config={config}>
-            <ReactUI />
-          </AbstractProvider>
-        </QueryClientProvider>
-      </AbstraxionProvider>
+      <ReactUI />
     </Provider>
   </StrictMode >
 );

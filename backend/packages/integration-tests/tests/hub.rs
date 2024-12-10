@@ -15,6 +15,7 @@ use xion_adventures_hub::{
     msg::{HubExecuteMsg, HubInstantiateMsg},
     HubInterface,
 };
+use cw_orch_interchain::prelude::InterchainEnv;
 
 pub struct Test<Chain: CwEnv> {
     account: Account<Chain>,
@@ -22,8 +23,8 @@ pub struct Test<Chain: CwEnv> {
 }
 
 fn setup() -> anyhow::Result<Test<MockBech32>> {
-    let interchain = MockBech32InterchainEnv::new([("atom-1", "atom"), ("osmo-1", "osmo")]);
-    let chain = interchain.get_chain("atom-1");
+    let interchain = MockBech32InterchainEnv::new(vec![("atom-1", "atom"), ("osmo-1", "osmo")]);
+    let chain = interchain.get_chain("atom-1")?;
     let abs = AbstractClient::builder(chain.clone()).build()?;
 
     let namespace = Namespace::new(common::NAMESPACE)?;

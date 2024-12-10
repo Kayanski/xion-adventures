@@ -24,7 +24,7 @@
       ],
       "properties": {
         "module": {
-          "$ref": "#/definitions/AdapterRequestMsg_for_HubExecuteMsg"
+          "$ref": "#/definitions/AdapterRequestMsg_for_GameHandlerExecuteMsg"
         }
       },
       "additionalProperties": false
@@ -145,7 +145,7 @@
         }
       ]
     },
-    "AdapterRequestMsg_for_HubExecuteMsg": {
+    "AdapterRequestMsg_for_GameHandlerExecuteMsg": {
       "description": "An adapter request. If account is None, then the sender must be an Account.",
       "type": "object",
       "required": [
@@ -162,7 +162,7 @@
           "description": "The actual request",
           "allOf": [
             {
-              "$ref": "#/definitions/HubExecuteMsg"
+              "$ref": "#/definitions/GameHandlerExecuteMsg"
             }
           ]
         }
@@ -510,6 +510,74 @@
       },
       "additionalProperties": false
     },
+    "GameHandlerExecuteMsg": {
+      "description": "App execute messages",
+      "oneOf": [
+        {
+          "description": "Create a new account on this chain. This actually mints a new NFT that you can play with. It's minted to the receiver (or the sender of the message)",
+          "type": "object",
+          "required": [
+            "create_account"
+          ],
+          "properties": {
+            "create_account": {
+              "type": "object",
+              "properties": {
+                "city_map_index": {
+                  "type": [
+                    "integer",
+                    "null"
+                  ],
+                  "format": "uint8",
+                  "minimum": 0.0
+                },
+                "receiver": {
+                  "anyOf": [
+                    {
+                      "$ref": "#/definitions/AccountId"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "description": "This is used to move a player around This endpoint accepts the trajectory of a player and verifies it's a possible trajectory according to the map stored in the Hub contract",
+          "type": "object",
+          "required": [
+            "move_player"
+          ],
+          "properties": {
+            "move_player": {
+              "type": "object",
+              "required": [
+                "positions",
+                "token_id"
+              ],
+              "properties": {
+                "positions": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Vec2"
+                  }
+                },
+                "token_id": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
     "GrpcQuery": {
       "description": "Queries the chain using a grpc query. This allows to query information that is not exposed in our API. The chain needs to allowlist the supported queries. The drawback of this query is that you have to handle the protobuf encoding and decoding yourself.\n\nThe returned data is protobuf encoded. The protobuf type depends on the query. Because of this, using it with the [`query`](crate::QuerierWrapper::query) function will result in a deserialization error. Use [`raw_query`](crate::Querier::raw_query) or [`query_grpc`](crate::QuerierWrapper::query_grpc) instead.\n\nTo find the path, as well as the request and response types, you can query the chain's gRPC endpoint using a tool like [grpcurl](https://github.com/fullstorydev/grpcurl).",
       "type": "object",
@@ -532,107 +600,6 @@
         }
       },
       "additionalProperties": false
-    },
-    "HubExecuteMsg": {
-      "description": "App execute messages",
-      "oneOf": [
-        {
-          "description": "Transfer the NFT cross-chain",
-          "type": "object",
-          "required": [
-            "ibc_transfer"
-          ],
-          "properties": {
-            "ibc_transfer": {
-              "type": "object",
-              "required": [
-                "recipient_chain",
-                "token_id"
-              ],
-              "properties": {
-                "recipient_chain": {
-                  "$ref": "#/definitions/TruncatedChainId"
-                },
-                "token_id": {
-                  "type": "string"
-                }
-              },
-              "additionalProperties": false
-            }
-          },
-          "additionalProperties": false
-        },
-        {
-          "description": "Mint a new lost token on this contract This is an authorized endpoint that is only callable by another app in the same namespace",
-          "type": "object",
-          "required": [
-            "mint"
-          ],
-          "properties": {
-            "mint": {
-              "type": "object",
-              "required": [
-                "metadata",
-                "module_id",
-                "token_uri"
-              ],
-              "properties": {
-                "metadata": {
-                  "$ref": "#/definitions/XionAdventuresExtensionMsg"
-                },
-                "module_id": {
-                  "type": "string"
-                },
-                "recipient": {
-                  "anyOf": [
-                    {
-                      "$ref": "#/definitions/AccountId"
-                    },
-                    {
-                      "type": "null"
-                    }
-                  ]
-                },
-                "token_uri": {
-                  "type": "string"
-                }
-              },
-              "additionalProperties": false
-            }
-          },
-          "additionalProperties": false
-        },
-        {
-          "description": "Change the metadata of an NFT This is an authorized endpoint that is only callable by another app in the same namespace",
-          "type": "object",
-          "required": [
-            "modify_metadata"
-          ],
-          "properties": {
-            "modify_metadata": {
-              "type": "object",
-              "required": [
-                "metadata",
-                "module_id",
-                "token_id"
-              ],
-              "properties": {
-                "metadata": {
-                  "$ref": "#/definitions/XionAdventuresExtensionMsg"
-                },
-                "module_id": {
-                  "type": "string"
-                },
-                "token_id": {
-                  "type": "string"
-                }
-              },
-              "additionalProperties": false
-            }
-          },
-          "additionalProperties": false
-        }
-      ]
     },
     "IbcQuery": {
       "description": "These are queries to the various IBC modules to see the state of the contract's IBC connection. These will return errors if the contract is not \"ibc enabled\"",
@@ -998,34 +965,6 @@
         }
       },
       "additionalProperties": false
-    },
-    "PlayerLocation": {
-      "oneOf": [
-        {
-          "type": "object",
-          "required": [
-            "city"
-          ],
-          "properties": {
-            "city": {
-              "$ref": "#/definitions/Vec2"
-            }
-          },
-          "additionalProperties": false
-        },
-        {
-          "type": "object",
-          "required": [
-            "general_map"
-          ],
-          "properties": {
-            "general_map": {
-              "$ref": "#/definitions/Vec2"
-            }
-          },
-          "additionalProperties": false
-        }
-      ]
     },
     "QueryRequest_for_ModuleQuery": {
       "oneOf": [
@@ -1482,30 +1421,6 @@
           "additionalProperties": false
         }
       ]
-    },
-    "XionAdventuresExtensionMsg": {
-      "type": "object",
-      "properties": {
-        "city_map": {
-          "type": [
-            "integer",
-            "null"
-          ],
-          "format": "uint8",
-          "minimum": 0.0
-        },
-        "location": {
-          "anyOf": [
-            {
-              "$ref": "#/definitions/PlayerLocation"
-            },
-            {
-              "type": "null"
-            }
-          ]
-        }
-      },
-      "additionalProperties": false
     }
   }
 }
