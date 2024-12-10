@@ -2,10 +2,13 @@ import { Abstraxion, useAbstraxionAccount, useAbstraxionSigningClient, useModal 
 import { useAtom } from "jotai";
 import { useCallback, useEffect } from "react";
 import { isTextBoxVisibleAtom, textBoxContentAtom, walletOpeningCommand } from "../game/store";
-import { useActiveWalletType, useSuggestChainAndConnect, WalletType } from "graz";
+import { useActiveWalletType, useChainInfos, useSuggestChainAndConnect, WalletType } from "graz";
 import { proxyChainEndpoints } from "@/utils/chains";
 import { testnetChains } from "graz/chains";
 import { APP_CHAIN } from "@/app/_lib/constants";
+import { useActiveChains } from "graz";
+import { useAccount } from "graz";
+import { useSenderAddress } from "@abstract-money/react";
 
 
 interface XionWalletProps {
@@ -28,6 +31,9 @@ export function XionWallet({ children }: XionWalletProps) {
 
   const { suggestAndConnect: connect, isLoading } = useSuggestChainAndConnect()
 
+  const infos = useChainInfos({ chainId: ["pion-1"] });
+
+
   useEffect(() => {
     console.log("Updating ?")
 
@@ -37,10 +43,10 @@ export function XionWallet({ children }: XionWalletProps) {
       // setIsVisible(true);
       // setShowModal(true);
       // setOpenModalCommand(false);
-      if (!walletType) return
+      if (!walletType || !infos?.[0]) return
 
       connect({
-        chainInfo: APP_CHAIN,
+        chainInfo: infos[0],
         walletType: walletType.walletType,
       })
     }
