@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@abstract-money/provider-xion": "^4.0.3",
+    "@abstract-money/provider-graz": "^11.0.3",
     "@abstract-money/react": "^2.3.6",
     "@burnt-labs/abstraxion": "^1.0.0-alpha.54",
     "@burnt-labs/ui": "^0.1.0-alpha.15",
