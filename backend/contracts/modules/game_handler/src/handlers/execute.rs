@@ -61,18 +61,27 @@ fn create_account(
     Ok(adapter
         .response("create-games-account")
         .add_message(mint_msg)
-        .add_message(payment_msg))
+        .add_messages(payment_msg))
 }
 
-fn payment(deps: Deps, env: &Env, adapter: &GameHandler) -> GameHandlerResult<ExecutorMsg> {
+fn payment(
+    deps: Deps,
+    _env: &Env,
+    adapter: &GameHandler,
+) -> GameHandlerResult<Option<ExecutorMsg>> {
     let config = CONFIG.load(deps.storage)?;
     let admin_account_base = adapter
         .account_registry(deps)?
         .account(&config.admin_account)?;
+
+    if (config.mint_cost.amount.is_zero()) {
+        return Ok(None);
+    }
+
     let payment_msg = adapter
         .bank(deps)
         .transfer(vec![config.mint_cost], admin_account_base.addr())?;
-    Ok(adapter.executor(deps).execute(vec![payment_msg])?)
+    Ok(Some(adapter.executor(deps).execute(vec![payment_msg])?))
 }
 
 fn assert_mint_limit(deps: DepsMut, adapter: &GameHandler) -> GameHandlerResult<()> {

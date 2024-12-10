@@ -11,7 +11,7 @@ use cosmwasm_std::Response;
 /// The version of your app
 pub const HUB_VERSION: &str = env!("CARGO_PKG_VERSION");
 /// The id of the app
-pub const HUB_ID: &str = "cosmos-adventures:hub";
+pub const HUB_ID: &str = "xion-adventures:hub";
 
 /// The type of the result returned by your app's entry points.
 pub type HubResult<T = Response> = Result<T, HubError>;

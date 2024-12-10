@@ -12,7 +12,7 @@ use xion_adventures_hub::contract::{HUB_ID, HUB_VERSION};
 /// The version of your app
 pub const GAME_HANDLER_VERSION: &str = env!("CARGO_PKG_VERSION");
 /// The id of the app
-pub const GAME_HANDLER_ID: &str = "cosmos-adventures:game-handler";
+pub const GAME_HANDLER_ID: &str = "xion-adventures:game-handler";
 
 /// The type of the result returned by your app's entry points.
 pub type GameHandlerResult<T = Response> = Result<T, GameHandlerError>;

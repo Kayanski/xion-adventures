@@ -1,0 +1,18 @@
+[package]
+name = "integration-tests"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+abstract-adapter.workspace = true
+abstract-client = { workspace = true, features = ["interchain"] }
+abstract-interface = { workspace = true, features = ["interchain", "testing"] }
+anyhow.workspace = true
+common = { version = "0.1.0", path = "../common" }
+cosmwasm-std.workspace = true
+cw-orch.workspace = true
+cw-orch-interchain = "0.8.1"
+cw721.workspace = true
+game-handler = { version = "0.1.0", path = "../../contracts/modules/game_handler" }
+nft = { version = "0.1.0", path = "../../contracts/nft" }
+xion-adventures-hub = { version = "0.0.1", path = "../../contracts/hub" }
