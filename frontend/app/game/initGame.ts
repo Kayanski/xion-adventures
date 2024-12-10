@@ -282,11 +282,6 @@ export default async function initGame() {
   k.onClick("wallet", () => {
     store.set(walletOpeningCommand, true);
   });
-
-  k.onClick(() => {
-    console.log("How many entities at the ground level", k.get("*")[0]?.children.length);
-  })
-
 }
 
 const walletSize = 50;
