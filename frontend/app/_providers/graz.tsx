@@ -2,7 +2,7 @@
 
 import { GrazProvider as Provider } from 'graz'
 import type { ComponentProps } from 'react'
-import { testnetChains, mainnetChainsArray, testnetChainsArray, mainnetChains } from 'graz/chains'
+import { mainnetChains, mainnetChainsArray, testnetChains } from 'graz/chains'
 import { proxyChainEndpoints } from '@/utils/chains'
 
 export function GrazProvider(
@@ -12,7 +12,12 @@ export function GrazProvider(
     <Provider
       client={props.client}
       grazOptions={{
-        chains: [...mainnetChainsArray, ...testnetChainsArray].map(proxyChainEndpoints),
+        chains: [...mainnetChainsArray, testnetChains.osmosistestnet, testnetChains.xiontestnet, {
+          ...testnetChains.neutrontestnet, feeCurrencies: [
+            {...testnetChains.neutrontestnet.feeCurrencies[0], coinGeckoId: 'neutron-protocol' },
+            ...testnetChains.neutrontestnet.feeCurrencies.slice(1),
+          ],
+        }].map(proxyChainEndpoints),
         chainsConfig: {
           [mainnetChains.osmosis.chainId]: {
             gas: {

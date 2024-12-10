@@ -1,0 +1,390 @@
+{
+  "contract_name": "module-schema",
+  "contract_version": "0.25.0",
+  "idl_version": "1.0.0",
+  "instantiate": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "InstantiateMsg",
+    "description": "App instantiate message",
+    "type": "object",
+    "required": [
+      "admin_account",
+      "nft_code_id"
+    ],
+    "properties": {
+      "admin_account": {
+        "$ref": "#/definitions/AccountId"
+      },
+      "nft_code_id": {
+        "type": "integer",
+        "format": "uint64",
+        "minimum": 0.0
+      }
+    },
+    "additionalProperties": false,
+    "definitions": {
+      "AccountId": {
+        "description": "Unique identifier for an account. On each chain this is unique.",
+        "type": "object",
+        "required": [
+          "seq",
+          "trace"
+        ],
+        "properties": {
+          "seq": {
+            "description": "Unique identifier for the accounts create on a local chain. Is reused when creating an interchain account.",
+            "type": "integer",
+            "format": "uint32",
+            "minimum": 0.0
+          },
+          "trace": {
+            "description": "Sequence of the chain that triggered the IBC account creation `AccountTrace::Local` if the account was created locally Example: Account created on Juno which has an abstract interchain account on Osmosis, which in turn creates an interchain account on Terra -> `AccountTrace::Remote(vec![\"juno\", \"osmosis\"])`",
+            "allOf": [
+              {
+                "$ref": "#/definitions/AccountTrace"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false
+      },
+      "AccountTrace": {
+        "description": "The identifier of chain that triggered the account creation",
+        "oneOf": [
+          {
+            "type": "string",
+            "enum": [
+              "local"
+            ]
+          },
+          {
+            "type": "object",
+            "required": [
+              "remote"
+            ],
+            "properties": {
+              "remote": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/TruncatedChainId"
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        ]
+      },
+      "TruncatedChainId": {
+        "description": "The name of a chain, aka the chain-id without the post-fix number. ex. `cosmoshub-4` -> `cosmoshub`, `juno-1` -> `juno`",
+        "type": "string"
+      }
+    }
+  },
+  "execute": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "ExecuteMsg",
+    "description": "App execute messages",
+    "oneOf": [
+      {
+        "description": "Transfer the NFT cross-chain",
+        "type": "object",
+        "required": [
+          "ibc_transfer"
+        ],
+        "properties": {
+          "ibc_transfer": {
+            "type": "object",
+            "required": [
+              "recipient_chain",
+              "token_id"
+            ],
+            "properties": {
+              "recipient_chain": {
+                "$ref": "#/definitions/TruncatedChainId"
+              },
+              "token_id": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      },
+      {
+        "description": "Mint a new lost token on this contract This is an authorized endpoint that is only callable by another app in the same namespace",
+        "type": "object",
+        "required": [
+          "mint"
+        ],
+        "properties": {
+          "mint": {
+            "type": "object",
+            "required": [
+              "metadata",
+              "module_id",
+              "token_uri"
+            ],
+            "properties": {
+              "metadata": {
+                "$ref": "#/definitions/XionAdventuresExtensionMsg"
+              },
+              "module_id": {
+                "type": "string"
+              },
+              "recipient": {
+                "anyOf": [
+                  {
+                    "$ref": "#/definitions/AccountId"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "token_uri": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      },
+      {
+        "description": "Change the metadata of an NFT This is an authorized endpoint that is only callable by another app in the same namespace",
+        "type": "object",
+        "required": [
+          "modify_metadata"
+        ],
+        "properties": {
+          "modify_metadata": {
+            "type": "object",
+            "required": [
+              "metadata",
+              "module_id",
+              "token_id"
+            ],
+            "properties": {
+              "metadata": {
+                "$ref": "#/definitions/XionAdventuresExtensionMsg"
+              },
+              "module_id": {
+                "type": "string"
+              },
+              "token_id": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      }
+    ],
+    "definitions": {
+      "AccountId": {
+        "description": "Unique identifier for an account. On each chain this is unique.",
+        "type": "object",
+        "required": [
+          "seq",
+          "trace"
+        ],
+        "properties": {
+          "seq": {
+            "description": "Unique identifier for the accounts create on a local chain. Is reused when creating an interchain account.",
+            "type": "integer",
+            "format": "uint32",
+            "minimum": 0.0
+          },
+          "trace": {
+            "description": "Sequence of the chain that triggered the IBC account creation `AccountTrace::Local` if the account was created locally Example: Account created on Juno which has an abstract interchain account on Osmosis, which in turn creates an interchain account on Terra -> `AccountTrace::Remote(vec![\"juno\", \"osmosis\"])`",
+            "allOf": [
+              {
+                "$ref": "#/definitions/AccountTrace"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false
+      },
+      "AccountTrace": {
+        "description": "The identifier of chain that triggered the account creation",
+        "oneOf": [
+          {
+            "type": "string",
+            "enum": [
+              "local"
+            ]
+          },
+          {
+            "type": "object",
+            "required": [
+              "remote"
+            ],
+            "properties": {
+              "remote": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/TruncatedChainId"
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        ]
+      },
+      "PlayerLocation": {
+        "oneOf": [
+          {
+            "type": "object",
+            "required": [
+              "city"
+            ],
+            "properties": {
+              "city": {
+                "$ref": "#/definitions/Vec2"
+              }
+            },
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "required": [
+              "general_map"
+            ],
+            "properties": {
+              "general_map": {
+                "$ref": "#/definitions/Vec2"
+              }
+            },
+            "additionalProperties": false
+          }
+        ]
+      },
+      "TruncatedChainId": {
+        "description": "The name of a chain, aka the chain-id without the post-fix number. ex. `cosmoshub-4` -> `cosmoshub`, `juno-1` -> `juno`",
+        "type": "string"
+      },
+      "Vec2": {
+        "type": "object",
+        "required": [
+          "x",
+          "y"
+        ],
+        "properties": {
+          "x": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "y": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "additionalProperties": false
+      },
+      "XionAdventuresExtensionMsg": {
+        "type": "object",
+        "properties": {
+          "city_map": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "format": "uint8",
+            "minimum": 0.0
+          },
+          "location": {
+            "anyOf": [
+              {
+                "$ref": "#/definitions/PlayerLocation"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "query": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "QueryMsg",
+    "description": "App query messages",
+    "oneOf": [
+      {
+        "type": "object",
+        "required": [
+          "config"
+        ],
+        "properties": {
+          "config": {
+            "type": "object",
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "required": [
+          "next_token_id"
+        ],
+        "properties": {
+          "next_token_id": {
+            "type": "object",
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      }
+    ]
+  },
+  "migrate": {
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "title": "MigrateMsg",
+    "description": "An empty struct that serves as a placeholder in different places, such as contracts that don't set a custom message.\n\nIt is designed to be expressable in correct JSON and JSON Schema but contains no meaningful data. Previously we used enums without cases, but those cannot represented as valid JSON Schema (https://github.com/CosmWasm/cosmwasm/issues/451)",
+    "type": "object",
+    "additionalProperties": false
+  },
+  "sudo": null,
+  "responses": {
+    "config": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "ConfigResponse",
+      "type": "object",
+      "required": [
+        "next_token_id",
+        "nft"
+      ],
+      "properties": {
+        "next_token_id": {
+          "type": "integer",
+          "format": "uint64",
+          "minimum": 0.0
+        },
+        "nft": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "next_token_id": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "NextTokenIdResponse",
+      "type": "object",
+      "required": [
+        "next_token_id"
+      ],
+      "properties": {
+        "next_token_id": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
