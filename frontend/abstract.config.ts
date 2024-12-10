@@ -23,15 +23,7 @@ export default defineConfig({
     react({
       disableAbstractAppFor: ['cw20-base']
     }),
-    vanilla({
-      enableAbstractAppFor: [
-      ]
-    }),
     registry({
-      contracts: [{
-        namespace: 'cw-plus',
-        name: 'cw20-base',
-        version: '1.0.1'
-      }]
+      contracts: []
     })],
 })

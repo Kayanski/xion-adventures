@@ -7,280 +7,92 @@ import { useMemo } from 'react'
 import {
   useAbstractModuleClient,
   useAbstractModuleQueryClient,
-  useModuleClient,
-  useModuleQueryClient,
 } from '@abstract-money/react'
 
 import { AccountId } from '@abstract-money/core'
 
 import {
-  useCw20BaseUploadLogoMutation,
-  Cw20BaseUploadLogoMutation,
-  useCw20BaseUpdateMarketingMutation,
-  Cw20BaseUpdateMarketingMutation,
-  useCw20BaseUpdateMinterMutation,
-  Cw20BaseUpdateMinterMutation,
-  useCw20BaseMintMutation,
-  Cw20BaseMintMutation,
-  useCw20BaseBurnFromMutation,
-  Cw20BaseBurnFromMutation,
-  useCw20BaseSendFromMutation,
-  Cw20BaseSendFromMutation,
-  useCw20BaseTransferFromMutation,
-  Cw20BaseTransferFromMutation,
-  useCw20BaseDecreaseAllowanceMutation,
-  Cw20BaseDecreaseAllowanceMutation,
-  useCw20BaseIncreaseAllowanceMutation,
-  Cw20BaseIncreaseAllowanceMutation,
-  useCw20BaseSendMutation,
-  Cw20BaseSendMutation,
-  useCw20BaseBurnMutation,
-  Cw20BaseBurnMutation,
-  useCw20BaseTransferMutation,
-  Cw20BaseTransferMutation,
-  useCw20BaseDownloadLogoQuery,
-  useCw20BaseMarketingInfoQuery,
-  useCw20BaseAllAccountsQuery,
-  useCw20BaseAllSpenderAllowancesQuery,
-  useCw20BaseAllAllowancesQuery,
-  useCw20BaseAllowanceQuery,
-  useCw20BaseMinterQuery,
-  useCw20BaseTokenInfoQuery,
-  useCw20BaseBalanceQuery,
-} from './cosmwasm-codegen/Cw20Base.react-query'
+  useGameHandlerMovePlayerMutation,
+  GameHandlerMovePlayerMutation,
+  useGameHandlerCreateAccountMutation,
+  GameHandlerCreateAccountMutation,
+  useGameHandlerConfigQuery,
+} from './cosmwasm-codegen/GameHandler.react-query'
+
+import * as GameHandlerTypes from './cosmwasm-codegen/GameHandler.types'
 
 import {
-  Cw20BaseQueryClient,
-  Cw20BaseClient,
-} from './cosmwasm-codegen/Cw20Base.client'
+  GameHandlerAppQueryClient,
+  GameHandlerAppClient,
+} from './cosmwasm-codegen/GameHandler.client'
+
+import {
+  useXionAdventuresHubModifyMetadataMutation,
+  XionAdventuresHubModifyMetadataMutation,
+  useXionAdventuresHubMintMutation,
+  XionAdventuresHubMintMutation,
+  useXionAdventuresHubIbcTransferMutation,
+  XionAdventuresHubIbcTransferMutation,
+  useXionAdventuresHubNextTokenIdQuery,
+  useXionAdventuresHubConfigQuery,
+} from './cosmwasm-codegen/XionAdventuresHub.react-query'
+
+import * as XionAdventuresHubTypes from './cosmwasm-codegen/XionAdventuresHub.types'
+
+import {
+  XionAdventuresHubAppQueryClient,
+  XionAdventuresHubAppClient,
+} from './cosmwasm-codegen/XionAdventuresHub.client'
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Cw20Base
+// GameHandler
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// XionAdventuresHub
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // React
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const cw20Base = {
+export const GAME_HANDLER_MODULE_ID = 'xion-adventures:game-handler'
+
+export const gameHandler = {
   queries: {
-    useDownloadLogo: ({
+    useConfig: ({
       options,
       ...rest
     }: Omit<
       Parameters<
-        typeof useCw20BaseDownloadLogoQuery<Cw20BaseTypes.DownloadLogoResponse>
+        typeof useGameHandlerConfigQuery<GameHandlerTypes.ConfigResponse>
       >[0],
       'client'
     > & {
-      contractAddress: string | undefined
+      accountId: AccountId | undefined
       chainName: string | undefined
     }) => {
-      const { data: cw20BaseQueryClient } = useModuleQueryClient({
+      const { data: gameHandlerAppQueryClient } = useAbstractModuleQueryClient({
+        moduleId: GAME_HANDLER_MODULE_ID,
         ...rest,
-        Module: Cw20BaseQueryClient,
+        Module: GameHandlerAppQueryClient,
+        query: { enabled: options?.enabled },
       })
 
-      return useCw20BaseDownloadLogoQuery({
-        client: cw20BaseQueryClient,
+      return useGameHandlerConfigQuery({
+        client: gameHandlerAppQueryClient,
         options,
-      })
-    },
-    useMarketingInfo: ({
-      options,
-      ...rest
-    }: Omit<
-      Parameters<
-        typeof useCw20BaseMarketingInfoQuery<Cw20BaseTypes.MarketingInfoResponse>
-      >[0],
-      'client'
-    > & {
-      contractAddress: string | undefined
-      chainName: string | undefined
-    }) => {
-      const { data: cw20BaseQueryClient } = useModuleQueryClient({
-        ...rest,
-        Module: Cw20BaseQueryClient,
-      })
-
-      return useCw20BaseMarketingInfoQuery({
-        client: cw20BaseQueryClient,
-        options,
-      })
-    },
-    useAllAccounts: ({
-      options,
-      args,
-      ...rest
-    }: Omit<
-      Parameters<
-        typeof useCw20BaseAllAccountsQuery<Cw20BaseTypes.AllAccountsResponse>
-      >[0],
-      'client'
-    > & {
-      contractAddress: string | undefined
-      chainName: string | undefined
-    }) => {
-      const { data: cw20BaseQueryClient } = useModuleQueryClient({
-        ...rest,
-        Module: Cw20BaseQueryClient,
-      })
-
-      return useCw20BaseAllAccountsQuery({
-        client: cw20BaseQueryClient,
-        options,
-        args,
-      })
-    },
-    useAllSpenderAllowances: ({
-      options,
-      args,
-      ...rest
-    }: Omit<
-      Parameters<
-        typeof useCw20BaseAllSpenderAllowancesQuery<Cw20BaseTypes.AllSpenderAllowancesResponse>
-      >[0],
-      'client'
-    > & {
-      contractAddress: string | undefined
-      chainName: string | undefined
-    }) => {
-      const { data: cw20BaseQueryClient } = useModuleQueryClient({
-        ...rest,
-        Module: Cw20BaseQueryClient,
-      })
-
-      return useCw20BaseAllSpenderAllowancesQuery({
-        client: cw20BaseQueryClient,
-        options,
-        args,
-      })
-    },
-    useAllAllowances: ({
-      options,
-      args,
-      ...rest
-    }: Omit<
-      Parameters<
-        typeof useCw20BaseAllAllowancesQuery<Cw20BaseTypes.AllAllowancesResponse>
-      >[0],
-      'client'
-    > & {
-      contractAddress: string | undefined
-      chainName: string | undefined
-    }) => {
-      const { data: cw20BaseQueryClient } = useModuleQueryClient({
-        ...rest,
-        Module: Cw20BaseQueryClient,
-      })
-
-      return useCw20BaseAllAllowancesQuery({
-        client: cw20BaseQueryClient,
-        options,
-        args,
-      })
-    },
-    useAllowance: ({
-      options,
-      args,
-      ...rest
-    }: Omit<
-      Parameters<
-        typeof useCw20BaseAllowanceQuery<Cw20BaseTypes.AllowanceResponse>
-      >[0],
-      'client'
-    > & {
-      contractAddress: string | undefined
-      chainName: string | undefined
-    }) => {
-      const { data: cw20BaseQueryClient } = useModuleQueryClient({
-        ...rest,
-        Module: Cw20BaseQueryClient,
-      })
-
-      return useCw20BaseAllowanceQuery({
-        client: cw20BaseQueryClient,
-        options,
-        args,
-      })
-    },
-    useMinter: ({
-      options,
-      ...rest
-    }: Omit<
-      Parameters<
-        typeof useCw20BaseMinterQuery<Cw20BaseTypes.MinterResponse>
-      >[0],
-      'client'
-    > & {
-      contractAddress: string | undefined
-      chainName: string | undefined
-    }) => {
-      const { data: cw20BaseQueryClient } = useModuleQueryClient({
-        ...rest,
-        Module: Cw20BaseQueryClient,
-      })
-
-      return useCw20BaseMinterQuery({
-        client: cw20BaseQueryClient,
-        options,
-      })
-    },
-    useTokenInfo: ({
-      options,
-      ...rest
-    }: Omit<
-      Parameters<
-        typeof useCw20BaseTokenInfoQuery<Cw20BaseTypes.TokenInfoResponse>
-      >[0],
-      'client'
-    > & {
-      contractAddress: string | undefined
-      chainName: string | undefined
-    }) => {
-      const { data: cw20BaseQueryClient } = useModuleQueryClient({
-        ...rest,
-        Module: Cw20BaseQueryClient,
-      })
-
-      return useCw20BaseTokenInfoQuery({
-        client: cw20BaseQueryClient,
-        options,
-      })
-    },
-    useBalance: ({
-      options,
-      args,
-      ...rest
-    }: Omit<
-      Parameters<
-        typeof useCw20BaseBalanceQuery<Cw20BaseTypes.BalanceResponse>
-      >[0],
-      'client'
-    > & {
-      contractAddress: string | undefined
-      chainName: string | undefined
-    }) => {
-      const { data: cw20BaseQueryClient } = useModuleQueryClient({
-        ...rest,
-        Module: Cw20BaseQueryClient,
-      })
-
-      return useCw20BaseBalanceQuery({
-        client: cw20BaseQueryClient,
-        options,
-        args,
       })
     },
   },
   mutations: {
-    useUploadLogo: (
+    useMovePlayer: (
       {
-        contractAddress,
+        accountId,
         chainName,
         sender,
       }: {
-        contractAddress: string | undefined
+        accountId: AccountId | undefined
         chainName: string | undefined
         sender?: string | undefined
       },
@@ -288,56 +100,60 @@ export const cw20Base = {
         UseMutationOptions<
           ExecuteResult,
           Error,
-          Omit<Cw20BaseUploadLogoMutation, 'client'>
+          Omit<GameHandlerMovePlayerMutation, 'client'>
         >,
         'mutationFn'
       >,
     ) => {
       const {
-        data: cw20BaseClient,
+        data: gameHandlerAppClient,
         // TODO: figure out what to do with those
-        // isLoading: isCw20BaseClientLoading,
-        // isError: isCw20BaseClientError,
-        // error: cw20BaseClientError,
-      } = useModuleClient({
-        contractAddress,
+        // isLoading: isGameHandlerAppClientLoading,
+        // isError: isGameHandlerAppClientError,
+        // error: gameHandlerAppClientError,
+      } = useAbstractModuleClient({
+        moduleId: GAME_HANDLER_MODULE_ID,
+        accountId,
         chainName,
-        Module: Cw20BaseClient,
+        sender,
+
+        Module: GameHandlerAppClient,
       })
 
       const {
         mutate: mutate_,
         mutateAsync: mutateAsync_,
         ...rest
-      } = useCw20BaseUploadLogoMutation(options)
+      } = useGameHandlerMovePlayerMutation(options)
 
       const mutate = useMemo(() => {
-        if (!cw20BaseClient) return undefined
+        if (!gameHandlerAppClient) return undefined
 
         return (
           variables: Omit<Parameters<typeof mutate_>[0], 'client'>,
           options?: Parameters<typeof mutate_>[1],
-        ) => mutate_({ client: cw20BaseClient, ...variables }, options)
-      }, [mutate_, cw20BaseClient])
+        ) => mutate_({ client: gameHandlerAppClient, ...variables }, options)
+      }, [mutate_, gameHandlerAppClient])
 
       const mutateAsync = useMemo(() => {
-        if (!cw20BaseClient) return undefined
+        if (!gameHandlerAppClient) return undefined
 
         return (
           variables: Omit<Parameters<typeof mutateAsync_>[0], 'client'>,
           options?: Parameters<typeof mutateAsync_>[1],
-        ) => mutateAsync_({ client: cw20BaseClient, ...variables }, options)
-      }, [mutateAsync_, cw20BaseClient])
+        ) =>
+          mutateAsync_({ client: gameHandlerAppClient, ...variables }, options)
+      }, [mutateAsync_, gameHandlerAppClient])
 
       return { mutate, mutateAsync, ...rest } as const
     },
-    useUpdateMarketing: (
+    useCreateAccount: (
       {
-        contractAddress,
+        accountId,
         chainName,
         sender,
       }: {
-        contractAddress: string | undefined
+        accountId: AccountId | undefined
         chainName: string | undefined
         sender?: string | undefined
       },
@@ -345,628 +161,307 @@ export const cw20Base = {
         UseMutationOptions<
           ExecuteResult,
           Error,
-          Omit<Cw20BaseUpdateMarketingMutation, 'client'>
+          Omit<GameHandlerCreateAccountMutation, 'client'>
         >,
         'mutationFn'
       >,
     ) => {
       const {
-        data: cw20BaseClient,
+        data: gameHandlerAppClient,
         // TODO: figure out what to do with those
-        // isLoading: isCw20BaseClientLoading,
-        // isError: isCw20BaseClientError,
-        // error: cw20BaseClientError,
-      } = useModuleClient({
-        contractAddress,
-        chainName,
-        Module: Cw20BaseClient,
-      })
-
-      const {
-        mutate: mutate_,
-        mutateAsync: mutateAsync_,
-        ...rest
-      } = useCw20BaseUpdateMarketingMutation(options)
-
-      const mutate = useMemo(() => {
-        if (!cw20BaseClient) return undefined
-
-        return (
-          variables: Omit<Parameters<typeof mutate_>[0], 'client'>,
-          options?: Parameters<typeof mutate_>[1],
-        ) => mutate_({ client: cw20BaseClient, ...variables }, options)
-      }, [mutate_, cw20BaseClient])
-
-      const mutateAsync = useMemo(() => {
-        if (!cw20BaseClient) return undefined
-
-        return (
-          variables: Omit<Parameters<typeof mutateAsync_>[0], 'client'>,
-          options?: Parameters<typeof mutateAsync_>[1],
-        ) => mutateAsync_({ client: cw20BaseClient, ...variables }, options)
-      }, [mutateAsync_, cw20BaseClient])
-
-      return { mutate, mutateAsync, ...rest } as const
-    },
-    useUpdateMinter: (
-      {
-        contractAddress,
+        // isLoading: isGameHandlerAppClientLoading,
+        // isError: isGameHandlerAppClientError,
+        // error: gameHandlerAppClientError,
+      } = useAbstractModuleClient({
+        moduleId: GAME_HANDLER_MODULE_ID,
+        accountId,
         chainName,
         sender,
-      }: {
-        contractAddress: string | undefined
-        chainName: string | undefined
-        sender?: string | undefined
-      },
-      options?: Omit<
-        UseMutationOptions<
-          ExecuteResult,
-          Error,
-          Omit<Cw20BaseUpdateMinterMutation, 'client'>
-        >,
-        'mutationFn'
-      >,
-    ) => {
-      const {
-        data: cw20BaseClient,
-        // TODO: figure out what to do with those
-        // isLoading: isCw20BaseClientLoading,
-        // isError: isCw20BaseClientError,
-        // error: cw20BaseClientError,
-      } = useModuleClient({
-        contractAddress,
-        chainName,
-        Module: Cw20BaseClient,
+
+        Module: GameHandlerAppClient,
       })
 
       const {
         mutate: mutate_,
         mutateAsync: mutateAsync_,
         ...rest
-      } = useCw20BaseUpdateMinterMutation(options)
+      } = useGameHandlerCreateAccountMutation(options)
 
       const mutate = useMemo(() => {
-        if (!cw20BaseClient) return undefined
+        if (!gameHandlerAppClient) return undefined
 
         return (
           variables: Omit<Parameters<typeof mutate_>[0], 'client'>,
           options?: Parameters<typeof mutate_>[1],
-        ) => mutate_({ client: cw20BaseClient, ...variables }, options)
-      }, [mutate_, cw20BaseClient])
+        ) => mutate_({ client: gameHandlerAppClient, ...variables }, options)
+      }, [mutate_, gameHandlerAppClient])
 
       const mutateAsync = useMemo(() => {
-        if (!cw20BaseClient) return undefined
+        if (!gameHandlerAppClient) return undefined
 
         return (
           variables: Omit<Parameters<typeof mutateAsync_>[0], 'client'>,
           options?: Parameters<typeof mutateAsync_>[1],
-        ) => mutateAsync_({ client: cw20BaseClient, ...variables }, options)
-      }, [mutateAsync_, cw20BaseClient])
-
-      return { mutate, mutateAsync, ...rest } as const
-    },
-    useMint: (
-      {
-        contractAddress,
-        chainName,
-        sender,
-      }: {
-        contractAddress: string | undefined
-        chainName: string | undefined
-        sender?: string | undefined
-      },
-      options?: Omit<
-        UseMutationOptions<
-          ExecuteResult,
-          Error,
-          Omit<Cw20BaseMintMutation, 'client'>
-        >,
-        'mutationFn'
-      >,
-    ) => {
-      const {
-        data: cw20BaseClient,
-        // TODO: figure out what to do with those
-        // isLoading: isCw20BaseClientLoading,
-        // isError: isCw20BaseClientError,
-        // error: cw20BaseClientError,
-      } = useModuleClient({
-        contractAddress,
-        chainName,
-        Module: Cw20BaseClient,
-      })
-
-      const {
-        mutate: mutate_,
-        mutateAsync: mutateAsync_,
-        ...rest
-      } = useCw20BaseMintMutation(options)
-
-      const mutate = useMemo(() => {
-        if (!cw20BaseClient) return undefined
-
-        return (
-          variables: Omit<Parameters<typeof mutate_>[0], 'client'>,
-          options?: Parameters<typeof mutate_>[1],
-        ) => mutate_({ client: cw20BaseClient, ...variables }, options)
-      }, [mutate_, cw20BaseClient])
-
-      const mutateAsync = useMemo(() => {
-        if (!cw20BaseClient) return undefined
-
-        return (
-          variables: Omit<Parameters<typeof mutateAsync_>[0], 'client'>,
-          options?: Parameters<typeof mutateAsync_>[1],
-        ) => mutateAsync_({ client: cw20BaseClient, ...variables }, options)
-      }, [mutateAsync_, cw20BaseClient])
-
-      return { mutate, mutateAsync, ...rest } as const
-    },
-    useBurnFrom: (
-      {
-        contractAddress,
-        chainName,
-        sender,
-      }: {
-        contractAddress: string | undefined
-        chainName: string | undefined
-        sender?: string | undefined
-      },
-      options?: Omit<
-        UseMutationOptions<
-          ExecuteResult,
-          Error,
-          Omit<Cw20BaseBurnFromMutation, 'client'>
-        >,
-        'mutationFn'
-      >,
-    ) => {
-      const {
-        data: cw20BaseClient,
-        // TODO: figure out what to do with those
-        // isLoading: isCw20BaseClientLoading,
-        // isError: isCw20BaseClientError,
-        // error: cw20BaseClientError,
-      } = useModuleClient({
-        contractAddress,
-        chainName,
-        Module: Cw20BaseClient,
-      })
-
-      const {
-        mutate: mutate_,
-        mutateAsync: mutateAsync_,
-        ...rest
-      } = useCw20BaseBurnFromMutation(options)
-
-      const mutate = useMemo(() => {
-        if (!cw20BaseClient) return undefined
-
-        return (
-          variables: Omit<Parameters<typeof mutate_>[0], 'client'>,
-          options?: Parameters<typeof mutate_>[1],
-        ) => mutate_({ client: cw20BaseClient, ...variables }, options)
-      }, [mutate_, cw20BaseClient])
-
-      const mutateAsync = useMemo(() => {
-        if (!cw20BaseClient) return undefined
-
-        return (
-          variables: Omit<Parameters<typeof mutateAsync_>[0], 'client'>,
-          options?: Parameters<typeof mutateAsync_>[1],
-        ) => mutateAsync_({ client: cw20BaseClient, ...variables }, options)
-      }, [mutateAsync_, cw20BaseClient])
-
-      return { mutate, mutateAsync, ...rest } as const
-    },
-    useSendFrom: (
-      {
-        contractAddress,
-        chainName,
-        sender,
-      }: {
-        contractAddress: string | undefined
-        chainName: string | undefined
-        sender?: string | undefined
-      },
-      options?: Omit<
-        UseMutationOptions<
-          ExecuteResult,
-          Error,
-          Omit<Cw20BaseSendFromMutation, 'client'>
-        >,
-        'mutationFn'
-      >,
-    ) => {
-      const {
-        data: cw20BaseClient,
-        // TODO: figure out what to do with those
-        // isLoading: isCw20BaseClientLoading,
-        // isError: isCw20BaseClientError,
-        // error: cw20BaseClientError,
-      } = useModuleClient({
-        contractAddress,
-        chainName,
-        Module: Cw20BaseClient,
-      })
-
-      const {
-        mutate: mutate_,
-        mutateAsync: mutateAsync_,
-        ...rest
-      } = useCw20BaseSendFromMutation(options)
-
-      const mutate = useMemo(() => {
-        if (!cw20BaseClient) return undefined
-
-        return (
-          variables: Omit<Parameters<typeof mutate_>[0], 'client'>,
-          options?: Parameters<typeof mutate_>[1],
-        ) => mutate_({ client: cw20BaseClient, ...variables }, options)
-      }, [mutate_, cw20BaseClient])
-
-      const mutateAsync = useMemo(() => {
-        if (!cw20BaseClient) return undefined
-
-        return (
-          variables: Omit<Parameters<typeof mutateAsync_>[0], 'client'>,
-          options?: Parameters<typeof mutateAsync_>[1],
-        ) => mutateAsync_({ client: cw20BaseClient, ...variables }, options)
-      }, [mutateAsync_, cw20BaseClient])
-
-      return { mutate, mutateAsync, ...rest } as const
-    },
-    useTransferFrom: (
-      {
-        contractAddress,
-        chainName,
-        sender,
-      }: {
-        contractAddress: string | undefined
-        chainName: string | undefined
-        sender?: string | undefined
-      },
-      options?: Omit<
-        UseMutationOptions<
-          ExecuteResult,
-          Error,
-          Omit<Cw20BaseTransferFromMutation, 'client'>
-        >,
-        'mutationFn'
-      >,
-    ) => {
-      const {
-        data: cw20BaseClient,
-        // TODO: figure out what to do with those
-        // isLoading: isCw20BaseClientLoading,
-        // isError: isCw20BaseClientError,
-        // error: cw20BaseClientError,
-      } = useModuleClient({
-        contractAddress,
-        chainName,
-        Module: Cw20BaseClient,
-      })
-
-      const {
-        mutate: mutate_,
-        mutateAsync: mutateAsync_,
-        ...rest
-      } = useCw20BaseTransferFromMutation(options)
-
-      const mutate = useMemo(() => {
-        if (!cw20BaseClient) return undefined
-
-        return (
-          variables: Omit<Parameters<typeof mutate_>[0], 'client'>,
-          options?: Parameters<typeof mutate_>[1],
-        ) => mutate_({ client: cw20BaseClient, ...variables }, options)
-      }, [mutate_, cw20BaseClient])
-
-      const mutateAsync = useMemo(() => {
-        if (!cw20BaseClient) return undefined
-
-        return (
-          variables: Omit<Parameters<typeof mutateAsync_>[0], 'client'>,
-          options?: Parameters<typeof mutateAsync_>[1],
-        ) => mutateAsync_({ client: cw20BaseClient, ...variables }, options)
-      }, [mutateAsync_, cw20BaseClient])
-
-      return { mutate, mutateAsync, ...rest } as const
-    },
-    useDecreaseAllowance: (
-      {
-        contractAddress,
-        chainName,
-        sender,
-      }: {
-        contractAddress: string | undefined
-        chainName: string | undefined
-        sender?: string | undefined
-      },
-      options?: Omit<
-        UseMutationOptions<
-          ExecuteResult,
-          Error,
-          Omit<Cw20BaseDecreaseAllowanceMutation, 'client'>
-        >,
-        'mutationFn'
-      >,
-    ) => {
-      const {
-        data: cw20BaseClient,
-        // TODO: figure out what to do with those
-        // isLoading: isCw20BaseClientLoading,
-        // isError: isCw20BaseClientError,
-        // error: cw20BaseClientError,
-      } = useModuleClient({
-        contractAddress,
-        chainName,
-        Module: Cw20BaseClient,
-      })
-
-      const {
-        mutate: mutate_,
-        mutateAsync: mutateAsync_,
-        ...rest
-      } = useCw20BaseDecreaseAllowanceMutation(options)
-
-      const mutate = useMemo(() => {
-        if (!cw20BaseClient) return undefined
-
-        return (
-          variables: Omit<Parameters<typeof mutate_>[0], 'client'>,
-          options?: Parameters<typeof mutate_>[1],
-        ) => mutate_({ client: cw20BaseClient, ...variables }, options)
-      }, [mutate_, cw20BaseClient])
-
-      const mutateAsync = useMemo(() => {
-        if (!cw20BaseClient) return undefined
-
-        return (
-          variables: Omit<Parameters<typeof mutateAsync_>[0], 'client'>,
-          options?: Parameters<typeof mutateAsync_>[1],
-        ) => mutateAsync_({ client: cw20BaseClient, ...variables }, options)
-      }, [mutateAsync_, cw20BaseClient])
-
-      return { mutate, mutateAsync, ...rest } as const
-    },
-    useIncreaseAllowance: (
-      {
-        contractAddress,
-        chainName,
-        sender,
-      }: {
-        contractAddress: string | undefined
-        chainName: string | undefined
-        sender?: string | undefined
-      },
-      options?: Omit<
-        UseMutationOptions<
-          ExecuteResult,
-          Error,
-          Omit<Cw20BaseIncreaseAllowanceMutation, 'client'>
-        >,
-        'mutationFn'
-      >,
-    ) => {
-      const {
-        data: cw20BaseClient,
-        // TODO: figure out what to do with those
-        // isLoading: isCw20BaseClientLoading,
-        // isError: isCw20BaseClientError,
-        // error: cw20BaseClientError,
-      } = useModuleClient({
-        contractAddress,
-        chainName,
-        Module: Cw20BaseClient,
-      })
-
-      const {
-        mutate: mutate_,
-        mutateAsync: mutateAsync_,
-        ...rest
-      } = useCw20BaseIncreaseAllowanceMutation(options)
-
-      const mutate = useMemo(() => {
-        if (!cw20BaseClient) return undefined
-
-        return (
-          variables: Omit<Parameters<typeof mutate_>[0], 'client'>,
-          options?: Parameters<typeof mutate_>[1],
-        ) => mutate_({ client: cw20BaseClient, ...variables }, options)
-      }, [mutate_, cw20BaseClient])
-
-      const mutateAsync = useMemo(() => {
-        if (!cw20BaseClient) return undefined
-
-        return (
-          variables: Omit<Parameters<typeof mutateAsync_>[0], 'client'>,
-          options?: Parameters<typeof mutateAsync_>[1],
-        ) => mutateAsync_({ client: cw20BaseClient, ...variables }, options)
-      }, [mutateAsync_, cw20BaseClient])
-
-      return { mutate, mutateAsync, ...rest } as const
-    },
-    useSend: (
-      {
-        contractAddress,
-        chainName,
-        sender,
-      }: {
-        contractAddress: string | undefined
-        chainName: string | undefined
-        sender?: string | undefined
-      },
-      options?: Omit<
-        UseMutationOptions<
-          ExecuteResult,
-          Error,
-          Omit<Cw20BaseSendMutation, 'client'>
-        >,
-        'mutationFn'
-      >,
-    ) => {
-      const {
-        data: cw20BaseClient,
-        // TODO: figure out what to do with those
-        // isLoading: isCw20BaseClientLoading,
-        // isError: isCw20BaseClientError,
-        // error: cw20BaseClientError,
-      } = useModuleClient({
-        contractAddress,
-        chainName,
-        Module: Cw20BaseClient,
-      })
-
-      const {
-        mutate: mutate_,
-        mutateAsync: mutateAsync_,
-        ...rest
-      } = useCw20BaseSendMutation(options)
-
-      const mutate = useMemo(() => {
-        if (!cw20BaseClient) return undefined
-
-        return (
-          variables: Omit<Parameters<typeof mutate_>[0], 'client'>,
-          options?: Parameters<typeof mutate_>[1],
-        ) => mutate_({ client: cw20BaseClient, ...variables }, options)
-      }, [mutate_, cw20BaseClient])
-
-      const mutateAsync = useMemo(() => {
-        if (!cw20BaseClient) return undefined
-
-        return (
-          variables: Omit<Parameters<typeof mutateAsync_>[0], 'client'>,
-          options?: Parameters<typeof mutateAsync_>[1],
-        ) => mutateAsync_({ client: cw20BaseClient, ...variables }, options)
-      }, [mutateAsync_, cw20BaseClient])
-
-      return { mutate, mutateAsync, ...rest } as const
-    },
-    useBurn: (
-      {
-        contractAddress,
-        chainName,
-        sender,
-      }: {
-        contractAddress: string | undefined
-        chainName: string | undefined
-        sender?: string | undefined
-      },
-      options?: Omit<
-        UseMutationOptions<
-          ExecuteResult,
-          Error,
-          Omit<Cw20BaseBurnMutation, 'client'>
-        >,
-        'mutationFn'
-      >,
-    ) => {
-      const {
-        data: cw20BaseClient,
-        // TODO: figure out what to do with those
-        // isLoading: isCw20BaseClientLoading,
-        // isError: isCw20BaseClientError,
-        // error: cw20BaseClientError,
-      } = useModuleClient({
-        contractAddress,
-        chainName,
-        Module: Cw20BaseClient,
-      })
-
-      const {
-        mutate: mutate_,
-        mutateAsync: mutateAsync_,
-        ...rest
-      } = useCw20BaseBurnMutation(options)
-
-      const mutate = useMemo(() => {
-        if (!cw20BaseClient) return undefined
-
-        return (
-          variables: Omit<Parameters<typeof mutate_>[0], 'client'>,
-          options?: Parameters<typeof mutate_>[1],
-        ) => mutate_({ client: cw20BaseClient, ...variables }, options)
-      }, [mutate_, cw20BaseClient])
-
-      const mutateAsync = useMemo(() => {
-        if (!cw20BaseClient) return undefined
-
-        return (
-          variables: Omit<Parameters<typeof mutateAsync_>[0], 'client'>,
-          options?: Parameters<typeof mutateAsync_>[1],
-        ) => mutateAsync_({ client: cw20BaseClient, ...variables }, options)
-      }, [mutateAsync_, cw20BaseClient])
-
-      return { mutate, mutateAsync, ...rest } as const
-    },
-    useTransfer: (
-      {
-        contractAddress,
-        chainName,
-        sender,
-      }: {
-        contractAddress: string | undefined
-        chainName: string | undefined
-        sender?: string | undefined
-      },
-      options?: Omit<
-        UseMutationOptions<
-          ExecuteResult,
-          Error,
-          Omit<Cw20BaseTransferMutation, 'client'>
-        >,
-        'mutationFn'
-      >,
-    ) => {
-      const {
-        data: cw20BaseClient,
-        // TODO: figure out what to do with those
-        // isLoading: isCw20BaseClientLoading,
-        // isError: isCw20BaseClientError,
-        // error: cw20BaseClientError,
-      } = useModuleClient({
-        contractAddress,
-        chainName,
-        Module: Cw20BaseClient,
-      })
-
-      const {
-        mutate: mutate_,
-        mutateAsync: mutateAsync_,
-        ...rest
-      } = useCw20BaseTransferMutation(options)
-
-      const mutate = useMemo(() => {
-        if (!cw20BaseClient) return undefined
-
-        return (
-          variables: Omit<Parameters<typeof mutate_>[0], 'client'>,
-          options?: Parameters<typeof mutate_>[1],
-        ) => mutate_({ client: cw20BaseClient, ...variables }, options)
-      }, [mutate_, cw20BaseClient])
-
-      const mutateAsync = useMemo(() => {
-        if (!cw20BaseClient) return undefined
-
-        return (
-          variables: Omit<Parameters<typeof mutateAsync_>[0], 'client'>,
-          options?: Parameters<typeof mutateAsync_>[1],
-        ) => mutateAsync_({ client: cw20BaseClient, ...variables }, options)
-      }, [mutateAsync_, cw20BaseClient])
+        ) =>
+          mutateAsync_({ client: gameHandlerAppClient, ...variables }, options)
+      }, [mutateAsync_, gameHandlerAppClient])
 
       return { mutate, mutateAsync, ...rest } as const
     },
   },
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Vanilla
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+export const XION_ADVENTURES_HUB_MODULE_ID =
+  'xion-adventures:xion-adventures-hub'
 
-export * from './cosmwasm-codegen/Cw20Base.client'
-export * from './cosmwasm-codegen/Cw20Base.message-builder'
-export * from './cosmwasm-codegen/Cw20Base.message-composer'
-import * as Cw20BaseTypes from './cosmwasm-codegen/Cw20Base.types'
-export { Cw20BaseTypes }
+export const xionAdventuresHub = {
+  queries: {
+    useNextTokenId: ({
+      options,
+      ...rest
+    }: Omit<
+      Parameters<
+        typeof useXionAdventuresHubNextTokenIdQuery<XionAdventuresHubTypes.NextTokenIdResponse>
+      >[0],
+      'client'
+    > & {
+      accountId: AccountId | undefined
+      chainName: string | undefined
+    }) => {
+      const { data: xionAdventuresHubAppQueryClient } =
+        useAbstractModuleQueryClient({
+          moduleId: XION_ADVENTURES_HUB_MODULE_ID,
+          ...rest,
+          Module: XionAdventuresHubAppQueryClient,
+          query: { enabled: options?.enabled },
+        })
+
+      return useXionAdventuresHubNextTokenIdQuery({
+        client: xionAdventuresHubAppQueryClient,
+        options,
+      })
+    },
+    useConfig: ({
+      options,
+      ...rest
+    }: Omit<
+      Parameters<
+        typeof useXionAdventuresHubConfigQuery<XionAdventuresHubTypes.ConfigResponse>
+      >[0],
+      'client'
+    > & {
+      accountId: AccountId | undefined
+      chainName: string | undefined
+    }) => {
+      const { data: xionAdventuresHubAppQueryClient } =
+        useAbstractModuleQueryClient({
+          moduleId: XION_ADVENTURES_HUB_MODULE_ID,
+          ...rest,
+          Module: XionAdventuresHubAppQueryClient,
+          query: { enabled: options?.enabled },
+        })
+
+      return useXionAdventuresHubConfigQuery({
+        client: xionAdventuresHubAppQueryClient,
+        options,
+      })
+    },
+  },
+  mutations: {
+    useModifyMetadata: (
+      {
+        accountId,
+        chainName,
+        sender,
+      }: {
+        accountId: AccountId | undefined
+        chainName: string | undefined
+        sender?: string | undefined
+      },
+      options?: Omit<
+        UseMutationOptions<
+          ExecuteResult,
+          Error,
+          Omit<XionAdventuresHubModifyMetadataMutation, 'client'>
+        >,
+        'mutationFn'
+      >,
+    ) => {
+      const {
+        data: xionAdventuresHubAppClient,
+        // TODO: figure out what to do with those
+        // isLoading: isXionAdventuresHubAppClientLoading,
+        // isError: isXionAdventuresHubAppClientError,
+        // error: xionAdventuresHubAppClientError,
+      } = useAbstractModuleClient({
+        moduleId: XION_ADVENTURES_HUB_MODULE_ID,
+        accountId,
+        chainName,
+        sender,
+
+        Module: XionAdventuresHubAppClient,
+      })
+
+      const {
+        mutate: mutate_,
+        mutateAsync: mutateAsync_,
+        ...rest
+      } = useXionAdventuresHubModifyMetadataMutation(options)
+
+      const mutate = useMemo(() => {
+        if (!xionAdventuresHubAppClient) return undefined
+
+        return (
+          variables: Omit<Parameters<typeof mutate_>[0], 'client'>,
+          options?: Parameters<typeof mutate_>[1],
+        ) =>
+          mutate_({ client: xionAdventuresHubAppClient, ...variables }, options)
+      }, [mutate_, xionAdventuresHubAppClient])
+
+      const mutateAsync = useMemo(() => {
+        if (!xionAdventuresHubAppClient) return undefined
+
+        return (
+          variables: Omit<Parameters<typeof mutateAsync_>[0], 'client'>,
+          options?: Parameters<typeof mutateAsync_>[1],
+        ) =>
+          mutateAsync_(
+            { client: xionAdventuresHubAppClient, ...variables },
+            options,
+          )
+      }, [mutateAsync_, xionAdventuresHubAppClient])
+
+      return { mutate, mutateAsync, ...rest } as const
+    },
+    useMint: (
+      {
+        accountId,
+        chainName,
+        sender,
+      }: {
+        accountId: AccountId | undefined
+        chainName: string | undefined
+        sender?: string | undefined
+      },
+      options?: Omit<
+        UseMutationOptions<
+          ExecuteResult,
+          Error,
+          Omit<XionAdventuresHubMintMutation, 'client'>
+        >,
+        'mutationFn'
+      >,
+    ) => {
+      const {
+        data: xionAdventuresHubAppClient,
+        // TODO: figure out what to do with those
+        // isLoading: isXionAdventuresHubAppClientLoading,
+        // isError: isXionAdventuresHubAppClientError,
+        // error: xionAdventuresHubAppClientError,
+      } = useAbstractModuleClient({
+        moduleId: XION_ADVENTURES_HUB_MODULE_ID,
+        accountId,
+        chainName,
+        sender,
+
+        Module: XionAdventuresHubAppClient,
+      })
+
+      const {
+        mutate: mutate_,
+        mutateAsync: mutateAsync_,
+        ...rest
+      } = useXionAdventuresHubMintMutation(options)
+
+      const mutate = useMemo(() => {
+        if (!xionAdventuresHubAppClient) return undefined
+
+        return (
+          variables: Omit<Parameters<typeof mutate_>[0], 'client'>,
+          options?: Parameters<typeof mutate_>[1],
+        ) =>
+          mutate_({ client: xionAdventuresHubAppClient, ...variables }, options)
+      }, [mutate_, xionAdventuresHubAppClient])
+
+      const mutateAsync = useMemo(() => {
+        if (!xionAdventuresHubAppClient) return undefined
+
+        return (
+          variables: Omit<Parameters<typeof mutateAsync_>[0], 'client'>,
+          options?: Parameters<typeof mutateAsync_>[1],
+        ) =>
+          mutateAsync_(
+            { client: xionAdventuresHubAppClient, ...variables },
+            options,
+          )
+      }, [mutateAsync_, xionAdventuresHubAppClient])
+
+      return { mutate, mutateAsync, ...rest } as const
+    },
+    useIbcTransfer: (
+      {
+        accountId,
+        chainName,
+        sender,
+      }: {
+        accountId: AccountId | undefined
+        chainName: string | undefined
+        sender?: string | undefined
+      },
+      options?: Omit<
+        UseMutationOptions<
+          ExecuteResult,
+          Error,
+          Omit<XionAdventuresHubIbcTransferMutation, 'client'>
+        >,
+        'mutationFn'
+      >,
+    ) => {
+      const {
+        data: xionAdventuresHubAppClient,
+        // TODO: figure out what to do with those
+        // isLoading: isXionAdventuresHubAppClientLoading,
+        // isError: isXionAdventuresHubAppClientError,
+        // error: xionAdventuresHubAppClientError,
+      } = useAbstractModuleClient({
+        moduleId: XION_ADVENTURES_HUB_MODULE_ID,
+        accountId,
+        chainName,
+        sender,
+
+        Module: XionAdventuresHubAppClient,
+      })
+
+      const {
+        mutate: mutate_,
+        mutateAsync: mutateAsync_,
+        ...rest
+      } = useXionAdventuresHubIbcTransferMutation(options)
+
+      const mutate = useMemo(() => {
+        if (!xionAdventuresHubAppClient) return undefined
+
+        return (
+          variables: Omit<Parameters<typeof mutate_>[0], 'client'>,
+          options?: Parameters<typeof mutate_>[1],
+        ) =>
+          mutate_({ client: xionAdventuresHubAppClient, ...variables }, options)
+      }, [mutate_, xionAdventuresHubAppClient])
+
+      const mutateAsync = useMemo(() => {
+        if (!xionAdventuresHubAppClient) return undefined
+
+        return (
+          variables: Omit<Parameters<typeof mutateAsync_>[0], 'client'>,
+          options?: Parameters<typeof mutateAsync_>[1],
+        ) =>
+          mutateAsync_(
+            { client: xionAdventuresHubAppClient, ...variables },
+            options,
+          )
+      }, [mutateAsync_, xionAdventuresHubAppClient])
+
+      return { mutate, mutateAsync, ...rest } as const
+    },
+  },
+}
