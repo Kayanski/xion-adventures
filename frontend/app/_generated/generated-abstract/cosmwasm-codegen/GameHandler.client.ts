@@ -55,7 +55,7 @@ export class GameHandlerAppQueryClient implements IGameHandlerAppQueryClient {
   _query = async (queryMsg: QueryMsg): Promise<any> => {
     return this.accountPublicClient.queryModule({
       moduleId: this.moduleId,
-      moduleType: "app",
+      moduleType: "adapter",
       queryMsg
     });
   };
@@ -103,7 +103,11 @@ export class GameHandlerAppClient extends GameHandlerAppQueryClient implements I
   _execute = async (msg: ExecuteMsg, fee_: number | StdFee | "auto" = "auto", memo_?: string, funds_?: Coin[]): Promise<ExecuteResult> => {
     const signingCwClient = await this.accountWalletClient.getSigningCosmWasmClient();
     const sender = await this.accountWalletClient.getSenderAddress();
-    const moduleMsg: AppExecuteMsg<ExecuteMsg> = AppExecuteMsgFactory.executeApp(msg);
+    const accountAddress = await this.accountPublicClient.getAccountAddress();
+    const moduleMsg: AdapterExecuteMsg<ExecuteMsg> = AdapterExecuteMsgFactory.executeAdapter({
+      request: msg,
+      accountAddress: accountAddress,
+    });
     return await signingCwClient.execute(sender, await this.getAddress(), moduleMsg, fee_, memo_, funds_);
   };
 }
