@@ -31,14 +31,11 @@ export function XionWallet({ children }: XionWalletProps) {
 
   const { suggestAndConnect: connect, isLoading } = useSuggestChainAndConnect()
 
-  const infos = useChainInfos({ chainId: ["pion-1"] });
+  const infos = useChainInfos({ chainId: ["xion-testnet-1"] });
 
 
   useEffect(() => {
-    console.log("Updating ?")
-
     if (openModalCommand) {
-      console.log("This should open the xion, modal, it's currently unavailable")
       // setTextBoxContent("Authentication is loading")
       // setIsVisible(true);
       // setShowModal(true);
