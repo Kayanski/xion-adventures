@@ -20,6 +20,7 @@ import {
 } from "kaplay";
 import initKaplay from "./kaplayCtx";
 import {
+  isWalletConnectedAtom,
   store,
   textBoxContentAtom,
   walletOpeningCommand,
@@ -97,6 +98,7 @@ export default async function initGame() {
     sliceX: backgroundSpritesX,
   });
   k.loadSprite("wallet", "./wallet.png", {});
+  k.loadSprite("wallet-connected", "./wallet-connected.png", {});
   k.loadSprite("characters", "./characters.png", {
     sliceY: 2,
     sliceX: 8,
@@ -255,7 +257,7 @@ export default async function initGame() {
 
   /// Drawing the wallet button (menu) in the future
 
-  k.add([
+  let walletArea = k.add([
     k.rect(walletRectSize, walletRectSize, {
       radius: [walletRadius, walletRadius, walletRadius, walletRadius],
     }),
@@ -263,8 +265,10 @@ export default async function initGame() {
     k.pos(12, 12),
     k.outline(1, k.Color.BLACK),
     k.z(frontZ),
+    k.area(),
+    "wallet",
   ]);
-  k.add([
+  let walletImage = k.add([
     k.sprite("wallet"),
     k.scale(1),
     k.pos(
@@ -275,9 +279,30 @@ export default async function initGame() {
     ),
     k.fixed(),
     k.z(frontZ),
-    k.area(),
-    "wallet",
   ]);
+
+
+  walletImage.onUpdate(() => {
+    // We change the wallet image on change
+    if (store.get(isWalletConnectedAtom)) {
+      walletImage.use(k.sprite("wallet-connected"))
+    } else {
+
+      walletImage.use(k.sprite("wallet"))
+    }
+  })
+  walletArea.onHover(() => {
+    let canvas = document.querySelector("canvas");
+    if (canvas) {
+      canvas.style.cursor = "pointer"; // Change to pointer cursor
+    }
+  });
+  walletArea.onHoverEnd(() => {
+    let canvas = document.querySelector("canvas");
+    if (canvas) {
+      canvas.style.cursor = "default"; // Reset to default cursor
+    }
+  })
 
   k.onClick("wallet", () => {
     store.set(walletOpeningCommand, true);

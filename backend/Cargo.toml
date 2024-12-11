@@ -10,11 +10,12 @@ resolver = "2"
 [workspace.dependencies]
 
 # Internal
-xion-adventures-hub = { path = "./contracts/hub" }
+xion-adventures-hub = { path = "./contracts/hub", default-features = false }
 nft = { path = "./contracts/nft" }
-game-handler = { path = "./contracts/modules/game_handler" }
+game-handler = { path = "./contracts/modules/game_handler", default-features = false }
 map-generation = { path = "./packages/map-generation" }
 common = { path = "./packages/common" }
+scripts = { path = "./packages/scripts" }
 
 
 # Dependencies for interface

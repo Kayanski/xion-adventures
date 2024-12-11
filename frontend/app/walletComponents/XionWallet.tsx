@@ -1,7 +1,7 @@
 import { Abstraxion, useAbstraxionAccount, useAbstraxionSigningClient, useModal } from "@burnt-labs/abstraxion";
 import { useAtom } from "jotai";
 import { useCallback, useEffect } from "react";
-import { isTextBoxVisibleAtom, textBoxContentAtom, walletOpeningCommand } from "../game/store";
+import { isTextBoxVisibleAtom, isWalletConnectedAtom, textBoxContentAtom, walletOpeningCommand } from "../game/store";
 import { useActiveWalletType, useChainInfos, useSuggestChainAndConnect, WalletType } from "graz";
 import { proxyChainEndpoints } from "@/utils/chains";
 import { testnetChains } from "graz/chains";
@@ -9,6 +9,7 @@ import { APP_CHAIN } from "@/app/_lib/constants";
 import { useActiveChains } from "graz";
 import { useAccount } from "graz";
 import { useSenderAddress } from "@abstract-money/react";
+import { useDisconnect } from "graz";
 
 
 interface XionWalletProps {
@@ -16,41 +17,46 @@ interface XionWalletProps {
 }
 
 export function XionWallet({ children }: XionWalletProps) {
-  // Abstraxion hooks
-  const { data: account } = useAbstraxionAccount();
-  const { client, signArb, logout } = useAbstraxionSigningClient();
-  const [isModalShown, setShowModal]: [
-    boolean,
-    React.Dispatch<React.SetStateAction<boolean>>,
-  ] = useModal();
+
 
   const [openModalCommand, setOpenModalCommand] = useAtom(walletOpeningCommand);
-  const [, setTextBoxContent] = useAtom(textBoxContentAtom);
-  const [, setIsVisible] = useAtom(isTextBoxVisibleAtom);
   const walletType = useActiveWalletType()
 
   const { suggestAndConnect: connect, isLoading } = useSuggestChainAndConnect()
+  const { disconnect } = useDisconnect()
 
   const infos = useChainInfos({ chainId: ["xion-testnet-1"] });
+  const { data: account } = useAccount()
 
+  const [connectedWallet, setConnectedWallet] = useAtom(isWalletConnectedAtom);
 
   useEffect(() => {
     if (openModalCommand) {
-      // setTextBoxContent("Authentication is loading")
-      // setIsVisible(true);
-      // setShowModal(true);
-      // setOpenModalCommand(false);
+      console.log("ask for open", account?.bech32Address)
       if (!walletType || !infos?.[0]) return
 
-      connect({
-        chainInfo: infos[0],
-        walletType: walletType.walletType,
-      })
+      if (!account?.bech32Address) {
+        // For connection
+        connect({
+          chainInfo: infos[0],
+          walletType: walletType.walletType,
+        })
+      } else {
+        // For dis-connection
+        disconnect()
+      }
+      setOpenModalCommand(false)
     }
 
-  }, [openModalCommand, setTextBoxContent, setOpenModalCommand, connect, walletType]);
+    if (account?.bech32Address) {
+      setConnectedWallet(true)
+    } else {
+      setConnectedWallet(false)
+    }
+
+  }, [openModalCommand, setOpenModalCommand, connect, disconnect, walletType, setConnectedWallet, account?.bech32Address]);
 
 
-  return <div>Nicoco {openModalCommand ? "non" : "oui"}</div>
+  return <div>Nicoco's address {account?.bech32Address}</div>
 
 }

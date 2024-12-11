@@ -2,6 +2,7 @@
 name = "game-handler"
 version = "0.1.0"
 edition = "2021"
+resolver = "2"
 
 [[bin]]
 name = "schema"
@@ -14,15 +15,10 @@ schema = ["abstract-adapter/schema"]
 abstract-interface = ["dep:abstract-interface"]
 abstract-client = ["dep:abstract-client"]
 semver = ["dep:semver"]
-interface = [
-    "export",
-    "dep:abstract-interface",
-    "dep:abstract-client",
-    "dep:semver",
-]
-daemon = ["interface", "cw-orch/daemon"]
+daemon = ["cw-orch/daemon"]
 
 [lib]
+crate-type = ["cdylib", "rlib"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
@@ -31,7 +27,6 @@ abstract-client = { workspace = true, optional = true }
 abstract-ibc-host = { workspace = true, default-features = false }
 abstract-interface = { workspace = true, optional = true }
 abstract-sdk.workspace = true
-xion-adventures-hub = { workspace = true }
 cosmwasm-schema.workspace = true
 cosmwasm-std = { workspace = true }
 cw-asset = { workspace = true }
@@ -40,6 +35,11 @@ cw-orch = { workspace = true }
 cw-storage-plus.workspace = true
 semver = { workspace = true, optional = true }
 thiserror.workspace = true
+
+xion-adventures-hub = { workspace = true }
 nft = { workspace = true, features = ["library"] }
-common = { version = "0.1.0", path = "../../../packages/common" }
-map-generation = { version = "0.1.0", path = "../../../packages/map-generation" }
+common = { workspace = true }
+map-generation = { workspace = true }
+
+[dev-dependencies]
+xion-adventures-hub = { workspace = true }

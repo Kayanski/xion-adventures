@@ -6,6 +6,7 @@ export const textBoxContentAtom = atom("");
 export const store = createStore();
 
 export const walletOpeningCommand = atom(false);
+export const isWalletConnectedAtom = atom(false);
 
 // Position store
 export const currentPositionAtom = atom<Vec2>();

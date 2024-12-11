@@ -1,0 +1,56 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "InstantiateMsg",
+  "type": "object",
+  "required": [
+    "collection_info_extension",
+    "name",
+    "symbol"
+  ],
+  "properties": {
+    "collection_info_extension": {
+      "description": "Optional extension of the collection metadata",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Empty"
+        }
+      ]
+    },
+    "creator": {
+      "description": "Sets the creator of collection. The creator is the only one eligible to update `CollectionInfo`.",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "minter": {
+      "description": "The minter is the only one who can create new NFTs. This is designed for a base NFT that is controlled by an external program or contract. You will likely replace this with custom logic in custom NFTs",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "name": {
+      "description": "Name of the NFT contract",
+      "type": "string"
+    },
+    "symbol": {
+      "description": "Symbol of the NFT contract",
+      "type": "string"
+    },
+    "withdraw_address": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "Empty": {
+      "description": "An empty struct that serves as a placeholder in different places, such as contracts that don't set a custom message.\n\nIt is designed to be expressable in correct JSON and JSON Schema but contains no meaningful data. Previously we used enums without cases, but those cannot represented as valid JSON Schema (https://github.com/CosmWasm/cosmwasm/issues/451)",
+      "type": "object",
+      "additionalProperties": false
+    }
+  }
+}

@@ -12,18 +12,22 @@ export default defineConfig({
       moduleType: "adapter",
     },
     {
-      name: "xion-adventures-hub",
+      name: "hub",
       path: "../backend/schema/hub/xion-adventures-hub/0.0.1/abstract",
       namespace: "xion-adventures",
       version: "0.1.0",
       moduleType: "adapter",
-    }
+    },
   ],
   plugins: [
     react({
-      disableAbstractAppFor: ['cw20-base']
+      disableAbstractAppFor: ['cw721-base']
     }),
     registry({
-      contracts: []
+      contracts: [{
+        name: "cw721-base",
+        namespace: "cw-plus",
+        version: "0.18"
+      }]
     })],
 })

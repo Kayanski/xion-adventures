@@ -12,9 +12,14 @@ export function GrazProvider(
     <Provider
       client={props.client}
       grazOptions={{
-        chains: [...mainnetChainsArray, testnetChains.osmosistestnet, testnetChains.xiontestnet, {
+        chains: [...mainnetChainsArray, testnetChains.osmosistestnet, {
+          ...testnetChains.xiontestnet, feeCurrencies: [
+            { ...testnetChains.neutrontestnet.feeCurrencies[0], coinGeckoId: undefined },
+            ...testnetChains.neutrontestnet.feeCurrencies.slice(1),
+          ],
+        }, {
           ...testnetChains.neutrontestnet, feeCurrencies: [
-            {...testnetChains.neutrontestnet.feeCurrencies[0], coinGeckoId: 'neutron-protocol' },
+            { ...testnetChains.neutrontestnet.feeCurrencies[0], coinGeckoId: 'neutron-protocol' },
             ...testnetChains.neutrontestnet.feeCurrencies.slice(1),
           ],
         }].map(proxyChainEndpoints),

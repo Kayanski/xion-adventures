@@ -27,6 +27,7 @@
     "@types/next": "^9.0.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "framer-motion": "^11.13.5",
     "generate": "^0.14.0",
     "graphql-request": "^5.1.0",
     "graz": "^0.1.25",

@@ -1,0 +1,26 @@
+[package]
+name = "scripts"
+version = "0.1.0"
+edition = "2021"
+resolver = "2"
+
+[dependencies]
+abstract-adapter.workspace = true
+abstract-client = { workspace = true, features = ["interchain"] }
+abstract-interface = { workspace = true, features = [
+    "daemon",
+    "interchain",
+    "testing",
+] }
+anyhow.workspace = true
+clap.workspace = true
+common = { version = "0.1.0", path = "../common" }
+cosmwasm-std.workspace = true
+cw-orch.workspace = true
+cw-orch-interchain = "0.8.1"
+cw721.workspace = true
+dotenv.workspace = true
+env_logger.workspace = true
+game-handler = { workspace = true }
+nft = { workspace = true }
+xion-adventures-hub = { workspace = true }

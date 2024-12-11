@@ -8,20 +8,14 @@
 //! $ just publish uni-6 osmo-test-5
 //! ```
 use abstract_adapter::objects::namespace::Namespace;
-use abstract_client::{AbstractClient, Publisher};
+use abstract_client::AbstractClient;
 use clap::Parser;
 use cw_orch::{
     anyhow,
     daemon::Daemon,
-    environment::TxHandler,
-    prelude::{networks::parse_network, ChainInfo, DaemonBuilder},
-    tokio::runtime::Runtime,
+    prelude::{networks::parse_network, ChainInfo},
 };
-use xion_adventures_hub::{
-    contract::HUB_ID,
-    msg::{HubInstantiateMsg, InstantiateMsg},
-    HubInterface,
-};
+use xion_adventures_hub::{contract::HUB_ID, msg::HubInstantiateMsg, HubInterface};
 
 fn publish(networks: Vec<ChainInfo>) -> anyhow::Result<()> {
     // run for each requested network
@@ -36,14 +30,16 @@ fn publish(networks: Vec<ChainInfo>) -> anyhow::Result<()> {
 
         // Get the [`Publisher`] that owns the namespace, otherwise create a new one and claim the namespace
         let publisher = abstract_client
-            .fetch_or_build_account(app_namespace, |b| b.namespace(app_namespace))?
+            .fetch_or_build_account(app_namespace.clone(), |b| b.namespace(app_namespace))?
             .publisher()?;
 
         // Publish the App to the Abstract Platform
-        publisher.publish_adapter::<HubInterface<Daemon>>(&HubInstantiateMsg {
-            admin_account: publisher.account().id(),
-            nft_code_id: todo!(),
-        })?;
+        publisher.publish_adapter::<HubInstantiateMsg, HubInterface<Daemon>>(
+            HubInstantiateMsg {
+                admin_account: publisher.account().id()?,
+                nft_code_id: todo!(),
+            },
+        )?;
     }
     Ok(())
 }

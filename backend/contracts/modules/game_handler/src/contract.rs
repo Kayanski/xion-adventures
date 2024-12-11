@@ -43,22 +43,3 @@ abstract_adapter::cw_orch_interface!(
     GameHandlerInstantiateMsg,
     GameHandlerInterface
 );
-
-#[cfg(feature = "interface")]
-pub mod interface_impl {
-
-    // impl<Chain: cw_orch::environment::CwEnv> abstract_interface::DependencyCreation
-    //     for super::interface::GameHandlerInterface<Chain>
-    // {
-    //     type DependenciesConfig = cosmwasm_std::Empty;
-
-    //     fn dependency_install_configs(
-    //         _configuration: Self::DependenciesConfig,
-    //     ) -> Result<
-    //         Vec<abstract_adapter::std::account::ModuleInstallConfig>,
-    //         abstract_interface::AbstractInterfaceError,
-    //     > {
-    //         Ok(vec![])
-    //     }
-    // }
-}

@@ -2,11 +2,14 @@
 name = "nft"
 version = "0.1.0"
 edition = "2021"
+resolver = "2"
 
 [features]
 library = []
+schema = []
 
 [lib]
+crate-type = ["cdylib", "rlib"]
 
 [dependencies]
 common = { version = "0.1.0", path = "../../packages/common" }

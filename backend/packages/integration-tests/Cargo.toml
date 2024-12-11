@@ -13,6 +13,7 @@ cosmwasm-std.workspace = true
 cw-orch.workspace = true
 cw-orch-interchain = "0.8.1"
 cw721.workspace = true
-game-handler = { version = "0.1.0", path = "../../contracts/modules/game_handler" }
-nft = { version = "0.1.0", path = "../../contracts/nft" }
-xion-adventures-hub = { version = "0.0.1", path = "../../contracts/hub" }
+game-handler = { workspace = true }
+nft = { workspace = true }
+xion-adventures-hub = { workspace = true }
+scripts = { workspace = true }

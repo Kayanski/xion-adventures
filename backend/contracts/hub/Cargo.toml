@@ -24,19 +24,14 @@ name = "schema"
 required-features = ["schema"]
 
 [[example]]
-name = "local_daemon"
-required-features = ["daemon"]
-
-[[example]]
 name = "publish"
-required-features = ["daemon"]
+required-features = ["daemon", "interface"]
 
 [features]
 default = ["export"]
 export = []
 schema = ["abstract-adapter/schema"]
-interface = ["export", "dep:abstract-interface", "dep:semver"]
-daemon = ["interface", "cw-orch/daemon"]
+daemon = ["cw-orch/daemon"]
 
 [dependencies]
 cosmwasm-std = { workspace = true }
@@ -64,7 +59,7 @@ nft = { version = "0.1.0", path = "../nft", features = ["library"] }
 
 
 [dev-dependencies]
-xion-adventures-hub = { path = ".", features = ["interface"] }
+xion-adventures-hub = { path = "." }
 abstract-client = { workspace = true }
 abstract-adapter = { workspace = true, features = ["test-utils"] }
 dotenv = "0.15.0"

@@ -13,22 +13,22 @@ importers:
     dependencies:
       '@abstract-money/cli':
         specifier: ^1.2.0
-        version: 1.2.0(esbuild@0.16.17)(typescript@5.0.2)
+        version: 1.2.0(bufferutil@4.0.8)(esbuild@0.16.17)(typescript@5.0.2)(utf-8-validate@5.0.10)
       '@abstract-money/core':
         specifier: ^3.4.2
-        version: 3.4.2(graphql@16.8.1)(typescript@5.0.2)
+        version: 3.4.2(bufferutil@4.0.8)(graphql@16.8.1)(typescript@5.0.2)(utf-8-validate@5.0.10)
       '@abstract-money/provider-graz':
         specifier: ^11.0.2
-        version: 11.0.2(@abstract-money/core@3.4.2)(@abstract-money/react@2.3.5)(graz@0.1.25)(typescript@5.0.2)
+        version: 11.0.2(@abstract-money/core@3.4.2(bufferutil@4.0.8)(graphql@16.8.1)(typescript@5.0.2)(utf-8-validate@5.0.10))(@abstract-money/react@2.3.5(bufferutil@4.0.8)(graphql@16.8.1)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)(typescript@5.0.2)(utf-8-validate@5.0.10))(graz@0.1.25(@cosmjs/amino@0.32.4)(@cosmjs/cosmwasm-stargate@0.32.4(bufferutil@4.0.8)(utf-8-validate@5.0.10))(@cosmjs/launchpad@0.27.1)(@cosmjs/proto-signing@0.32.4)(@cosmjs/stargate@0.32.4(bufferutil@4.0.8)(utf-8-validate@5.0.10))(@cosmjs/tendermint-rpc@0.32.4(bufferutil@4.0.8)(utf-8-validate@5.0.10))(@leapwallet/cosmos-social-login-capsule-provider@0.0.41(@cosmjs/encoding@0.32.4)(@cosmjs/proto-signing@0.32.4)(fp-ts@2.1.1))(@terra-money/feather.js@3.0.0-beta.3)(@types/react@18.2.55)(axios@1.7.9)(bufferutil@4.0.8)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)(utf-8-validate@5.0.10))(typescript@5.0.2)
       '@abstract-money/react':
         specifier: ^2.3.5
-        version: 2.3.5(graphql@16.8.1)(react-dom@18.0.0)(react@18.0.0)(typescript@5.0.2)
+        version: 2.3.5(bufferutil@4.0.8)(graphql@16.8.1)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)(typescript@5.0.2)(utf-8-validate@5.0.10)
       '@burnt-labs/abstraxion':
         specifier: 1.0.0-alpha.54
-        version: 1.0.0-alpha.54(@types/react@18.2.55)(graphql@16.8.1)(react-dom@18.0.0)(react@18.0.0)(starknet@6.11.0)
+        version: 1.0.0-alpha.54(@types/react@18.2.55)(bufferutil@4.0.8)(graphql-ws@5.16.0(graphql@16.8.1))(graphql@16.8.1)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)(starknet@6.11.0)(utf-8-validate@5.0.10)
       '@graphql-codegen/cli':
         specifier: ^5.0.3
-        version: 5.0.3(@types/node@20.0.0)(graphql@16.8.1)(typescript@5.0.2)
+        version: 5.0.3(@parcel/watcher@2.5.0)(@types/node@20.0.0)(bufferutil@4.0.8)(enquirer@2.4.1)(graphql@16.8.1)(typescript@5.0.2)(utf-8-validate@5.0.10)
       '@graphql-codegen/client-preset':
         specifier: ^4.4.0
         version: 4.4.0(graphql@16.8.1)
@@ -43,16 +43,19 @@ importers:
         version: 1.1.0(@types/react@18.2.55)(react@18.0.0)
       '@tanstack/react-query':
         specifier: ^4.36.1
-        version: 4.36.1(react-dom@18.0.0)(react@18.0.0)
+        version: 4.36.1(react-dom@18.0.0(react@18.0.0))(react@18.0.0)
       '@types/next':
         specifier: ^9.0.0
-        version: 9.0.0(@babel/core@7.26.0)(react-dom@18.0.0)(react@18.0.0)
+        version: 9.0.0(@babel/core@7.26.0)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)
       class-variance-authority:
         specifier: ^0.7.0
         version: 0.7.0
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      framer-motion:
+        specifier: ^11.13.5
+        version: 11.13.5(react-dom@18.0.0(react@18.0.0))(react@18.0.0)
       generate:
         specifier: ^0.14.0
         version: 0.14.0
@@ -61,7 +64,7 @@ importers:
         version: 5.1.0(graphql@16.8.1)
       graz:
         specifier: ^0.1.25
-        version: 0.1.25(@cosmjs/amino@0.31.3)(@cosmjs/cosmwasm-stargate@0.31.3)(@cosmjs/launchpad@0.27.1)(@cosmjs/proto-signing@0.31.3)(@cosmjs/stargate@0.31.3)(@cosmjs/tendermint-rpc@0.31.3)(@leapwallet/cosmos-social-login-capsule-provider@0.0.41)(@terra-money/feather.js@3.0.0-beta.3)(@types/react@18.2.55)(axios@0.27.2)(react-dom@18.0.0)(react@18.0.0)
+        version: 0.1.25(@cosmjs/amino@0.32.4)(@cosmjs/cosmwasm-stargate@0.32.4(bufferutil@4.0.8)(utf-8-validate@5.0.10))(@cosmjs/launchpad@0.27.1)(@cosmjs/proto-signing@0.32.4)(@cosmjs/stargate@0.32.4(bufferutil@4.0.8)(utf-8-validate@5.0.10))(@cosmjs/tendermint-rpc@0.32.4(bufferutil@4.0.8)(utf-8-validate@5.0.10))(@leapwallet/cosmos-social-login-capsule-provider@0.0.41(@cosmjs/encoding@0.32.4)(@cosmjs/proto-signing@0.32.4)(fp-ts@2.1.1))(@terra-money/feather.js@3.0.0-beta.3)(@types/react@18.2.55)(axios@1.7.9)(bufferutil@4.0.8)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)(utf-8-validate@5.0.10)
       jotai:
         specifier: ^2.10.1
         version: 2.10.1(@types/react@18.2.55)(react@18.0.0)
@@ -73,7 +76,7 @@ importers:
         version: 0.453.0(react@18.0.0)
       next:
         specifier: 14.2.15
-        version: 14.2.15(@babel/core@7.26.0)(react-dom@18.0.0)(react@18.0.0)
+        version: 14.2.15(@babel/core@7.26.0)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)
       pino-pretty:
         specifier: ^11.3.0
         version: 11.3.0
@@ -905,17 +908,8 @@ packages:
   '@cosmjs/amino@0.31.3':
     resolution: {integrity: sha512-36emtUq895sPRX8PTSOnG+lhJDCVyIcE0Tr5ct59sUbgQiI14y43vj/4WAlJ/utSOxy+Zhj9wxcs4AZfu0BHsw==}
 
-  '@cosmjs/amino@0.32.3':
-    resolution: {integrity: sha512-G4zXl+dJbqrz1sSJ56H/25l5NJEk/pAPIr8piAHgbXYw88OdAOlpA26PQvk2IbSN/rRgVbvlLTNgX2tzz1dyUA==}
-
   '@cosmjs/amino@0.32.4':
     resolution: {integrity: sha512-zKYOt6hPy8obIFtLie/xtygCkH9ZROiQ12UHfKsOkWaZfPQUvVbtgmu6R4Kn1tFLI/SRkw7eqhaogmW/3NYu/Q==}
-
-  '@cosmjs/cosmwasm-stargate@0.31.3':
-    resolution: {integrity: sha512-Uv9TmCn3650gdFeZm7SEfUZF3uX3lfJfFhXOk6I2ZLr/FrKximnlb+vwAfZaZnWYvlA7qrKtHIjeRNHvT23zcw==}
-
-  '@cosmjs/cosmwasm-stargate@0.32.3':
-    resolution: {integrity: sha512-pqkt+QsLIPNMTRh9m+igJgIpzXXgn1BxmxfAb9zlC23kvsuzY/12un9M7iAdim1NwKXDFeYw46xC2YkprwQp+g==}
 
   '@cosmjs/cosmwasm-stargate@0.32.4':
     resolution: {integrity: sha512-Fuo9BGEiB+POJ5WeRyBGuhyKR1ordvxZGLPuPosFJOH9U0gKMgcjwKMCgAlWFkMlHaTB+tNdA8AifWiHrI7VgA==}
@@ -935,14 +929,8 @@ packages:
   '@cosmjs/encoding@0.31.3':
     resolution: {integrity: sha512-6IRtG0fiVYwyP7n+8e54uTx2pLYijO48V3t9TLiROERm5aUAIzIlz6Wp0NYaI5he9nh1lcEGJ1lkquVKFw3sUg==}
 
-  '@cosmjs/encoding@0.32.3':
-    resolution: {integrity: sha512-p4KF7hhv8jBQX3MkB3Defuhz/W0l3PwWVYU2vkVuBJ13bJcXyhU9nJjiMkaIv+XP+W2QgRceqNNgFUC5chNR7w==}
-
   '@cosmjs/encoding@0.32.4':
     resolution: {integrity: sha512-tjvaEy6ZGxJchiizzTn7HVRiyTg1i4CObRRaTRPknm5EalE13SV+TCHq38gIDfyUeden4fCuaBVEdBR5+ti7Hw==}
-
-  '@cosmjs/json-rpc@0.31.3':
-    resolution: {integrity: sha512-7LVYerXjnm69qqYR3uA6LGCrBW2EO5/F7lfJxAmY+iII2C7xO3a0vAjMSt5zBBh29PXrJVS6c2qRP22W1Le2Wg==}
 
   '@cosmjs/json-rpc@0.32.4':
     resolution: {integrity: sha512-/jt4mBl7nYzfJ2J/VJ+r19c92mUKF0Lt0JxM3MXEJl7wlwW5haHAWtzRujHkyYMXOwIR+gBqT2S0vntXVBRyhQ==}
@@ -956,47 +944,23 @@ packages:
   '@cosmjs/math@0.31.3':
     resolution: {integrity: sha512-kZ2C6glA5HDb9hLz1WrftAjqdTBb3fWQsRR+Us2HsjAYdeE6M3VdXMsYCP5M3yiihal1WDwAY2U7HmfJw7Uh4A==}
 
-  '@cosmjs/math@0.32.3':
-    resolution: {integrity: sha512-amumUtZs8hCCnV+lSBaJIiZkGabQm22QGg/IotYrhcmoOEOjt82n7hMNlNXRs7V6WLMidGrGYcswB5zcmp0Meg==}
-
   '@cosmjs/math@0.32.4':
     resolution: {integrity: sha512-++dqq2TJkoB8zsPVYCvrt88oJWsy1vMOuSOKcdlnXuOA/ASheTJuYy4+oZlTQ3Fr8eALDLGGPhJI02W2HyAQaw==}
 
   '@cosmjs/proto-signing@0.31.3':
     resolution: {integrity: sha512-24+10/cGl6lLS4VCrGTCJeDRPQTn1K5JfknzXzDIHOx8THR31JxA7/HV5eWGHqWgAbudA7ccdSvEK08lEHHtLA==}
 
-  '@cosmjs/proto-signing@0.32.3':
-    resolution: {integrity: sha512-kSZ0ZUY0DwcRT0NcIn2HkadH4NKlwjfZgbLj1ABwh/4l0RgeT84QCscZCu63tJYq3K6auwqTiZSZERwlO4/nbg==}
-
   '@cosmjs/proto-signing@0.32.4':
     resolution: {integrity: sha512-QdyQDbezvdRI4xxSlyM1rSVBO2st5sqtbEIl3IX03uJ7YiZIQHyv6vaHVf1V4mapusCqguiHJzm4N4gsFdLBbQ==}
-
-  '@cosmjs/socket@0.31.3':
-    resolution: {integrity: sha512-aqrDGGi7os/hsz5p++avI4L0ZushJ+ItnzbqA7C6hamFSCJwgOkXaOUs+K9hXZdX4rhY7rXO4PH9IH8q09JkTw==}
 
   '@cosmjs/socket@0.32.4':
     resolution: {integrity: sha512-davcyYziBhkzfXQTu1l5NrpDYv0K9GekZCC9apBRvL1dvMc9F/ygM7iemHjUA+z8tJkxKxrt/YPjJ6XNHzLrkw==}
 
-  '@cosmjs/stargate@0.31.3':
-    resolution: {integrity: sha512-53NxnzmB9FfXpG4KjOUAYAvWLYKdEmZKsutcat/u2BrDXNZ7BN8jim/ENcpwXfs9/Og0K24lEIdvA4gsq3JDQw==}
-
-  '@cosmjs/stargate@0.32.3':
-    resolution: {integrity: sha512-OQWzO9YWKerUinPIxrO1MARbe84XkeXJAW0lyMIjXIEikajuXZ+PwftiKA5yA+8OyditVmHVLtPud6Pjna2s5w==}
-
   '@cosmjs/stargate@0.32.4':
     resolution: {integrity: sha512-usj08LxBSsPRq9sbpCeVdyLx2guEcOHfJS9mHGCLCXpdAPEIEQEtWLDpEUc0LEhWOx6+k/ChXTc5NpFkdrtGUQ==}
 
-  '@cosmjs/stream@0.31.3':
-    resolution: {integrity: sha512-8keYyI7X0RjsLyVcZuBeNjSv5FA4IHwbFKx7H60NHFXszN8/MvXL6aZbNIvxtcIHHsW7K9QSQos26eoEWlAd+w==}
-
   '@cosmjs/stream@0.32.4':
     resolution: {integrity: sha512-Gih++NYHEiP+oyD4jNEUxU9antoC0pFSg+33Hpp0JlHwH0wXhtD3OOKnzSfDB7OIoEbrzLJUpEjOgpCp5Z+W3A==}
-
-  '@cosmjs/tendermint-rpc@0.31.3':
-    resolution: {integrity: sha512-s3TiWkPCW4QceTQjpYqn4xttUJH36mTPqplMl+qyocdqk5+X5mergzExU/pHZRWQ4pbby8bnR7kMvG4OC1aZ8g==}
-
-  '@cosmjs/tendermint-rpc@0.32.3':
-    resolution: {integrity: sha512-xeprW+VR9xKGstqZg0H/KBZoUp8/FfFyS9ljIUTLM/UINjP2MhiwncANPS2KScfJVepGufUKk0/phHUeIBSEkw==}
 
   '@cosmjs/tendermint-rpc@0.32.4':
     resolution: {integrity: sha512-MWvUUno+4bCb/LmlMIErLypXxy7ckUuzEmpufYYYd9wgbdCXaTaO08SZzyFM5PI8UJ/0S2AmUrgWhldlbxO8mw==}
@@ -4700,12 +4664,23 @@ packages:
   fp-ts@2.1.1:
     resolution: {integrity: sha512-YcWhMdDCFCja0MmaDroTgNu+NWWrrnUEn92nvDgrtVy9Z71YFnhNVIghoHPt8gs82ijoMzFGeWKvArbyICiJgw==}
 
-  fp-ts@2.16.9:
-    resolution: {integrity: sha512-+I2+FnVB+tVaxcYyQkHUq7ZdKScaBlX53A41mxQtpIccsfyv8PzdzP7fzp2AY832T4aoK6UZ5WRX/ebGd8uZuQ==}
-
   fragment-cache@0.2.1:
     resolution: {integrity: sha512-GMBAbW9antB8iZRHLoGw0b3HANt57diZYFO/HL1JGIC1MjKrdmhxvrJbupnVvpys0zsz7yBApXdQyfepKly2kA==}
     engines: {node: '>=0.10.0'}
+
+  framer-motion@11.13.5:
+    resolution: {integrity: sha512-rArI0zPU9VkpS3Wt0J7dmRxAFUWtzPWoSofNQAP0UO276CmJ+Xlf5xN19GMw3w2QsdrS2sU+0+Q2vtuz4IEZaw==}
+    peerDependencies:
+      '@emotion/is-prop-valid': '*'
+      react: ^18.0.0 || ^19.0.0
+      react-dom: ^18.0.0 || ^19.0.0
+    peerDependenciesMeta:
+      '@emotion/is-prop-valid':
+        optional: true
+      react:
+        optional: true
+      react-dom:
+        optional: true
 
   fs-exists-sync@0.1.0:
     resolution: {integrity: sha512-cR/vflFyPZtrN6b38ZyWxpWdhlXrzZEBawlpBQMq7033xVY7/kg0GDMBK5jg8lDYQckdJ5x/YC88lM3C7VMsLg==}
@@ -6310,6 +6285,12 @@ packages:
 
   mobx@6.13.5:
     resolution: {integrity: sha512-/HTWzW2s8J1Gqt+WmUj5Y0mddZk+LInejADc79NJadrWla3rHzmRHki/mnEUH1AvOmbNTZ1BRbKxr8DSgfdjMA==}
+
+  motion-dom@11.13.0:
+    resolution: {integrity: sha512-Oc1MLGJQ6nrvXccXA89lXtOqFyBmvHtaDcTRGT66o8Czl7nuA8BeHAd9MQV1pQKX0d2RHFBFaw5g3k23hQJt0w==}
+
+  motion-utils@11.13.0:
+    resolution: {integrity: sha512-lq6TzXkH5c/ysJQBxgLXgM01qwBH1b4goTPh57VvZWJbVJZF/0SB31UWEn4EIqbVPf3au88n2rvK17SpDTja1A==}
 
   motion@10.16.2:
     resolution: {integrity: sha512-p+PurYqfUdcJZvtnmAqu5fJgV2kR0uLFQuBKtLeFVTrYEVllI99tiOTSefVNYuip9ELTEkepIIDftNdze76NAQ==}
@@ -8602,12 +8583,12 @@ snapshots:
       esbuild: 0.16.17
       load-tsconfig: 0.2.5
 
-  '@abstract-money/cli@1.2.0(esbuild@0.16.17)(typescript@5.0.2)':
+  '@abstract-money/cli@1.2.0(bufferutil@4.0.8)(esbuild@0.16.17)(typescript@5.0.2)(utf-8-validate@5.0.10)':
     dependencies:
       '@abstract-money/bundle-require': 0.2.0(esbuild@0.16.17)
       '@abstract-money/ts-codegen': 0.37.0-beta-3
-      '@cosmjs/cosmwasm-stargate': 0.32.4
-      '@cosmjs/stargate': 0.32.4
+      '@cosmjs/cosmwasm-stargate': 0.32.4(bufferutil@4.0.8)(utf-8-validate@5.0.10)
+      '@cosmjs/stargate': 0.32.4(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       abort-controller: 3.0.0
       cac: 6.7.14
       change-case: 4.1.2
@@ -8623,8 +8604,9 @@ snapshots:
       pathe: 1.1.2
       picocolors: 1.1.1
       prettier: 2.8.8
-      typescript: 5.0.2
       zod: 3.24.0
+    optionalDependencies:
+      typescript: 5.0.2
     transitivePeerDependencies:
       - bufferutil
       - debug
@@ -8632,15 +8614,15 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@abstract-money/core@3.4.2(graphql@16.8.1)(typescript@5.0.2)':
+  '@abstract-money/core@3.4.2(bufferutil@4.0.8)(graphql@16.8.1)(typescript@5.0.2)(utf-8-validate@5.0.10)':
     dependencies:
-      '@abstract-money/cosmwasm-utils': 0.3.5(typescript@5.0.2)
+      '@abstract-money/cosmwasm-utils': 0.3.5(bufferutil@4.0.8)(typescript@5.0.2)(utf-8-validate@5.0.10)
       '@chain-registry/types': 0.45.86
-      '@cosmjs/cosmwasm-stargate': 0.32.4
+      '@cosmjs/cosmwasm-stargate': 0.32.4(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       '@cosmjs/encoding': 0.32.4
       '@cosmjs/proto-signing': 0.32.4
-      '@cosmjs/stargate': 0.32.4
-      '@cosmjs/tendermint-rpc': 0.32.4
+      '@cosmjs/stargate': 0.32.4(bufferutil@4.0.8)(utf-8-validate@5.0.10)
+      '@cosmjs/tendermint-rpc': 0.32.4(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       '@rimbu/bimap': 1.1.1
       bech32: 2.0.0
       chain-registry: 1.69.58
@@ -8653,8 +8635,9 @@ snapshots:
       ts-mixer: 6.0.4
       ts-pattern: 4.3.0
       type-fest: 4.3.0
-      typescript: 5.0.2
       yup: 1.3.2
+    optionalDependencies:
+      typescript: 5.0.2
     transitivePeerDependencies:
       - bufferutil
       - debug
@@ -8662,34 +8645,37 @@ snapshots:
       - graphql
       - utf-8-validate
 
-  '@abstract-money/cosmwasm-utils@0.3.5(typescript@5.0.2)':
+  '@abstract-money/cosmwasm-utils@0.3.5(bufferutil@4.0.8)(typescript@5.0.2)(utf-8-validate@5.0.10)':
     dependencies:
-      '@cosmjs/cosmwasm-stargate': 0.32.4
+      '@cosmjs/cosmwasm-stargate': 0.32.4(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       '@cosmjs/encoding': 0.32.4
-      '@cosmjs/tendermint-rpc': 0.32.4
+      '@cosmjs/tendermint-rpc': 0.32.4(bufferutil@4.0.8)(utf-8-validate@5.0.10)
+    optionalDependencies:
       typescript: 5.0.2
     transitivePeerDependencies:
       - bufferutil
       - debug
       - utf-8-validate
 
-  '@abstract-money/provider-graz@11.0.2(@abstract-money/core@3.4.2)(@abstract-money/react@2.3.5)(graz@0.1.25)(typescript@5.0.2)':
+  '@abstract-money/provider-graz@11.0.2(@abstract-money/core@3.4.2(bufferutil@4.0.8)(graphql@16.8.1)(typescript@5.0.2)(utf-8-validate@5.0.10))(@abstract-money/react@2.3.5(bufferutil@4.0.8)(graphql@16.8.1)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)(typescript@5.0.2)(utf-8-validate@5.0.10))(graz@0.1.25(@cosmjs/amino@0.32.4)(@cosmjs/cosmwasm-stargate@0.32.4(bufferutil@4.0.8)(utf-8-validate@5.0.10))(@cosmjs/launchpad@0.27.1)(@cosmjs/proto-signing@0.32.4)(@cosmjs/stargate@0.32.4(bufferutil@4.0.8)(utf-8-validate@5.0.10))(@cosmjs/tendermint-rpc@0.32.4(bufferutil@4.0.8)(utf-8-validate@5.0.10))(@leapwallet/cosmos-social-login-capsule-provider@0.0.41(@cosmjs/encoding@0.32.4)(@cosmjs/proto-signing@0.32.4)(fp-ts@2.1.1))(@terra-money/feather.js@3.0.0-beta.3)(@types/react@18.2.55)(axios@1.7.9)(bufferutil@4.0.8)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)(utf-8-validate@5.0.10))(typescript@5.0.2)':
     dependencies:
-      '@abstract-money/core': 3.4.2(graphql@16.8.1)(typescript@5.0.2)
-      '@abstract-money/react': 2.3.5(graphql@16.8.1)(react-dom@18.0.0)(react@18.0.0)(typescript@5.0.2)
-      graz: 0.1.25(@cosmjs/amino@0.31.3)(@cosmjs/cosmwasm-stargate@0.31.3)(@cosmjs/launchpad@0.27.1)(@cosmjs/proto-signing@0.31.3)(@cosmjs/stargate@0.31.3)(@cosmjs/tendermint-rpc@0.31.3)(@leapwallet/cosmos-social-login-capsule-provider@0.0.41)(@terra-money/feather.js@3.0.0-beta.3)(@types/react@18.2.55)(axios@0.27.2)(react-dom@18.0.0)(react@18.0.0)
+      '@abstract-money/core': 3.4.2(bufferutil@4.0.8)(graphql@16.8.1)(typescript@5.0.2)(utf-8-validate@5.0.10)
+      '@abstract-money/react': 2.3.5(bufferutil@4.0.8)(graphql@16.8.1)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)(typescript@5.0.2)(utf-8-validate@5.0.10)
+      graz: 0.1.25(@cosmjs/amino@0.32.4)(@cosmjs/cosmwasm-stargate@0.32.4(bufferutil@4.0.8)(utf-8-validate@5.0.10))(@cosmjs/launchpad@0.27.1)(@cosmjs/proto-signing@0.32.4)(@cosmjs/stargate@0.32.4(bufferutil@4.0.8)(utf-8-validate@5.0.10))(@cosmjs/tendermint-rpc@0.32.4(bufferutil@4.0.8)(utf-8-validate@5.0.10))(@leapwallet/cosmos-social-login-capsule-provider@0.0.41(@cosmjs/encoding@0.32.4)(@cosmjs/proto-signing@0.32.4)(fp-ts@2.1.1))(@terra-money/feather.js@3.0.0-beta.3)(@types/react@18.2.55)(axios@1.7.9)(bufferutil@4.0.8)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)(utf-8-validate@5.0.10)
+    optionalDependencies:
       typescript: 5.0.2
 
-  '@abstract-money/react@2.3.5(graphql@16.8.1)(react-dom@18.0.0)(react@18.0.0)(typescript@5.0.2)':
+  '@abstract-money/react@2.3.5(bufferutil@4.0.8)(graphql@16.8.1)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)(typescript@5.0.2)(utf-8-validate@5.0.10)':
     dependencies:
-      '@abstract-money/core': 3.4.2(graphql@16.8.1)(typescript@5.0.2)
-      '@cosmjs/cosmwasm-stargate': 0.32.4
+      '@abstract-money/core': 3.4.2(bufferutil@4.0.8)(graphql@16.8.1)(typescript@5.0.2)(utf-8-validate@5.0.10)
+      '@cosmjs/cosmwasm-stargate': 0.32.4(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       '@cosmjs/encoding': 0.32.4
       '@cosmjs/proto-signing': 0.32.4
-      '@cosmjs/stargate': 0.32.4
-      '@tanstack/react-query': 4.36.1(react-dom@18.0.0)(react@18.0.0)
+      '@cosmjs/stargate': 0.32.4(bufferutil@4.0.8)(utf-8-validate@5.0.10)
+      '@tanstack/react-query': 4.36.1(react-dom@18.0.0(react@18.0.0))(react@18.0.0)
       dedent: 0.7.0
       react: 18.0.0
+    optionalDependencies:
       typescript: 5.0.2
     transitivePeerDependencies:
       - bufferutil
@@ -8750,7 +8736,7 @@ snapshots:
       '@jridgewell/gen-mapping': 0.3.5
       '@jridgewell/trace-mapping': 0.3.25
 
-  '@apollo/client@3.12.2(@types/react@18.2.55)(graphql@16.8.1)(react-dom@18.0.0)(react@18.0.0)':
+  '@apollo/client@3.12.2(@types/react@18.2.55)(graphql-ws@5.16.0(graphql@16.8.1))(graphql@16.8.1)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)':
     dependencies:
       '@graphql-typed-document-node/core': 3.2.0(graphql@16.8.1)
       '@wry/caches': 1.0.1
@@ -8761,14 +8747,16 @@ snapshots:
       hoist-non-react-statics: 3.3.2
       optimism: 0.18.1
       prop-types: 15.8.1
-      react: 18.0.0
-      react-dom: 18.0.0(react@18.0.0)
       rehackt: 0.1.0(@types/react@18.2.55)(react@18.0.0)
       response-iterator: 0.2.6
       symbol-observable: 4.0.0
       ts-invariant: 0.10.3
       tslib: 2.8.1
       zen-observable-ts: 1.2.5
+    optionalDependencies:
+      graphql-ws: 5.16.0(graphql@16.8.1)
+      react: 18.0.0
+      react-dom: 18.0.0(react@18.0.0)
     transitivePeerDependencies:
       - '@types/react'
 
@@ -9814,17 +9802,17 @@ snapshots:
       '@babel/helper-string-parser': 7.25.9
       '@babel/helper-validator-identifier': 7.25.9
 
-  '@burnt-labs/abstraxion-core@1.0.0-alpha.49(@types/react@18.2.55)(graphql@16.8.1)(react-dom@18.0.0)(react@18.0.0)(starknet@6.11.0)':
+  '@burnt-labs/abstraxion-core@1.0.0-alpha.49(@types/react@18.2.55)(bufferutil@4.0.8)(graphql-ws@5.16.0(graphql@16.8.1))(graphql@16.8.1)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)(starknet@6.11.0)(utf-8-validate@5.0.10)':
     dependencies:
       '@burnt-labs/constants': 0.1.0-alpha.14
-      '@burnt-labs/signers': 0.1.0-alpha.13(@types/react@18.2.55)(graphql@16.8.1)(react-dom@18.0.0)(react@18.0.0)
+      '@burnt-labs/signers': 0.1.0-alpha.13(@types/react@18.2.55)(bufferutil@4.0.8)(graphql-ws@5.16.0(graphql@16.8.1))(graphql@16.8.1)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)(utf-8-validate@5.0.10)
       '@cosmjs/amino': 0.32.4
-      '@cosmjs/cosmwasm-stargate': 0.32.4
+      '@cosmjs/cosmwasm-stargate': 0.32.4(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       '@cosmjs/crypto': 0.32.4
       '@cosmjs/encoding': 0.32.4
       '@cosmjs/proto-signing': 0.32.4
-      '@cosmjs/stargate': 0.32.4
-      '@cosmjs/tendermint-rpc': 0.32.4
+      '@cosmjs/stargate': 0.32.4(bufferutil@4.0.8)(utf-8-validate@5.0.10)
+      '@cosmjs/tendermint-rpc': 0.32.4(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       '@cosmjs/utils': 0.32.4
       '@keplr-wallet/cosmos': 0.12.160(starknet@6.11.0)
       '@keplr-wallet/crypto': 0.12.160(starknet@6.11.0)
@@ -9842,19 +9830,19 @@ snapshots:
       - subscriptions-transport-ws
       - utf-8-validate
 
-  '@burnt-labs/abstraxion@1.0.0-alpha.54(@types/react@18.2.55)(graphql@16.8.1)(react-dom@18.0.0)(react@18.0.0)(starknet@6.11.0)':
+  '@burnt-labs/abstraxion@1.0.0-alpha.54(@types/react@18.2.55)(bufferutil@4.0.8)(graphql-ws@5.16.0(graphql@16.8.1))(graphql@16.8.1)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)(starknet@6.11.0)(utf-8-validate@5.0.10)':
     dependencies:
-      '@burnt-labs/abstraxion-core': 1.0.0-alpha.49(@types/react@18.2.55)(graphql@16.8.1)(react-dom@18.0.0)(react@18.0.0)(starknet@6.11.0)
+      '@burnt-labs/abstraxion-core': 1.0.0-alpha.49(@types/react@18.2.55)(bufferutil@4.0.8)(graphql-ws@5.16.0(graphql@16.8.1))(graphql@16.8.1)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)(starknet@6.11.0)(utf-8-validate@5.0.10)
       '@burnt-labs/constants': 0.1.0-alpha.14
-      '@burnt-labs/signers': 0.1.0-alpha.13(@types/react@18.2.55)(graphql@16.8.1)(react-dom@18.0.0)(react@18.0.0)
-      '@burnt-labs/ui': 0.1.0-alpha.15(@types/react@18.2.55)(react-dom@18.0.0)(react@18.0.0)
+      '@burnt-labs/signers': 0.1.0-alpha.13(@types/react@18.2.55)(bufferutil@4.0.8)(graphql-ws@5.16.0(graphql@16.8.1))(graphql@16.8.1)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)(utf-8-validate@5.0.10)
+      '@burnt-labs/ui': 0.1.0-alpha.15(@types/react@18.2.55)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)
       '@cosmjs/amino': 0.32.4
-      '@cosmjs/cosmwasm-stargate': 0.32.4
+      '@cosmjs/cosmwasm-stargate': 0.32.4(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       '@cosmjs/crypto': 0.32.4
       '@cosmjs/encoding': 0.32.4
       '@cosmjs/proto-signing': 0.32.4
-      '@cosmjs/stargate': 0.32.4
-      '@cosmjs/tendermint-rpc': 0.32.4
+      '@cosmjs/stargate': 0.32.4(bufferutil@4.0.8)(utf-8-validate@5.0.10)
+      '@cosmjs/tendermint-rpc': 0.32.4(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       '@cosmjs/utils': 0.32.4
       '@types/react-dom': 18.3.3(@types/react@18.2.55)
       cosmjs-types: 0.9.0
@@ -9873,17 +9861,17 @@ snapshots:
 
   '@burnt-labs/constants@0.1.0-alpha.14': {}
 
-  '@burnt-labs/signers@0.1.0-alpha.13(@types/react@18.2.55)(graphql@16.8.1)(react-dom@18.0.0)(react@18.0.0)':
+  '@burnt-labs/signers@0.1.0-alpha.13(@types/react@18.2.55)(bufferutil@4.0.8)(graphql-ws@5.16.0(graphql@16.8.1))(graphql@16.8.1)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)(utf-8-validate@5.0.10)':
     dependencies:
-      '@apollo/client': 3.12.2(@types/react@18.2.55)(graphql@16.8.1)(react-dom@18.0.0)(react@18.0.0)
-      '@cosmjs/amino': 0.32.3
-      '@cosmjs/cosmwasm-stargate': 0.32.3
+      '@apollo/client': 3.12.2(@types/react@18.2.55)(graphql-ws@5.16.0(graphql@16.8.1))(graphql@16.8.1)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)
+      '@cosmjs/amino': 0.32.4
+      '@cosmjs/cosmwasm-stargate': 0.32.4(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       '@cosmjs/crypto': 0.32.4
-      '@cosmjs/encoding': 0.32.3
-      '@cosmjs/math': 0.32.3
-      '@cosmjs/proto-signing': 0.32.3
-      '@cosmjs/stargate': 0.32.3
-      '@cosmjs/tendermint-rpc': 0.32.3
+      '@cosmjs/encoding': 0.32.4
+      '@cosmjs/math': 0.32.4
+      '@cosmjs/proto-signing': 0.32.4
+      '@cosmjs/stargate': 0.32.4(bufferutil@4.0.8)(utf-8-validate@5.0.10)
+      '@cosmjs/tendermint-rpc': 0.32.4(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       '@cosmjs/utils': 0.32.4
       '@protobuf-ts/runtime': 2.9.4
       bech32: 2.0.0
@@ -9900,11 +9888,11 @@ snapshots:
       - subscriptions-transport-ws
       - utf-8-validate
 
-  '@burnt-labs/ui@0.1.0-alpha.15(@types/react@18.2.55)(react-dom@18.0.0)(react@18.0.0)':
+  '@burnt-labs/ui@0.1.0-alpha.15(@types/react@18.2.55)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)':
     dependencies:
-      '@radix-ui/react-dialog': 1.1.2(@types/react-dom@18.3.3)(@types/react@18.2.55)(react-dom@18.0.0)(react@18.0.0)
-      '@radix-ui/react-popover': 1.1.2(@types/react-dom@18.3.3)(@types/react@18.2.55)(react-dom@18.0.0)(react@18.0.0)
-      '@radix-ui/react-visually-hidden': 1.1.0(@types/react-dom@18.3.3)(@types/react@18.2.55)(react-dom@18.0.0)(react@18.0.0)
+      '@radix-ui/react-dialog': 1.1.2(@types/react-dom@18.3.3(@types/react@18.2.55))(@types/react@18.2.55)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)
+      '@radix-ui/react-popover': 1.1.2(@types/react-dom@18.3.3(@types/react@18.2.55))(@types/react@18.2.55)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)
+      '@radix-ui/react-visually-hidden': 1.1.0(@types/react-dom@18.3.3(@types/react@18.2.55))(@types/react@18.2.55)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)
       '@types/react-dom': 18.3.3(@types/react@18.2.55)
       react: 18.0.0
     transitivePeerDependencies:
@@ -9915,7 +9903,7 @@ snapshots:
 
   '@celo/base@6.1.0': {}
 
-  '@celo/utils@3.2.0(fp-ts@2.16.9)':
+  '@celo/utils@3.2.0(fp-ts@2.1.1)':
     dependencies:
       '@celo/base': 3.2.0
       '@types/bn.js': 5.1.6
@@ -9925,7 +9913,7 @@ snapshots:
       bignumber.js: 9.1.2
       elliptic: 6.6.1
       ethereumjs-util: 5.2.1
-      io-ts: 2.0.1(fp-ts@2.16.9)
+      io-ts: 2.0.1(fp-ts@2.1.1)
       web3-eth-abi: 1.3.6
       web3-utils: 1.3.6
     transitivePeerDependencies:
@@ -9981,13 +9969,6 @@ snapshots:
       '@cosmjs/math': 0.31.3
       '@cosmjs/utils': 0.31.3
 
-  '@cosmjs/amino@0.32.3':
-    dependencies:
-      '@cosmjs/crypto': 0.32.4
-      '@cosmjs/encoding': 0.32.4
-      '@cosmjs/math': 0.32.3
-      '@cosmjs/utils': 0.32.4
-
   '@cosmjs/amino@0.32.4':
     dependencies:
       '@cosmjs/crypto': 0.32.4
@@ -9995,50 +9976,15 @@ snapshots:
       '@cosmjs/math': 0.32.4
       '@cosmjs/utils': 0.32.4
 
-  '@cosmjs/cosmwasm-stargate@0.31.3':
-    dependencies:
-      '@cosmjs/amino': 0.31.3
-      '@cosmjs/crypto': 0.31.3
-      '@cosmjs/encoding': 0.31.3
-      '@cosmjs/math': 0.31.3
-      '@cosmjs/proto-signing': 0.31.3
-      '@cosmjs/stargate': 0.31.3
-      '@cosmjs/tendermint-rpc': 0.31.3
-      '@cosmjs/utils': 0.31.3
-      cosmjs-types: 0.8.0
-      long: 4.0.0
-      pako: 2.1.0
-    transitivePeerDependencies:
-      - bufferutil
-      - debug
-      - utf-8-validate
-
-  '@cosmjs/cosmwasm-stargate@0.32.3':
-    dependencies:
-      '@cosmjs/amino': 0.32.4
-      '@cosmjs/crypto': 0.32.4
-      '@cosmjs/encoding': 0.32.4
-      '@cosmjs/math': 0.32.3
-      '@cosmjs/proto-signing': 0.32.4
-      '@cosmjs/stargate': 0.32.4
-      '@cosmjs/tendermint-rpc': 0.32.4
-      '@cosmjs/utils': 0.32.4
-      cosmjs-types: 0.9.0
-      pako: 2.1.0
-    transitivePeerDependencies:
-      - bufferutil
-      - debug
-      - utf-8-validate
-
-  '@cosmjs/cosmwasm-stargate@0.32.4':
+  '@cosmjs/cosmwasm-stargate@0.32.4(bufferutil@4.0.8)(utf-8-validate@5.0.10)':
     dependencies:
       '@cosmjs/amino': 0.32.4
       '@cosmjs/crypto': 0.32.4
       '@cosmjs/encoding': 0.32.4
       '@cosmjs/math': 0.32.4
       '@cosmjs/proto-signing': 0.32.4
-      '@cosmjs/stargate': 0.32.4
-      '@cosmjs/tendermint-rpc': 0.32.4
+      '@cosmjs/stargate': 0.32.4(bufferutil@4.0.8)(utf-8-validate@5.0.10)
+      '@cosmjs/tendermint-rpc': 0.32.4(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       '@cosmjs/utils': 0.32.4
       cosmjs-types: 0.9.0
       pako: 2.1.0
@@ -10092,22 +10038,11 @@ snapshots:
       bech32: 1.1.4
       readonly-date: 1.0.0
 
-  '@cosmjs/encoding@0.32.3':
-    dependencies:
-      base64-js: 1.5.1
-      bech32: 1.1.4
-      readonly-date: 1.0.0
-
   '@cosmjs/encoding@0.32.4':
     dependencies:
       base64-js: 1.5.1
       bech32: 1.1.4
       readonly-date: 1.0.0
-
-  '@cosmjs/json-rpc@0.31.3':
-    dependencies:
-      '@cosmjs/stream': 0.31.3
-      xstream: 11.14.0
 
   '@cosmjs/json-rpc@0.32.4':
     dependencies:
@@ -10134,10 +10069,6 @@ snapshots:
     dependencies:
       bn.js: 5.2.1
 
-  '@cosmjs/math@0.32.3':
-    dependencies:
-      bn.js: 5.2.1
-
   '@cosmjs/math@0.32.4':
     dependencies:
       bn.js: 5.2.1
@@ -10152,15 +10083,6 @@ snapshots:
       cosmjs-types: 0.8.0
       long: 4.0.0
 
-  '@cosmjs/proto-signing@0.32.3':
-    dependencies:
-      '@cosmjs/amino': 0.32.4
-      '@cosmjs/crypto': 0.32.4
-      '@cosmjs/encoding': 0.32.4
-      '@cosmjs/math': 0.32.3
-      '@cosmjs/utils': 0.32.4
-      cosmjs-types: 0.9.0
-
   '@cosmjs/proto-signing@0.32.4':
     dependencies:
       '@cosmjs/amino': 0.32.4
@@ -10170,63 +10092,17 @@ snapshots:
       '@cosmjs/utils': 0.32.4
       cosmjs-types: 0.9.0
 
-  '@cosmjs/socket@0.31.3':
+  '@cosmjs/socket@0.32.4(bufferutil@4.0.8)(utf-8-validate@5.0.10)':
     dependencies:
-      '@cosmjs/stream': 0.31.3
-      isomorphic-ws: 4.0.1(ws@7.5.10)
+      '@cosmjs/stream': 0.32.4
+      isomorphic-ws: 4.0.1(ws@7.5.10(bufferutil@4.0.8)(utf-8-validate@5.0.10))
       ws: 7.5.10(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       xstream: 11.14.0
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
 
-  '@cosmjs/socket@0.32.4':
-    dependencies:
-      '@cosmjs/stream': 0.32.4
-      isomorphic-ws: 4.0.1(ws@7.5.10)
-      ws: 7.5.10(bufferutil@4.0.8)(utf-8-validate@5.0.10)
-      xstream: 11.14.0
-    transitivePeerDependencies:
-      - bufferutil
-      - utf-8-validate
-
-  '@cosmjs/stargate@0.31.3':
-    dependencies:
-      '@confio/ics23': 0.6.8
-      '@cosmjs/amino': 0.31.3
-      '@cosmjs/encoding': 0.31.3
-      '@cosmjs/math': 0.31.3
-      '@cosmjs/proto-signing': 0.31.3
-      '@cosmjs/stream': 0.31.3
-      '@cosmjs/tendermint-rpc': 0.31.3
-      '@cosmjs/utils': 0.31.3
-      cosmjs-types: 0.8.0
-      long: 4.0.0
-      protobufjs: 6.11.4
-      xstream: 11.14.0
-    transitivePeerDependencies:
-      - bufferutil
-      - debug
-      - utf-8-validate
-
-  '@cosmjs/stargate@0.32.3':
-    dependencies:
-      '@confio/ics23': 0.6.8
-      '@cosmjs/amino': 0.32.4
-      '@cosmjs/encoding': 0.32.4
-      '@cosmjs/math': 0.32.3
-      '@cosmjs/proto-signing': 0.32.4
-      '@cosmjs/stream': 0.32.4
-      '@cosmjs/tendermint-rpc': 0.32.4
-      '@cosmjs/utils': 0.32.4
-      cosmjs-types: 0.9.0
-      xstream: 11.14.0
-    transitivePeerDependencies:
-      - bufferutil
-      - debug
-      - utf-8-validate
-
-  '@cosmjs/stargate@0.32.4':
+  '@cosmjs/stargate@0.32.4(bufferutil@4.0.8)(utf-8-validate@5.0.10)':
     dependencies:
       '@confio/ics23': 0.6.8
       '@cosmjs/amino': 0.32.4
@@ -10234,7 +10110,7 @@ snapshots:
       '@cosmjs/math': 0.32.4
       '@cosmjs/proto-signing': 0.32.4
       '@cosmjs/stream': 0.32.4
-      '@cosmjs/tendermint-rpc': 0.32.4
+      '@cosmjs/tendermint-rpc': 0.32.4(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       '@cosmjs/utils': 0.32.4
       cosmjs-types: 0.9.0
       xstream: 11.14.0
@@ -10242,56 +10118,18 @@ snapshots:
       - bufferutil
       - debug
       - utf-8-validate
-
-  '@cosmjs/stream@0.31.3':
-    dependencies:
-      xstream: 11.14.0
 
   '@cosmjs/stream@0.32.4':
     dependencies:
       xstream: 11.14.0
 
-  '@cosmjs/tendermint-rpc@0.31.3':
-    dependencies:
-      '@cosmjs/crypto': 0.31.3
-      '@cosmjs/encoding': 0.31.3
-      '@cosmjs/json-rpc': 0.31.3
-      '@cosmjs/math': 0.31.3
-      '@cosmjs/socket': 0.31.3
-      '@cosmjs/stream': 0.31.3
-      '@cosmjs/utils': 0.31.3
-      axios: 0.21.4
-      readonly-date: 1.0.0
-      xstream: 11.14.0
-    transitivePeerDependencies:
-      - bufferutil
-      - debug
-      - utf-8-validate
-
-  '@cosmjs/tendermint-rpc@0.32.3':
-    dependencies:
-      '@cosmjs/crypto': 0.32.4
-      '@cosmjs/encoding': 0.32.4
-      '@cosmjs/json-rpc': 0.32.4
-      '@cosmjs/math': 0.32.3
-      '@cosmjs/socket': 0.32.4
-      '@cosmjs/stream': 0.32.4
-      '@cosmjs/utils': 0.32.4
-      axios: 1.7.9
-      readonly-date: 1.0.0
-      xstream: 11.14.0
-    transitivePeerDependencies:
-      - bufferutil
-      - debug
-      - utf-8-validate
-
-  '@cosmjs/tendermint-rpc@0.32.4':
+  '@cosmjs/tendermint-rpc@0.32.4(bufferutil@4.0.8)(utf-8-validate@5.0.10)':
     dependencies:
       '@cosmjs/crypto': 0.32.4
       '@cosmjs/encoding': 0.32.4
       '@cosmjs/json-rpc': 0.32.4
       '@cosmjs/math': 0.32.4
-      '@cosmjs/socket': 0.32.4
+      '@cosmjs/socket': 0.32.4(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       '@cosmjs/stream': 0.32.4
       '@cosmjs/utils': 0.32.4
       axios: 1.7.9
@@ -10314,10 +10152,10 @@ snapshots:
       '@keplr-wallet/types': 0.12.12
       ses: 0.18.4
 
-  '@dao-dao/cosmiframe@0.1.0(@cosmjs/amino@0.31.3)(@cosmjs/proto-signing@0.31.3)':
+  '@dao-dao/cosmiframe@0.1.0(@cosmjs/amino@0.32.4)(@cosmjs/proto-signing@0.32.4)':
     dependencies:
-      '@cosmjs/amino': 0.31.3
-      '@cosmjs/proto-signing': 0.31.3
+      '@cosmjs/amino': 0.32.4
+      '@cosmjs/proto-signing': 0.32.4
       uuid: 9.0.1
 
   '@esbuild/android-arm64@0.16.17':
@@ -10579,7 +10417,7 @@ snapshots:
       '@floating-ui/core': 1.6.8
       '@floating-ui/utils': 0.2.8
 
-  '@floating-ui/react-dom@2.1.2(react-dom@18.0.0)(react@18.0.0)':
+  '@floating-ui/react-dom@2.1.2(react-dom@18.0.0(react@18.0.0))(react@18.0.0)':
     dependencies:
       '@floating-ui/dom': 1.6.12
       react: 18.0.0
@@ -10593,7 +10431,7 @@ snapshots:
       graphql: 16.8.1
       tslib: 2.6.3
 
-  '@graphql-codegen/cli@5.0.3(@types/node@20.0.0)(graphql@16.8.1)(typescript@5.0.2)':
+  '@graphql-codegen/cli@5.0.3(@parcel/watcher@2.5.0)(@types/node@20.0.0)(bufferutil@4.0.8)(enquirer@2.4.1)(graphql@16.8.1)(typescript@5.0.2)(utf-8-validate@5.0.10)':
     dependencies:
       '@babel/generator': 7.26.3
       '@babel/template': 7.25.9
@@ -10608,8 +10446,8 @@ snapshots:
       '@graphql-tools/graphql-file-loader': 8.0.6(graphql@16.8.1)
       '@graphql-tools/json-file-loader': 8.0.6(graphql@16.8.1)
       '@graphql-tools/load': 8.0.7(graphql@16.8.1)
-      '@graphql-tools/prisma-loader': 8.0.17(@types/node@20.0.0)(graphql@16.8.1)
-      '@graphql-tools/url-loader': 8.0.18(@types/node@20.0.0)(graphql@16.8.1)
+      '@graphql-tools/prisma-loader': 8.0.17(@types/node@20.0.0)(bufferutil@4.0.8)(graphql@16.8.1)(utf-8-validate@5.0.10)
+      '@graphql-tools/url-loader': 8.0.18(@types/node@20.0.0)(bufferutil@4.0.8)(graphql@16.8.1)(utf-8-validate@5.0.10)
       '@graphql-tools/utils': 10.6.2(graphql@16.8.1)
       '@whatwg-node/fetch': 0.9.23
       chalk: 4.1.2
@@ -10617,12 +10455,12 @@ snapshots:
       debounce: 1.2.1
       detect-indent: 6.1.0
       graphql: 16.8.1
-      graphql-config: 5.1.3(@types/node@20.0.0)(graphql@16.8.1)(typescript@5.0.2)
+      graphql-config: 5.1.3(@types/node@20.0.0)(bufferutil@4.0.8)(graphql@16.8.1)(typescript@5.0.2)(utf-8-validate@5.0.10)
       inquirer: 8.2.6
       is-glob: 4.0.3
       jiti: 1.21.6
       json-to-pretty-yaml: 1.2.2
-      listr2: 4.0.5
+      listr2: 4.0.5(enquirer@2.4.1)
       log-symbols: 4.1.0
       micromatch: 4.0.8
       shell-quote: 1.8.2
@@ -10631,6 +10469,8 @@ snapshots:
       tslib: 2.8.1
       yaml: 2.6.1
       yargs: 17.7.2
+    optionalDependencies:
+      '@parcel/watcher': 2.5.0
     transitivePeerDependencies:
       - '@types/node'
       - bufferutil
@@ -10814,15 +10654,15 @@ snapshots:
       lodash.sortby: 4.7.0
       tslib: 2.6.3
 
-  '@graphql-tools/executor-graphql-ws@1.3.5(graphql@16.8.1)':
+  '@graphql-tools/executor-graphql-ws@1.3.5(bufferutil@4.0.8)(graphql@16.8.1)(utf-8-validate@5.0.10)':
     dependencies:
       '@graphql-tools/utils': 10.6.2(graphql@16.8.1)
       '@whatwg-node/disposablestack': 0.0.5
       graphql: 16.8.1
       graphql-ws: 5.16.0(graphql@16.8.1)
-      isomorphic-ws: 5.0.0(ws@8.18.0)
+      isomorphic-ws: 5.0.0(ws@8.18.0(bufferutil@4.0.8)(utf-8-validate@5.0.10))
       tslib: 2.8.1
-      ws: 8.18.0
+      ws: 8.18.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -10841,14 +10681,14 @@ snapshots:
     transitivePeerDependencies:
       - '@types/node'
 
-  '@graphql-tools/executor-legacy-ws@1.1.5(graphql@16.8.1)':
+  '@graphql-tools/executor-legacy-ws@1.1.5(bufferutil@4.0.8)(graphql@16.8.1)(utf-8-validate@5.0.10)':
     dependencies:
       '@graphql-tools/utils': 10.6.2(graphql@16.8.1)
       '@types/ws': 8.5.13
       graphql: 16.8.1
-      isomorphic-ws: 5.0.0(ws@8.18.0)
+      isomorphic-ws: 5.0.0(ws@8.18.0(bufferutil@4.0.8)(utf-8-validate@5.0.10))
       tslib: 2.8.1
-      ws: 8.18.0
+      ws: 8.18.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -10943,11 +10783,11 @@ snapshots:
   '@graphql-tools/optimize@2.0.0(graphql@16.8.1)':
     dependencies:
       graphql: 16.8.1
-      tslib: 2.6.3
+      tslib: 2.8.1
 
-  '@graphql-tools/prisma-loader@8.0.17(@types/node@20.0.0)(graphql@16.8.1)':
+  '@graphql-tools/prisma-loader@8.0.17(@types/node@20.0.0)(bufferutil@4.0.8)(graphql@16.8.1)(utf-8-validate@5.0.10)':
     dependencies:
-      '@graphql-tools/url-loader': 8.0.18(@types/node@20.0.0)(graphql@16.8.1)
+      '@graphql-tools/url-loader': 8.0.18(@types/node@20.0.0)(bufferutil@4.0.8)(graphql@16.8.1)(utf-8-validate@5.0.10)
       '@graphql-tools/utils': 10.6.2(graphql@16.8.1)
       '@types/js-yaml': 4.0.9
       '@whatwg-node/fetch': 0.10.1
@@ -10976,7 +10816,7 @@ snapshots:
       '@ardatan/relay-compiler': 12.0.0(graphql@16.8.1)
       '@graphql-tools/utils': 10.6.2(graphql@16.8.1)
       graphql: 16.8.1
-      tslib: 2.6.3
+      tslib: 2.8.1
     transitivePeerDependencies:
       - encoding
       - supports-color
@@ -10989,21 +10829,21 @@ snapshots:
       tslib: 2.8.1
       value-or-promise: 1.0.12
 
-  '@graphql-tools/url-loader@8.0.18(@types/node@20.0.0)(graphql@16.8.1)':
+  '@graphql-tools/url-loader@8.0.18(@types/node@20.0.0)(bufferutil@4.0.8)(graphql@16.8.1)(utf-8-validate@5.0.10)':
     dependencies:
       '@ardatan/sync-fetch': 0.0.1
-      '@graphql-tools/executor-graphql-ws': 1.3.5(graphql@16.8.1)
+      '@graphql-tools/executor-graphql-ws': 1.3.5(bufferutil@4.0.8)(graphql@16.8.1)(utf-8-validate@5.0.10)
       '@graphql-tools/executor-http': 1.1.14(@types/node@20.0.0)(graphql@16.8.1)
-      '@graphql-tools/executor-legacy-ws': 1.1.5(graphql@16.8.1)
+      '@graphql-tools/executor-legacy-ws': 1.1.5(bufferutil@4.0.8)(graphql@16.8.1)(utf-8-validate@5.0.10)
       '@graphql-tools/utils': 10.6.2(graphql@16.8.1)
       '@graphql-tools/wrap': 10.0.25(graphql@16.8.1)
       '@types/ws': 8.5.13
       '@whatwg-node/fetch': 0.10.1
       graphql: 16.8.1
-      isomorphic-ws: 5.0.0(ws@8.18.0)
+      isomorphic-ws: 5.0.0(ws@8.18.0(bufferutil@4.0.8)(utf-8-validate@5.0.10))
       tslib: 2.8.1
       value-or-promise: 1.0.12
-      ws: 8.18.0
+      ws: 8.18.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)
     transitivePeerDependencies:
       - '@types/node'
       - bufferutil
@@ -11070,7 +10910,7 @@ snapshots:
 
   '@jest/transform@28.1.3':
     dependencies:
-      '@babel/core': 7.18.10
+      '@babel/core': 7.26.0
       '@jest/types': 28.1.3
       '@jridgewell/trace-mapping': 0.3.25
       babel-plugin-istanbul: 6.1.1
@@ -11236,12 +11076,12 @@ snapshots:
       big-integer: 1.6.52
       utility-types: 3.11.0
 
-  '@leapwallet/cosmos-social-login-capsule-provider@0.0.41(@cosmjs/encoding@0.32.4)(@cosmjs/proto-signing@0.31.3)(fp-ts@2.16.9)':
+  '@leapwallet/cosmos-social-login-capsule-provider@0.0.41(@cosmjs/encoding@0.32.4)(@cosmjs/proto-signing@0.32.4)(fp-ts@2.1.1)':
     dependencies:
       '@cosmjs/amino': 0.31.3
       '@leapwallet/cosmos-social-login-core': 0.0.1
-      '@usecapsule/cosmjs-v0-integration': 1.24.1(@cosmjs/amino@0.31.3)(@cosmjs/encoding@0.32.4)(@cosmjs/proto-signing@0.31.3)
-      '@usecapsule/web-sdk': 1.23.0(fp-ts@2.16.9)
+      '@usecapsule/cosmjs-v0-integration': 1.24.1(@cosmjs/amino@0.31.3)(@cosmjs/encoding@0.32.4)(@cosmjs/proto-signing@0.32.4)
+      '@usecapsule/web-sdk': 1.23.0(fp-ts@2.1.1)
       long: 5.2.3
     transitivePeerDependencies:
       - '@cosmjs/encoding'
@@ -11567,195 +11407,217 @@ snapshots:
 
   '@radix-ui/primitive@1.1.0': {}
 
-  '@radix-ui/react-arrow@1.1.0(@types/react-dom@18.3.3)(@types/react@18.2.55)(react-dom@18.0.0)(react@18.0.0)':
+  '@radix-ui/react-arrow@1.1.0(@types/react-dom@18.3.3(@types/react@18.2.55))(@types/react@18.2.55)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)':
     dependencies:
-      '@radix-ui/react-primitive': 2.0.0(@types/react-dom@18.3.3)(@types/react@18.2.55)(react-dom@18.0.0)(react@18.0.0)
-      '@types/react': 18.2.55
-      '@types/react-dom': 18.3.3(@types/react@18.2.55)
+      '@radix-ui/react-primitive': 2.0.0(@types/react-dom@18.3.3(@types/react@18.2.55))(@types/react@18.2.55)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)
       react: 18.0.0
       react-dom: 18.0.0(react@18.0.0)
+    optionalDependencies:
+      '@types/react': 18.2.55
+      '@types/react-dom': 18.3.3(@types/react@18.2.55)
 
   '@radix-ui/react-compose-refs@1.1.0(@types/react@18.2.55)(react@18.0.0)':
     dependencies:
-      '@types/react': 18.2.55
       react: 18.0.0
+    optionalDependencies:
+      '@types/react': 18.2.55
 
   '@radix-ui/react-context@1.1.0(@types/react@18.2.55)(react@18.0.0)':
     dependencies:
-      '@types/react': 18.2.55
       react: 18.0.0
+    optionalDependencies:
+      '@types/react': 18.2.55
 
   '@radix-ui/react-context@1.1.1(@types/react@18.2.55)(react@18.0.0)':
     dependencies:
-      '@types/react': 18.2.55
       react: 18.0.0
+    optionalDependencies:
+      '@types/react': 18.2.55
 
-  '@radix-ui/react-dialog@1.1.2(@types/react-dom@18.3.3)(@types/react@18.2.55)(react-dom@18.0.0)(react@18.0.0)':
+  '@radix-ui/react-dialog@1.1.2(@types/react-dom@18.3.3(@types/react@18.2.55))(@types/react@18.2.55)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)':
     dependencies:
       '@radix-ui/primitive': 1.1.0
       '@radix-ui/react-compose-refs': 1.1.0(@types/react@18.2.55)(react@18.0.0)
       '@radix-ui/react-context': 1.1.1(@types/react@18.2.55)(react@18.0.0)
-      '@radix-ui/react-dismissable-layer': 1.1.1(@types/react-dom@18.3.3)(@types/react@18.2.55)(react-dom@18.0.0)(react@18.0.0)
+      '@radix-ui/react-dismissable-layer': 1.1.1(@types/react-dom@18.3.3(@types/react@18.2.55))(@types/react@18.2.55)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)
       '@radix-ui/react-focus-guards': 1.1.1(@types/react@18.2.55)(react@18.0.0)
-      '@radix-ui/react-focus-scope': 1.1.0(@types/react-dom@18.3.3)(@types/react@18.2.55)(react-dom@18.0.0)(react@18.0.0)
+      '@radix-ui/react-focus-scope': 1.1.0(@types/react-dom@18.3.3(@types/react@18.2.55))(@types/react@18.2.55)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)
       '@radix-ui/react-id': 1.1.0(@types/react@18.2.55)(react@18.0.0)
-      '@radix-ui/react-portal': 1.1.2(@types/react-dom@18.3.3)(@types/react@18.2.55)(react-dom@18.0.0)(react@18.0.0)
-      '@radix-ui/react-presence': 1.1.1(@types/react-dom@18.3.3)(@types/react@18.2.55)(react-dom@18.0.0)(react@18.0.0)
-      '@radix-ui/react-primitive': 2.0.0(@types/react-dom@18.3.3)(@types/react@18.2.55)(react-dom@18.0.0)(react@18.0.0)
+      '@radix-ui/react-portal': 1.1.2(@types/react-dom@18.3.3(@types/react@18.2.55))(@types/react@18.2.55)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)
+      '@radix-ui/react-presence': 1.1.1(@types/react-dom@18.3.3(@types/react@18.2.55))(@types/react@18.2.55)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)
+      '@radix-ui/react-primitive': 2.0.0(@types/react-dom@18.3.3(@types/react@18.2.55))(@types/react@18.2.55)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)
       '@radix-ui/react-slot': 1.1.0(@types/react@18.2.55)(react@18.0.0)
       '@radix-ui/react-use-controllable-state': 1.1.0(@types/react@18.2.55)(react@18.0.0)
-      '@types/react': 18.2.55
-      '@types/react-dom': 18.3.3(@types/react@18.2.55)
       aria-hidden: 1.2.4
       react: 18.0.0
       react-dom: 18.0.0(react@18.0.0)
       react-remove-scroll: 2.6.0(@types/react@18.2.55)(react@18.0.0)
+    optionalDependencies:
+      '@types/react': 18.2.55
+      '@types/react-dom': 18.3.3(@types/react@18.2.55)
 
-  '@radix-ui/react-dismissable-layer@1.1.1(@types/react-dom@18.3.3)(@types/react@18.2.55)(react-dom@18.0.0)(react@18.0.0)':
+  '@radix-ui/react-dismissable-layer@1.1.1(@types/react-dom@18.3.3(@types/react@18.2.55))(@types/react@18.2.55)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)':
     dependencies:
       '@radix-ui/primitive': 1.1.0
       '@radix-ui/react-compose-refs': 1.1.0(@types/react@18.2.55)(react@18.0.0)
-      '@radix-ui/react-primitive': 2.0.0(@types/react-dom@18.3.3)(@types/react@18.2.55)(react-dom@18.0.0)(react@18.0.0)
+      '@radix-ui/react-primitive': 2.0.0(@types/react-dom@18.3.3(@types/react@18.2.55))(@types/react@18.2.55)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)
       '@radix-ui/react-use-callback-ref': 1.1.0(@types/react@18.2.55)(react@18.0.0)
       '@radix-ui/react-use-escape-keydown': 1.1.0(@types/react@18.2.55)(react@18.0.0)
-      '@types/react': 18.2.55
-      '@types/react-dom': 18.3.3(@types/react@18.2.55)
       react: 18.0.0
       react-dom: 18.0.0(react@18.0.0)
+    optionalDependencies:
+      '@types/react': 18.2.55
+      '@types/react-dom': 18.3.3(@types/react@18.2.55)
 
   '@radix-ui/react-focus-guards@1.1.1(@types/react@18.2.55)(react@18.0.0)':
     dependencies:
-      '@types/react': 18.2.55
       react: 18.0.0
+    optionalDependencies:
+      '@types/react': 18.2.55
 
-  '@radix-ui/react-focus-scope@1.1.0(@types/react-dom@18.3.3)(@types/react@18.2.55)(react-dom@18.0.0)(react@18.0.0)':
+  '@radix-ui/react-focus-scope@1.1.0(@types/react-dom@18.3.3(@types/react@18.2.55))(@types/react@18.2.55)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)':
     dependencies:
       '@radix-ui/react-compose-refs': 1.1.0(@types/react@18.2.55)(react@18.0.0)
-      '@radix-ui/react-primitive': 2.0.0(@types/react-dom@18.3.3)(@types/react@18.2.55)(react-dom@18.0.0)(react@18.0.0)
+      '@radix-ui/react-primitive': 2.0.0(@types/react-dom@18.3.3(@types/react@18.2.55))(@types/react@18.2.55)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)
       '@radix-ui/react-use-callback-ref': 1.1.0(@types/react@18.2.55)(react@18.0.0)
-      '@types/react': 18.2.55
-      '@types/react-dom': 18.3.3(@types/react@18.2.55)
       react: 18.0.0
       react-dom: 18.0.0(react@18.0.0)
+    optionalDependencies:
+      '@types/react': 18.2.55
+      '@types/react-dom': 18.3.3(@types/react@18.2.55)
 
   '@radix-ui/react-id@1.1.0(@types/react@18.2.55)(react@18.0.0)':
     dependencies:
       '@radix-ui/react-use-layout-effect': 1.1.0(@types/react@18.2.55)(react@18.0.0)
-      '@types/react': 18.2.55
       react: 18.0.0
+    optionalDependencies:
+      '@types/react': 18.2.55
 
-  '@radix-ui/react-popover@1.1.2(@types/react-dom@18.3.3)(@types/react@18.2.55)(react-dom@18.0.0)(react@18.0.0)':
+  '@radix-ui/react-popover@1.1.2(@types/react-dom@18.3.3(@types/react@18.2.55))(@types/react@18.2.55)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)':
     dependencies:
       '@radix-ui/primitive': 1.1.0
       '@radix-ui/react-compose-refs': 1.1.0(@types/react@18.2.55)(react@18.0.0)
       '@radix-ui/react-context': 1.1.1(@types/react@18.2.55)(react@18.0.0)
-      '@radix-ui/react-dismissable-layer': 1.1.1(@types/react-dom@18.3.3)(@types/react@18.2.55)(react-dom@18.0.0)(react@18.0.0)
+      '@radix-ui/react-dismissable-layer': 1.1.1(@types/react-dom@18.3.3(@types/react@18.2.55))(@types/react@18.2.55)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)
       '@radix-ui/react-focus-guards': 1.1.1(@types/react@18.2.55)(react@18.0.0)
-      '@radix-ui/react-focus-scope': 1.1.0(@types/react-dom@18.3.3)(@types/react@18.2.55)(react-dom@18.0.0)(react@18.0.0)
+      '@radix-ui/react-focus-scope': 1.1.0(@types/react-dom@18.3.3(@types/react@18.2.55))(@types/react@18.2.55)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)
       '@radix-ui/react-id': 1.1.0(@types/react@18.2.55)(react@18.0.0)
-      '@radix-ui/react-popper': 1.2.0(@types/react-dom@18.3.3)(@types/react@18.2.55)(react-dom@18.0.0)(react@18.0.0)
-      '@radix-ui/react-portal': 1.1.2(@types/react-dom@18.3.3)(@types/react@18.2.55)(react-dom@18.0.0)(react@18.0.0)
-      '@radix-ui/react-presence': 1.1.1(@types/react-dom@18.3.3)(@types/react@18.2.55)(react-dom@18.0.0)(react@18.0.0)
-      '@radix-ui/react-primitive': 2.0.0(@types/react-dom@18.3.3)(@types/react@18.2.55)(react-dom@18.0.0)(react@18.0.0)
+      '@radix-ui/react-popper': 1.2.0(@types/react-dom@18.3.3(@types/react@18.2.55))(@types/react@18.2.55)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)
+      '@radix-ui/react-portal': 1.1.2(@types/react-dom@18.3.3(@types/react@18.2.55))(@types/react@18.2.55)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)
+      '@radix-ui/react-presence': 1.1.1(@types/react-dom@18.3.3(@types/react@18.2.55))(@types/react@18.2.55)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)
+      '@radix-ui/react-primitive': 2.0.0(@types/react-dom@18.3.3(@types/react@18.2.55))(@types/react@18.2.55)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)
       '@radix-ui/react-slot': 1.1.0(@types/react@18.2.55)(react@18.0.0)
       '@radix-ui/react-use-controllable-state': 1.1.0(@types/react@18.2.55)(react@18.0.0)
-      '@types/react': 18.2.55
-      '@types/react-dom': 18.3.3(@types/react@18.2.55)
       aria-hidden: 1.2.4
       react: 18.0.0
       react-dom: 18.0.0(react@18.0.0)
       react-remove-scroll: 2.6.0(@types/react@18.2.55)(react@18.0.0)
+    optionalDependencies:
+      '@types/react': 18.2.55
+      '@types/react-dom': 18.3.3(@types/react@18.2.55)
 
-  '@radix-ui/react-popper@1.2.0(@types/react-dom@18.3.3)(@types/react@18.2.55)(react-dom@18.0.0)(react@18.0.0)':
+  '@radix-ui/react-popper@1.2.0(@types/react-dom@18.3.3(@types/react@18.2.55))(@types/react@18.2.55)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)':
     dependencies:
-      '@floating-ui/react-dom': 2.1.2(react-dom@18.0.0)(react@18.0.0)
-      '@radix-ui/react-arrow': 1.1.0(@types/react-dom@18.3.3)(@types/react@18.2.55)(react-dom@18.0.0)(react@18.0.0)
+      '@floating-ui/react-dom': 2.1.2(react-dom@18.0.0(react@18.0.0))(react@18.0.0)
+      '@radix-ui/react-arrow': 1.1.0(@types/react-dom@18.3.3(@types/react@18.2.55))(@types/react@18.2.55)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)
       '@radix-ui/react-compose-refs': 1.1.0(@types/react@18.2.55)(react@18.0.0)
       '@radix-ui/react-context': 1.1.0(@types/react@18.2.55)(react@18.0.0)
-      '@radix-ui/react-primitive': 2.0.0(@types/react-dom@18.3.3)(@types/react@18.2.55)(react-dom@18.0.0)(react@18.0.0)
+      '@radix-ui/react-primitive': 2.0.0(@types/react-dom@18.3.3(@types/react@18.2.55))(@types/react@18.2.55)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)
       '@radix-ui/react-use-callback-ref': 1.1.0(@types/react@18.2.55)(react@18.0.0)
       '@radix-ui/react-use-layout-effect': 1.1.0(@types/react@18.2.55)(react@18.0.0)
       '@radix-ui/react-use-rect': 1.1.0(@types/react@18.2.55)(react@18.0.0)
       '@radix-ui/react-use-size': 1.1.0(@types/react@18.2.55)(react@18.0.0)
       '@radix-ui/rect': 1.1.0
-      '@types/react': 18.2.55
-      '@types/react-dom': 18.3.3(@types/react@18.2.55)
       react: 18.0.0
       react-dom: 18.0.0(react@18.0.0)
+    optionalDependencies:
+      '@types/react': 18.2.55
+      '@types/react-dom': 18.3.3(@types/react@18.2.55)
 
-  '@radix-ui/react-portal@1.1.2(@types/react-dom@18.3.3)(@types/react@18.2.55)(react-dom@18.0.0)(react@18.0.0)':
+  '@radix-ui/react-portal@1.1.2(@types/react-dom@18.3.3(@types/react@18.2.55))(@types/react@18.2.55)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)':
     dependencies:
-      '@radix-ui/react-primitive': 2.0.0(@types/react-dom@18.3.3)(@types/react@18.2.55)(react-dom@18.0.0)(react@18.0.0)
+      '@radix-ui/react-primitive': 2.0.0(@types/react-dom@18.3.3(@types/react@18.2.55))(@types/react@18.2.55)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)
       '@radix-ui/react-use-layout-effect': 1.1.0(@types/react@18.2.55)(react@18.0.0)
-      '@types/react': 18.2.55
-      '@types/react-dom': 18.3.3(@types/react@18.2.55)
       react: 18.0.0
       react-dom: 18.0.0(react@18.0.0)
+    optionalDependencies:
+      '@types/react': 18.2.55
+      '@types/react-dom': 18.3.3(@types/react@18.2.55)
 
-  '@radix-ui/react-presence@1.1.1(@types/react-dom@18.3.3)(@types/react@18.2.55)(react-dom@18.0.0)(react@18.0.0)':
+  '@radix-ui/react-presence@1.1.1(@types/react-dom@18.3.3(@types/react@18.2.55))(@types/react@18.2.55)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)':
     dependencies:
       '@radix-ui/react-compose-refs': 1.1.0(@types/react@18.2.55)(react@18.0.0)
       '@radix-ui/react-use-layout-effect': 1.1.0(@types/react@18.2.55)(react@18.0.0)
-      '@types/react': 18.2.55
-      '@types/react-dom': 18.3.3(@types/react@18.2.55)
       react: 18.0.0
       react-dom: 18.0.0(react@18.0.0)
+    optionalDependencies:
+      '@types/react': 18.2.55
+      '@types/react-dom': 18.3.3(@types/react@18.2.55)
 
-  '@radix-ui/react-primitive@2.0.0(@types/react-dom@18.3.3)(@types/react@18.2.55)(react-dom@18.0.0)(react@18.0.0)':
+  '@radix-ui/react-primitive@2.0.0(@types/react-dom@18.3.3(@types/react@18.2.55))(@types/react@18.2.55)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)':
     dependencies:
       '@radix-ui/react-slot': 1.1.0(@types/react@18.2.55)(react@18.0.0)
-      '@types/react': 18.2.55
-      '@types/react-dom': 18.3.3(@types/react@18.2.55)
       react: 18.0.0
       react-dom: 18.0.0(react@18.0.0)
+    optionalDependencies:
+      '@types/react': 18.2.55
+      '@types/react-dom': 18.3.3(@types/react@18.2.55)
 
   '@radix-ui/react-slot@1.1.0(@types/react@18.2.55)(react@18.0.0)':
     dependencies:
       '@radix-ui/react-compose-refs': 1.1.0(@types/react@18.2.55)(react@18.0.0)
-      '@types/react': 18.2.55
       react: 18.0.0
+    optionalDependencies:
+      '@types/react': 18.2.55
 
   '@radix-ui/react-use-callback-ref@1.1.0(@types/react@18.2.55)(react@18.0.0)':
     dependencies:
-      '@types/react': 18.2.55
       react: 18.0.0
+    optionalDependencies:
+      '@types/react': 18.2.55
 
   '@radix-ui/react-use-controllable-state@1.1.0(@types/react@18.2.55)(react@18.0.0)':
     dependencies:
       '@radix-ui/react-use-callback-ref': 1.1.0(@types/react@18.2.55)(react@18.0.0)
-      '@types/react': 18.2.55
       react: 18.0.0
+    optionalDependencies:
+      '@types/react': 18.2.55
 
   '@radix-ui/react-use-escape-keydown@1.1.0(@types/react@18.2.55)(react@18.0.0)':
     dependencies:
       '@radix-ui/react-use-callback-ref': 1.1.0(@types/react@18.2.55)(react@18.0.0)
-      '@types/react': 18.2.55
       react: 18.0.0
+    optionalDependencies:
+      '@types/react': 18.2.55
 
   '@radix-ui/react-use-layout-effect@1.1.0(@types/react@18.2.55)(react@18.0.0)':
     dependencies:
-      '@types/react': 18.2.55
       react: 18.0.0
+    optionalDependencies:
+      '@types/react': 18.2.55
 
   '@radix-ui/react-use-rect@1.1.0(@types/react@18.2.55)(react@18.0.0)':
     dependencies:
       '@radix-ui/rect': 1.1.0
-      '@types/react': 18.2.55
       react: 18.0.0
+    optionalDependencies:
+      '@types/react': 18.2.55
 
   '@radix-ui/react-use-size@1.1.0(@types/react@18.2.55)(react@18.0.0)':
     dependencies:
       '@radix-ui/react-use-layout-effect': 1.1.0(@types/react@18.2.55)(react@18.0.0)
-      '@types/react': 18.2.55
       react: 18.0.0
-
-  '@radix-ui/react-visually-hidden@1.1.0(@types/react-dom@18.3.3)(@types/react@18.2.55)(react-dom@18.0.0)(react@18.0.0)':
-    dependencies:
-      '@radix-ui/react-primitive': 2.0.0(@types/react-dom@18.3.3)(@types/react@18.2.55)(react-dom@18.0.0)(react@18.0.0)
+    optionalDependencies:
       '@types/react': 18.2.55
-      '@types/react-dom': 18.3.3(@types/react@18.2.55)
+
+  '@radix-ui/react-visually-hidden@1.1.0(@types/react-dom@18.3.3(@types/react@18.2.55))(@types/react@18.2.55)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)':
+    dependencies:
+      '@radix-ui/react-primitive': 2.0.0(@types/react-dom@18.3.3(@types/react@18.2.55))(@types/react@18.2.55)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)
       react: 18.0.0
       react-dom: 18.0.0(react@18.0.0)
+    optionalDependencies:
+      '@types/react': 18.2.55
+      '@types/react-dom': 18.3.3(@types/react@18.2.55)
 
   '@radix-ui/rect@1.1.0': {}
 
@@ -11937,12 +11799,13 @@ snapshots:
 
   '@tanstack/query-core@4.36.1': {}
 
-  '@tanstack/react-query@4.36.1(react-dom@18.0.0)(react@18.0.0)':
+  '@tanstack/react-query@4.36.1(react-dom@18.0.0(react@18.0.0))(react@18.0.0)':
     dependencies:
       '@tanstack/query-core': 4.36.1
       react: 18.0.0
-      react-dom: 18.0.0(react@18.0.0)
       use-sync-external-store: 1.4.0(react@18.0.0)
+    optionalDependencies:
+      react-dom: 18.0.0(react@18.0.0)
 
   '@terra-money/feather.js@3.0.0-beta.3':
     dependencies:
@@ -11967,11 +11830,11 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  '@terra-money/station-connector@1.1.0(@cosmjs/amino@0.31.3)(@terra-money/feather.js@3.0.0-beta.3)(axios@0.27.2)':
+  '@terra-money/station-connector@1.1.0(@cosmjs/amino@0.32.4)(@terra-money/feather.js@3.0.0-beta.3)(axios@1.7.9)':
     dependencies:
-      '@cosmjs/amino': 0.31.3
+      '@cosmjs/amino': 0.32.4
       '@terra-money/feather.js': 3.0.0-beta.3
-      axios: 0.27.2
+      axios: 1.7.9
       bech32: 2.0.0
 
   '@terra-money/terra.proto@0.1.7':
@@ -12042,9 +11905,9 @@ snapshots:
 
   '@types/ms@0.7.34': {}
 
-  '@types/next@9.0.0(@babel/core@7.26.0)(react-dom@18.0.0)(react@18.0.0)':
+  '@types/next@9.0.0(@babel/core@7.26.0)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)':
     dependencies:
-      next: 14.2.15(@babel/core@7.26.0)(react-dom@18.0.0)(react@18.0.0)
+      next: 14.2.15(@babel/core@7.26.0)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)
     transitivePeerDependencies:
       - '@babel/core'
       - '@opentelemetry/api'
@@ -12106,7 +11969,7 @@ snapshots:
     dependencies:
       '@types/yargs-parser': 21.0.3
 
-  '@typescript-eslint/eslint-plugin@8.18.0(@typescript-eslint/parser@8.18.0)(eslint@8.0.0)(typescript@5.0.2)':
+  '@typescript-eslint/eslint-plugin@8.18.0(@typescript-eslint/parser@8.18.0(eslint@8.0.0)(typescript@5.0.2))(eslint@8.0.0)(typescript@5.0.2)':
     dependencies:
       '@eslint-community/regexpp': 4.12.1
       '@typescript-eslint/parser': 8.18.0(eslint@8.0.0)(typescript@5.0.2)
@@ -12183,9 +12046,9 @@ snapshots:
       '@typescript-eslint/types': 8.18.0
       eslint-visitor-keys: 4.2.0
 
-  '@usecapsule/core-sdk@1.21.0(fp-ts@2.16.9)':
+  '@usecapsule/core-sdk@1.21.0(fp-ts@2.1.1)':
     dependencies:
-      '@celo/utils': 3.2.0(fp-ts@2.16.9)
+      '@celo/utils': 3.2.0(fp-ts@2.1.1)
       '@usecapsule/user-management-client': 1.18.0
       base64url: 3.0.1
       buffer: 6.0.3
@@ -12210,11 +12073,11 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  '@usecapsule/cosmjs-v0-integration@1.24.1(@cosmjs/amino@0.31.3)(@cosmjs/encoding@0.32.4)(@cosmjs/proto-signing@0.31.3)':
+  '@usecapsule/cosmjs-v0-integration@1.24.1(@cosmjs/amino@0.31.3)(@cosmjs/encoding@0.32.4)(@cosmjs/proto-signing@0.32.4)':
     dependencies:
       '@cosmjs/amino': 0.31.3
       '@cosmjs/encoding': 0.32.4
-      '@cosmjs/proto-signing': 0.31.3
+      '@cosmjs/proto-signing': 0.32.4
       '@usecapsule/core-sdk': 1.24.1
     transitivePeerDependencies:
       - debug
@@ -12233,9 +12096,9 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  '@usecapsule/web-sdk@1.23.0(fp-ts@2.16.9)':
+  '@usecapsule/web-sdk@1.23.0(fp-ts@2.1.1)':
     dependencies:
-      '@usecapsule/core-sdk': 1.21.0(fp-ts@2.16.9)
+      '@usecapsule/core-sdk': 1.21.0(fp-ts@2.1.1)
       '@usecapsule/user-management-client': 1.18.0
       assert: 2.1.0
       base64url: 3.0.1
@@ -12248,13 +12111,13 @@ snapshots:
 
   '@vectis/extension-client@0.7.2': {}
 
-  '@walletconnect/core@2.10.0':
+  '@walletconnect/core@2.10.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)':
     dependencies:
       '@walletconnect/heartbeat': 1.2.1
       '@walletconnect/jsonrpc-provider': 1.0.13
       '@walletconnect/jsonrpc-types': 1.0.3
       '@walletconnect/jsonrpc-utils': 1.0.8
-      '@walletconnect/jsonrpc-ws-connection': 1.0.13
+      '@walletconnect/jsonrpc-ws-connection': 1.0.13(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       '@walletconnect/keyvaluestorage': 1.1.1
       '@walletconnect/logger': 2.1.2
       '@walletconnect/relay-api': 1.0.11
@@ -12320,7 +12183,7 @@ snapshots:
       '@walletconnect/jsonrpc-types': 1.0.4
       tslib: 1.14.1
 
-  '@walletconnect/jsonrpc-ws-connection@1.0.13':
+  '@walletconnect/jsonrpc-ws-connection@1.0.13(bufferutil@4.0.8)(utf-8-validate@5.0.10)':
     dependencies:
       '@walletconnect/jsonrpc-utils': 1.0.8
       '@walletconnect/safe-json': 1.0.2
@@ -12372,9 +12235,9 @@ snapshots:
     dependencies:
       tslib: 1.14.1
 
-  '@walletconnect/sign-client@2.10.0':
+  '@walletconnect/sign-client@2.10.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)':
     dependencies:
-      '@walletconnect/core': 2.10.0
+      '@walletconnect/core': 2.10.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       '@walletconnect/events': 1.0.1
       '@walletconnect/heartbeat': 1.2.1
       '@walletconnect/jsonrpc-utils': 1.0.8
@@ -14287,6 +14150,7 @@ snapshots:
       js-yaml: 4.1.0
       parse-json: 5.2.0
       path-type: 4.0.0
+    optionalDependencies:
       typescript: 5.0.2
 
   cosmjs-types@0.8.0:
@@ -14901,15 +14765,16 @@ snapshots:
     dependencies:
       '@next/eslint-plugin-next': 14.2.15
       '@rushstack/eslint-patch': 1.10.4
-      '@typescript-eslint/eslint-plugin': 8.18.0(@typescript-eslint/parser@8.18.0)(eslint@8.0.0)(typescript@5.0.2)
+      '@typescript-eslint/eslint-plugin': 8.18.0(@typescript-eslint/parser@8.18.0(eslint@8.0.0)(typescript@5.0.2))(eslint@8.0.0)(typescript@5.0.2)
       '@typescript-eslint/parser': 8.18.0(eslint@8.0.0)(typescript@5.0.2)
       eslint: 8.0.0
       eslint-import-resolver-node: 0.3.9
       eslint-import-resolver-typescript: 3.7.0(eslint-plugin-import@2.31.0)(eslint@8.0.0)
-      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@8.18.0)(eslint-import-resolver-typescript@3.7.0)(eslint@8.0.0)
+      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@8.18.0(eslint@8.0.0)(typescript@5.0.2))(eslint-import-resolver-typescript@3.7.0)(eslint@8.0.0)
       eslint-plugin-jsx-a11y: 6.10.2(eslint@8.0.0)
       eslint-plugin-react: 7.37.2(eslint@8.0.0)
       eslint-plugin-react-hooks: 5.0.0-canary-7118f5dd7-20230705(eslint@8.0.0)
+    optionalDependencies:
       typescript: 5.0.2
     transitivePeerDependencies:
       - eslint-import-resolver-webpack
@@ -14930,29 +14795,30 @@ snapshots:
       debug: 4.4.0
       enhanced-resolve: 5.17.1
       eslint: 8.0.0
-      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@8.18.0)(eslint-import-resolver-typescript@3.7.0)(eslint@8.0.0)
       fast-glob: 3.3.2
       get-tsconfig: 4.8.1
       is-bun-module: 1.3.0
       is-glob: 4.0.3
       stable-hash: 0.0.4
+    optionalDependencies:
+      eslint-plugin-import: 2.31.0(@typescript-eslint/parser@8.18.0(eslint@8.0.0)(typescript@5.0.2))(eslint-import-resolver-typescript@3.7.0)(eslint@8.0.0)
     transitivePeerDependencies:
       - supports-color
 
-  eslint-module-utils@2.12.0(@typescript-eslint/parser@8.18.0)(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.7.0)(eslint@8.0.0):
+  eslint-module-utils@2.12.0(@typescript-eslint/parser@8.18.0(eslint@8.0.0)(typescript@5.0.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.7.0)(eslint@8.0.0):
     dependencies:
-      '@typescript-eslint/parser': 8.18.0(eslint@8.0.0)(typescript@5.0.2)
       debug: 3.2.7
+    optionalDependencies:
+      '@typescript-eslint/parser': 8.18.0(eslint@8.0.0)(typescript@5.0.2)
       eslint: 8.0.0
       eslint-import-resolver-node: 0.3.9
       eslint-import-resolver-typescript: 3.7.0(eslint-plugin-import@2.31.0)(eslint@8.0.0)
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.18.0)(eslint-import-resolver-typescript@3.7.0)(eslint@8.0.0):
+  eslint-plugin-import@2.31.0(@typescript-eslint/parser@8.18.0(eslint@8.0.0)(typescript@5.0.2))(eslint-import-resolver-typescript@3.7.0)(eslint@8.0.0):
     dependencies:
       '@rtsao/scc': 1.1.0
-      '@typescript-eslint/parser': 8.18.0(eslint@8.0.0)(typescript@5.0.2)
       array-includes: 3.1.8
       array.prototype.findlastindex: 1.2.5
       array.prototype.flat: 1.3.2
@@ -14961,7 +14827,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 8.0.0
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.12.0(@typescript-eslint/parser@8.18.0)(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.7.0)(eslint@8.0.0)
+      eslint-module-utils: 2.12.0(@typescript-eslint/parser@8.18.0(eslint@8.0.0)(typescript@5.0.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.7.0)(eslint@8.0.0)
       hasown: 2.0.2
       is-core-module: 2.15.1
       is-glob: 4.0.3
@@ -14972,6 +14838,8 @@ snapshots:
       semver: 6.3.1
       string.prototype.trimend: 1.0.8
       tsconfig-paths: 3.15.0
+    optionalDependencies:
+      '@typescript-eslint/parser': 8.18.0(eslint@8.0.0)(typescript@5.0.2)
     transitivePeerDependencies:
       - eslint-import-resolver-typescript
       - eslint-import-resolver-webpack
@@ -15579,11 +15447,18 @@ snapshots:
 
   fp-ts@2.1.1: {}
 
-  fp-ts@2.16.9: {}
-
   fragment-cache@0.2.1:
     dependencies:
       map-cache: 0.2.2
+
+  framer-motion@11.13.5(react-dom@18.0.0(react@18.0.0))(react@18.0.0):
+    dependencies:
+      motion-dom: 11.13.0
+      motion-utils: 11.13.0
+      tslib: 2.8.1
+    optionalDependencies:
+      react: 18.0.0
+      react-dom: 18.0.0(react@18.0.0)
 
   fs-exists-sync@0.1.0: {}
 
@@ -15924,13 +15799,13 @@ snapshots:
 
   graphemer@1.4.0: {}
 
-  graphql-config@5.1.3(@types/node@20.0.0)(graphql@16.8.1)(typescript@5.0.2):
+  graphql-config@5.1.3(@types/node@20.0.0)(bufferutil@4.0.8)(graphql@16.8.1)(typescript@5.0.2)(utf-8-validate@5.0.10):
     dependencies:
       '@graphql-tools/graphql-file-loader': 8.0.6(graphql@16.8.1)
       '@graphql-tools/json-file-loader': 8.0.6(graphql@16.8.1)
       '@graphql-tools/load': 8.0.7(graphql@16.8.1)
       '@graphql-tools/merge': 9.0.12(graphql@16.8.1)
-      '@graphql-tools/url-loader': 8.0.18(@types/node@20.0.0)(graphql@16.8.1)
+      '@graphql-tools/url-loader': 8.0.18(@types/node@20.0.0)(bufferutil@4.0.8)(graphql@16.8.1)(utf-8-validate@5.0.10)
       '@graphql-tools/utils': 10.6.2(graphql@16.8.1)
       cosmiconfig: 8.3.6(typescript@5.0.2)
       graphql: 16.8.1
@@ -15966,7 +15841,7 @@ snapshots:
   graphql-tag@2.12.6(graphql@16.8.1):
     dependencies:
       graphql: 16.8.1
-      tslib: 2.6.3
+      tslib: 2.8.1
 
   graphql-ws@5.16.0(graphql@16.8.1):
     dependencies:
@@ -15981,24 +15856,24 @@ snapshots:
       kind-of: 5.1.0
       strip-bom-string: 1.0.0
 
-  graz@0.1.25(@cosmjs/amino@0.31.3)(@cosmjs/cosmwasm-stargate@0.31.3)(@cosmjs/launchpad@0.27.1)(@cosmjs/proto-signing@0.31.3)(@cosmjs/stargate@0.31.3)(@cosmjs/tendermint-rpc@0.31.3)(@leapwallet/cosmos-social-login-capsule-provider@0.0.41)(@terra-money/feather.js@3.0.0-beta.3)(@types/react@18.2.55)(axios@0.27.2)(react-dom@18.0.0)(react@18.0.0):
+  graz@0.1.25(@cosmjs/amino@0.32.4)(@cosmjs/cosmwasm-stargate@0.32.4(bufferutil@4.0.8)(utf-8-validate@5.0.10))(@cosmjs/launchpad@0.27.1)(@cosmjs/proto-signing@0.32.4)(@cosmjs/stargate@0.32.4(bufferutil@4.0.8)(utf-8-validate@5.0.10))(@cosmjs/tendermint-rpc@0.32.4(bufferutil@4.0.8)(utf-8-validate@5.0.10))(@leapwallet/cosmos-social-login-capsule-provider@0.0.41(@cosmjs/encoding@0.32.4)(@cosmjs/proto-signing@0.32.4)(fp-ts@2.1.1))(@terra-money/feather.js@3.0.0-beta.3)(@types/react@18.2.55)(axios@1.7.9)(bufferutil@4.0.8)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)(utf-8-validate@5.0.10):
     dependencies:
-      '@cosmjs/amino': 0.31.3
-      '@cosmjs/cosmwasm-stargate': 0.31.3
+      '@cosmjs/amino': 0.32.4
+      '@cosmjs/cosmwasm-stargate': 0.32.4(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       '@cosmjs/launchpad': 0.27.1
-      '@cosmjs/proto-signing': 0.31.3
-      '@cosmjs/stargate': 0.31.3
-      '@cosmjs/tendermint-rpc': 0.31.3
+      '@cosmjs/proto-signing': 0.32.4
+      '@cosmjs/stargate': 0.32.4(bufferutil@4.0.8)(utf-8-validate@5.0.10)
+      '@cosmjs/tendermint-rpc': 0.32.4(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       '@cosmsnap/snapper': 0.1.29
-      '@dao-dao/cosmiframe': 0.1.0(@cosmjs/amino@0.31.3)(@cosmjs/proto-signing@0.31.3)
+      '@dao-dao/cosmiframe': 0.1.0(@cosmjs/amino@0.32.4)(@cosmjs/proto-signing@0.32.4)
       '@keplr-wallet/cosmos': 0.12.20
       '@keplr-wallet/types': 0.12.23
-      '@leapwallet/cosmos-social-login-capsule-provider': 0.0.41(@cosmjs/encoding@0.32.4)(@cosmjs/proto-signing@0.31.3)(fp-ts@2.16.9)
+      '@leapwallet/cosmos-social-login-capsule-provider': 0.0.41(@cosmjs/encoding@0.32.4)(@cosmjs/proto-signing@0.32.4)(fp-ts@2.1.1)
       '@metamask/providers': 12.0.0
-      '@tanstack/react-query': 4.36.1(react-dom@18.0.0)(react@18.0.0)
-      '@terra-money/station-connector': 1.1.0(@cosmjs/amino@0.31.3)(@terra-money/feather.js@3.0.0-beta.3)(axios@0.27.2)
+      '@tanstack/react-query': 4.36.1(react-dom@18.0.0(react@18.0.0))(react@18.0.0)
+      '@terra-money/station-connector': 1.1.0(@cosmjs/amino@0.32.4)(@terra-money/feather.js@3.0.0-beta.3)(axios@1.7.9)
       '@vectis/extension-client': 0.7.2
-      '@walletconnect/sign-client': 2.10.0
+      '@walletconnect/sign-client': 2.10.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       '@walletconnect/types': 2.10.0
       '@walletconnect/utils': 2.10.0
       '@web3modal/standalone': 2.4.3(react@18.0.0)
@@ -16345,10 +16220,6 @@ snapshots:
   io-ts@2.0.1(fp-ts@2.1.1):
     dependencies:
       fp-ts: 2.1.1
-
-  io-ts@2.0.1(fp-ts@2.16.9):
-    dependencies:
-      fp-ts: 2.16.9
 
   iron-webcrypto@1.2.1: {}
 
@@ -16723,20 +16594,20 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  isomorphic-ws@4.0.1(ws@7.5.10):
+  isomorphic-ws@4.0.1(ws@7.5.10(bufferutil@4.0.8)(utf-8-validate@5.0.10)):
     dependencies:
       ws: 7.5.10(bufferutil@4.0.8)(utf-8-validate@5.0.10)
 
-  isomorphic-ws@5.0.0(ws@8.18.0):
+  isomorphic-ws@5.0.0(ws@8.18.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)):
     dependencies:
-      ws: 8.18.0
+      ws: 8.18.0(bufferutil@4.0.8)(utf-8-validate@5.0.10)
 
   istanbul-lib-coverage@3.2.2: {}
 
   istanbul-lib-instrument@5.2.1:
     dependencies:
-      '@babel/core': 7.18.10
-      '@babel/parser': 7.18.11
+      '@babel/core': 7.26.0
+      '@babel/parser': 7.26.3
       '@istanbuljs/schema': 0.1.3
       istanbul-lib-coverage: 3.2.2
       semver: 6.3.1
@@ -16810,7 +16681,7 @@ snapshots:
   jose@5.9.6: {}
 
   jotai@2.10.1(@types/react@18.2.55)(react@18.0.0):
-    dependencies:
+    optionalDependencies:
       '@types/react': 18.2.55
       react: 18.0.0
 
@@ -17009,7 +16880,7 @@ snapshots:
       untun: 0.1.3
       uqr: 0.1.2
 
-  listr2@4.0.5:
+  listr2@4.0.5(enquirer@2.4.1):
     dependencies:
       cli-truncate: 2.1.0
       colorette: 2.0.20
@@ -17019,6 +16890,8 @@ snapshots:
       rxjs: 7.8.1
       through: 2.3.8
       wrap-ansi: 7.0.0
+    optionalDependencies:
+      enquirer: 2.4.1
 
   lit-element@3.3.3:
     dependencies:
@@ -17398,7 +17271,7 @@ snapshots:
   merge2@1.4.1: {}
 
   meros@1.3.0(@types/node@20.0.0):
-    dependencies:
+    optionalDependencies:
       '@types/node': 20.0.0
 
   micro-ftch@0.3.1: {}
@@ -17529,6 +17402,10 @@ snapshots:
 
   mobx@6.13.5: {}
 
+  motion-dom@11.13.0: {}
+
+  motion-utils@11.13.0: {}
+
   motion@10.16.2:
     dependencies:
       '@motionone/animation': 10.18.0
@@ -17588,7 +17465,7 @@ snapshots:
 
   next-tick@1.1.0: {}
 
-  next@14.2.15(@babel/core@7.26.0)(react-dom@18.0.0)(react@18.0.0):
+  next@14.2.15(@babel/core@7.26.0)(react-dom@18.0.0(react@18.0.0))(react@18.0.0):
     dependencies:
       '@next/env': 14.2.15
       '@swc/helpers': 0.5.5
@@ -18162,8 +18039,9 @@ snapshots:
   postcss-load-config@4.0.2(postcss@8.4.49):
     dependencies:
       lilconfig: 3.1.3
-      postcss: 8.4.49
       yaml: 2.6.1
+    optionalDependencies:
+      postcss: 8.4.49
 
   postcss-nested@6.2.0(postcss@8.4.49):
     dependencies:
@@ -18439,28 +18317,31 @@ snapshots:
 
   react-remove-scroll-bar@2.3.6(@types/react@18.2.55)(react@18.0.0):
     dependencies:
-      '@types/react': 18.2.55
       react: 18.0.0
       react-style-singleton: 2.2.1(@types/react@18.2.55)(react@18.0.0)
       tslib: 2.8.1
+    optionalDependencies:
+      '@types/react': 18.2.55
 
   react-remove-scroll@2.6.0(@types/react@18.2.55)(react@18.0.0):
     dependencies:
-      '@types/react': 18.2.55
       react: 18.0.0
       react-remove-scroll-bar: 2.3.6(@types/react@18.2.55)(react@18.0.0)
       react-style-singleton: 2.2.1(@types/react@18.2.55)(react@18.0.0)
       tslib: 2.8.1
       use-callback-ref: 1.3.2(@types/react@18.2.55)(react@18.0.0)
       use-sidecar: 1.1.2(@types/react@18.2.55)(react@18.0.0)
+    optionalDependencies:
+      '@types/react': 18.2.55
 
   react-style-singleton@2.2.1(@types/react@18.2.55)(react@18.0.0):
     dependencies:
-      '@types/react': 18.2.55
       get-nonce: 1.0.1
       invariant: 2.2.4
       react: 18.0.0
       tslib: 2.8.1
+    optionalDependencies:
+      '@types/react': 18.2.55
 
   react@18.0.0:
     dependencies:
@@ -18600,7 +18481,7 @@ snapshots:
       jsesc: 3.0.2
 
   rehackt@0.1.0(@types/react@18.2.55)(react@18.0.0):
-    dependencies:
+    optionalDependencies:
       '@types/react': 18.2.55
       react: 18.0.0
 
@@ -19230,9 +19111,10 @@ snapshots:
 
   styled-jsx@5.1.1(@babel/core@7.26.0)(react@18.0.0):
     dependencies:
-      '@babel/core': 7.26.0
       client-only: 0.0.1
       react: 18.0.0
+    optionalDependencies:
+      '@babel/core': 7.26.0
 
   stytch@9.1.0:
     dependencies:
@@ -19698,12 +19580,13 @@ snapshots:
       citty: 0.1.6
       destr: 2.0.3
       h3: 1.13.0
-      idb-keyval: 6.2.1
       listhen: 1.9.0
       lru-cache: 10.4.3
       node-fetch-native: 1.6.4
       ofetch: 1.4.1
       ufo: 1.5.4
+    optionalDependencies:
+      idb-keyval: 6.2.1
 
   untun@0.1.3:
     dependencies:
@@ -19767,16 +19650,18 @@ snapshots:
 
   use-callback-ref@1.3.2(@types/react@18.2.55)(react@18.0.0):
     dependencies:
-      '@types/react': 18.2.55
       react: 18.0.0
       tslib: 2.8.1
+    optionalDependencies:
+      '@types/react': 18.2.55
 
   use-sidecar@1.1.2(@types/react@18.2.55)(react@18.0.0):
     dependencies:
-      '@types/react': 18.2.55
       detect-node-es: 1.1.0
       react: 18.0.0
       tslib: 2.8.1
+    optionalDependencies:
+      '@types/react': 18.2.55
 
   use-sync-external-store@1.2.0(react@18.0.0):
     dependencies:
@@ -19830,8 +19715,9 @@ snapshots:
   valtio@1.10.5(react@18.0.0):
     dependencies:
       proxy-compare: 2.5.1
-      react: 18.0.0
       use-sync-external-store: 1.2.0(react@18.0.0)
+    optionalDependencies:
+      react: 18.0.0
 
   value-or-promise@1.0.12: {}
 
@@ -20052,11 +19938,14 @@ snapshots:
       mkdirp: 0.5.6
 
   ws@7.5.10(bufferutil@4.0.8)(utf-8-validate@5.0.10):
-    dependencies:
+    optionalDependencies:
       bufferutil: 4.0.8
       utf-8-validate: 5.0.10
 
-  ws@8.18.0: {}
+  ws@8.18.0(bufferutil@4.0.8)(utf-8-validate@5.0.10):
+    optionalDependencies:
+      bufferutil: 4.0.8
+      utf-8-validate: 5.0.10
 
   xdg-basedir@3.0.0: {}
 
@@ -20162,6 +20051,7 @@ snapshots:
 
   zustand@4.5.2(@types/react@18.2.55)(react@18.0.0):
     dependencies:
+      use-sync-external-store: 1.2.0(react@18.0.0)
+    optionalDependencies:
       '@types/react': 18.2.55
       react: 18.0.0
-      use-sync-external-store: 1.2.0(react@18.0.0)
