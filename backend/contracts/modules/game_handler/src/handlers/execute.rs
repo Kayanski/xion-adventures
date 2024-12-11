@@ -74,7 +74,7 @@ fn payment(
         .account_registry(deps)?
         .account(&config.admin_account)?;
 
-    if (config.mint_cost.amount.is_zero()) {
+    if config.mint_cost.amount.is_zero() {
         return Ok(None);
     }
 

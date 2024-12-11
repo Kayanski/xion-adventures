@@ -5,7 +5,9 @@ use crate::{
     handlers,
     msg::{HubExecuteMsg, HubInstantiateMsg, HubQueryMsg},
 };
+use abstract_adapter::objects::dependency::StaticDependency;
 use abstract_adapter::AdapterContract;
+use abstract_sdk::std::{ABSTRACT_VERSION, IBC_CLIENT};
 use cosmwasm_std::Response;
 
 /// The version of your app
@@ -26,7 +28,8 @@ const HUB: Hub = Hub::new(HUB_ID, HUB_VERSION, None)
     .with_query(handlers::query_handler)
     .with_replies(&[])
     .with_ibc_callback(ibc::transfer::transfer_callback)
-    .with_module_ibc(ibc::module_ibc::receive_module_ibc);
+    .with_module_ibc(ibc::module_ibc::receive_module_ibc)
+    .with_dependencies(&[StaticDependency::new(IBC_CLIENT, &[ABSTRACT_VERSION])]);
 
 // Export handlers
 #[cfg(feature = "export")]
