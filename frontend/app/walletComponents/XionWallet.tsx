@@ -32,7 +32,6 @@ export function XionWallet({ children }: XionWalletProps) {
 
   useEffect(() => {
     if (openModalCommand) {
-      console.log("ask for open", account?.bech32Address)
       if (!walletType || !infos?.[0]) return
 
       if (!account?.bech32Address) {

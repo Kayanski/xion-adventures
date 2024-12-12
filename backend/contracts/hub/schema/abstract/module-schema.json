@@ -340,6 +340,40 @@
           }
         },
         "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "required": [
+          "map"
+        ],
+        "properties": {
+          "map": {
+            "type": "object",
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "required": [
+          "player_metadata"
+        ],
+        "properties": {
+          "player_metadata": {
+            "type": "object",
+            "required": [
+              "token_id"
+            ],
+            "properties": {
+              "token_id": {
+                "type": "string"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
       }
     ]
   },
@@ -372,6 +406,50 @@
       },
       "additionalProperties": false
     },
+    "map": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "MapResponse",
+      "type": "object",
+      "required": [
+        "map"
+      ],
+      "properties": {
+        "map": {
+          "$ref": "#/definitions/MapOutput"
+        }
+      },
+      "additionalProperties": false,
+      "definitions": {
+        "Binary": {
+          "description": "Binary is a wrapper around Vec<u8> to add base64 de/serialization with serde. It also adds some helper methods to help encode inline.\n\nThis is only needed as serde-json-{core,wasm} has a horrible encoding for Vec<u8>. See also <https://github.com/CosmWasm/cosmwasm/blob/main/docs/MESSAGE_TYPES.md>.",
+          "type": "string"
+        },
+        "MapOutput": {
+          "type": "object",
+          "required": [
+            "data",
+            "height",
+            "width"
+          ],
+          "properties": {
+            "data": {
+              "$ref": "#/definitions/Binary"
+            },
+            "height": {
+              "type": "integer",
+              "format": "uint32",
+              "minimum": 0.0
+            },
+            "width": {
+              "type": "integer",
+              "format": "uint32",
+              "minimum": 0.0
+            }
+          },
+          "additionalProperties": false
+        }
+      }
+    },
     "next_token_id": {
       "$schema": "http://json-schema.org/draft-07/schema#",
       "title": "NextTokenIdResponse",
@@ -385,6 +463,74 @@
         }
       },
       "additionalProperties": false
+    },
+    "player_metadata": {
+      "$schema": "http://json-schema.org/draft-07/schema#",
+      "title": "XionAdventuresExtension",
+      "type": "object",
+      "required": [
+        "city_map",
+        "location"
+      ],
+      "properties": {
+        "city_map": {
+          "type": "integer",
+          "format": "uint8",
+          "minimum": 0.0
+        },
+        "location": {
+          "$ref": "#/definitions/PlayerLocation"
+        }
+      },
+      "additionalProperties": false,
+      "definitions": {
+        "PlayerLocation": {
+          "oneOf": [
+            {
+              "type": "object",
+              "required": [
+                "city"
+              ],
+              "properties": {
+                "city": {
+                  "$ref": "#/definitions/Vec2"
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "required": [
+                "general_map"
+              ],
+              "properties": {
+                "general_map": {
+                  "$ref": "#/definitions/Vec2"
+                }
+              },
+              "additionalProperties": false
+            }
+          ]
+        },
+        "Vec2": {
+          "type": "object",
+          "required": [
+            "x",
+            "y"
+          ],
+          "properties": {
+            "x": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "y": {
+              "type": "integer",
+              "format": "int64"
+            }
+          },
+          "additionalProperties": false
+        }
+      }
     }
   }
 }

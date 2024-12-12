@@ -13,7 +13,7 @@ pub enum PlayerLocation {
 // The Player spawns in the middle of their city
 impl Default for PlayerLocation {
     fn default() -> Self {
-        Self::city(0, 0)
+        Self::general_map(0, 0)
     }
 }
 

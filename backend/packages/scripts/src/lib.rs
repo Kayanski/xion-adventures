@@ -16,18 +16,17 @@ pub fn create_account_for_game<Chain: CwEnv>(
     abs: &AbstractClient<Chain>,
 ) -> anyhow::Result<LocalGameAccount<Chain>> {
     let account = abs.account_builder().build()?;
-    // account.set_ibc_status(true)?;
+    account.set_ibc_status(true)?;
 
-    // let hub = account.install_adapter::<HubInterface<Chain>>(&[])?;
-    // let game_handler = account.install_adapter::<GameHandlerInterface<Chain>>(&[])?;
-    // game_handler.authorize_on_adapters(&[HUB_ID])?;
-    todo!();
+    let hub = account.install_adapter::<HubInterface<Chain>>(&[])?;
+    let game_handler = account.install_adapter::<GameHandlerInterface<Chain>>(&[])?;
+    game_handler.authorize_on_adapters(&[HUB_ID])?;
 
-    // Ok(LocalGameAccount {
-    //     account,
-    //     hub,
-    //     game_handler,
-    // })
+    Ok(LocalGameAccount {
+        account,
+        hub,
+        game_handler,
+    })
 }
 
 pub fn create_remote_account_for_game<Chain: IbcQueryHandler, IBC: InterchainEnv<Chain>>(

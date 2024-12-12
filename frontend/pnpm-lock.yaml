@@ -12,8 +12,8 @@ importers:
   .:
     dependencies:
       '@abstract-money/cli':
-        specifier: ^1.2.0
-        version: 1.2.0(bufferutil@4.0.8)(esbuild@0.16.17)(typescript@5.0.2)(utf-8-validate@5.0.10)
+        specifier: ^1.2.1
+        version: 1.2.1(bufferutil@4.0.8)(esbuild@0.16.17)(typescript@5.0.2)(utf-8-validate@5.0.10)
       '@abstract-money/core':
         specifier: ^3.4.2
         version: 3.4.2(bufferutil@4.0.8)(graphql@16.8.1)(typescript@5.0.2)(utf-8-validate@5.0.10)
@@ -26,6 +26,9 @@ importers:
       '@burnt-labs/abstraxion':
         specifier: 1.0.0-alpha.54
         version: 1.0.0-alpha.54(@types/react@18.2.55)(bufferutil@4.0.8)(graphql-ws@5.16.0(graphql@16.8.1))(graphql@16.8.1)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)(starknet@6.11.0)(utf-8-validate@5.0.10)
+      '@cosmjs/cosmwasm-stargate':
+        specifier: ^0.32.4
+        version: 0.32.4(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       '@graphql-codegen/cli':
         specifier: ^5.0.3
         version: 5.0.3(@parcel/watcher@2.5.0)(@types/node@20.0.0)(bufferutil@4.0.8)(enquirer@2.4.1)(graphql@16.8.1)(typescript@5.0.2)(utf-8-validate@5.0.10)
@@ -108,6 +111,9 @@ importers:
       eslint-config-next:
         specifier: 14.2.15
         version: 14.2.15(eslint@8.0.0)(typescript@5.0.2)
+      eslint-plugin-react-hooks:
+        specifier: ^5.1.0
+        version: 5.1.0(eslint@8.0.0)
       graphql:
         specifier: ^16.8.1
         version: 16.8.1
@@ -128,8 +134,8 @@ packages:
     peerDependencies:
       esbuild: '>=0.13.x <= 0.16.x'
 
-  '@abstract-money/cli@1.2.0':
-    resolution: {integrity: sha512-SoUHN20SvM4i8SFyW/U+KF48gy+abDQEqpme29Fs1zbVNYbsG6TD/+8xlmVxORulv5PtgbA/1Q22+ElRh8i2Qw==}
+  '@abstract-money/cli@1.2.1':
+    resolution: {integrity: sha512-yX881HFOBEC0wqxiBkAa1/CLPAN/CW9nKfF9jmz6wmASlKv9fLcDU8EXZxpoKGmvQxX9Ta8KTKzOoLehcc9iHQ==}
     hasBin: true
     peerDependencies:
       typescript: '>=5.0.4'
@@ -174,12 +180,12 @@ packages:
       typescript:
         optional: true
 
-  '@abstract-money/ts-codegen@0.37.0-beta-3':
-    resolution: {integrity: sha512-XrgDPRdsXUCpeKoEKIZgysh88217oMMl53rc2sG1Z7IoJj4maA+kW7+1RjmzmJOqg8jipFtUK5kMmH6hXocORg==}
+  '@abstract-money/ts-codegen@0.37.0-beta-5':
+    resolution: {integrity: sha512-8UWh1WkszEeLGiSEXILLtFuKL5enSxlQ7YTg7ugZ4mWrXIFDguhyyjbhAMXT+SdGyFS0SAFhpG3R2KmrThkbuQ==}
     hasBin: true
 
-  '@abstract-money/wasm-ast-types@0.28.0-beta-3':
-    resolution: {integrity: sha512-fTUVZBjFpo+IRm+krtNYBCLRDcPIeKxpJgB1cosJAWOmHt8IHNagMYrMrmFrGV6ZbW5Us73/D6oe9n5KMv4eRw==}
+  '@abstract-money/wasm-ast-types@0.28.0-beta-5':
+    resolution: {integrity: sha512-ZBGfn0cs72OX9azRrMxYTHHy2apBlyaDfC7gHtIPmZVj35XwezHp1rSnO7/T8pCevmv94qFYIhC27b2yrSy/IA==}
 
   '@alloc/quick-lru@5.2.0':
     resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
@@ -4261,6 +4267,12 @@ packages:
     engines: {node: '>=10'}
     peerDependencies:
       eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0
+
+  eslint-plugin-react-hooks@5.1.0:
+    resolution: {integrity: sha512-mpJRtPgHN2tNAvZ35AMfqeB3Xqeo273QxrHJsbBEPWODRM4r0yB6jfoROqKEYrOn27UtRPpcpHc2UqyBSuUNTw==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0 || ^9.0.0
 
   eslint-plugin-react@7.37.2:
     resolution: {integrity: sha512-EsTAnj9fLVr/GZleBLFbj/sSuXeWmp1eXIN60ceYnZveqEaUCyW4X+Vh4WTdUhCkW4xutXYqTXCUSyqD4rB75w==}
@@ -8558,8 +8570,8 @@ packages:
   zen-observable@0.8.15:
     resolution: {integrity: sha512-PQ2PC7R9rslx84ndNBZB/Dkv8V8fZEpk83RLgXtYd0fwUgEjseMn1Dgajh2x6S8QbZAFa9p2qVCEuYZNgve0dQ==}
 
-  zod@3.24.0:
-    resolution: {integrity: sha512-Hz+wiY8yD0VLA2k/+nsg2Abez674dDGTai33SwNvMPuf9uIrBC9eFgIMQxBBbHFxVXi8W+5nX9DcAh9YNSQm/w==}
+  zod@3.24.1:
+    resolution: {integrity: sha512-muH7gBL9sI1nciMZV67X5fTKKBLtwpZ5VBp1vsOQzj1MhrBZ4wlVCm3gedKZWLp0Oyel8sIGfeiz54Su+OVT+A==}
 
   zustand@4.5.2:
     resolution: {integrity: sha512-2cN1tPkDVkwCy5ickKrI7vijSjPksFRfqS6237NzT0vqSsztTNnQdHw9mmN7uBdk3gceVXU0a+21jFzFzAc9+g==}
@@ -8583,10 +8595,10 @@ snapshots:
       esbuild: 0.16.17
       load-tsconfig: 0.2.5
 
-  '@abstract-money/cli@1.2.0(bufferutil@4.0.8)(esbuild@0.16.17)(typescript@5.0.2)(utf-8-validate@5.0.10)':
+  '@abstract-money/cli@1.2.1(bufferutil@4.0.8)(esbuild@0.16.17)(typescript@5.0.2)(utf-8-validate@5.0.10)':
     dependencies:
       '@abstract-money/bundle-require': 0.2.0(esbuild@0.16.17)
-      '@abstract-money/ts-codegen': 0.37.0-beta-3
+      '@abstract-money/ts-codegen': 0.37.0-beta-5
       '@cosmjs/cosmwasm-stargate': 0.32.4(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       '@cosmjs/stargate': 0.32.4(bufferutil@4.0.8)(utf-8-validate@5.0.10)
       abort-controller: 3.0.0
@@ -8604,7 +8616,7 @@ snapshots:
       pathe: 1.1.2
       picocolors: 1.1.1
       prettier: 2.8.8
-      zod: 3.24.0
+      zod: 3.24.1
     optionalDependencies:
       typescript: 5.0.2
     transitivePeerDependencies:
@@ -8686,7 +8698,7 @@ snapshots:
       - react-native
       - utf-8-validate
 
-  '@abstract-money/ts-codegen@0.37.0-beta-3':
+  '@abstract-money/ts-codegen@0.37.0-beta-5':
     dependencies:
       '@babel/core': 7.18.10
       '@babel/generator': 7.18.12
@@ -8714,11 +8726,11 @@ snapshots:
       parse-package-name: 1.0.0
       rimraf: 3.0.2
       shelljs: 0.8.5
-      wasm-ast-types: '@abstract-money/wasm-ast-types@0.28.0-beta-3'
+      wasm-ast-types: '@abstract-money/wasm-ast-types@0.28.0-beta-5'
     transitivePeerDependencies:
       - supports-color
 
-  '@abstract-money/wasm-ast-types@0.28.0-beta-3':
+  '@abstract-money/wasm-ast-types@0.28.0-beta-5':
     dependencies:
       '@babel/runtime': 7.26.0
       '@babel/types': 7.18.10
@@ -8802,14 +8814,14 @@ snapshots:
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@babel/code-frame': 7.26.2
-      '@babel/generator': 7.18.12
+      '@babel/generator': 7.26.3
       '@babel/helper-compilation-targets': 7.25.9
       '@babel/helper-module-transforms': 7.26.0(@babel/core@7.18.10)
       '@babel/helpers': 7.26.0
-      '@babel/parser': 7.18.11
+      '@babel/parser': 7.26.3
       '@babel/template': 7.25.9
-      '@babel/traverse': 7.18.11
-      '@babel/types': 7.18.10
+      '@babel/traverse': 7.26.4
+      '@babel/types': 7.26.3
       convert-source-map: 1.9.0
       debug: 4.4.0
       gensync: 1.0.0-beta.2
@@ -8840,7 +8852,7 @@ snapshots:
 
   '@babel/generator@7.18.12':
     dependencies:
-      '@babel/types': 7.18.10
+      '@babel/types': 7.26.3
       '@jridgewell/gen-mapping': 0.3.5
       jsesc: 2.5.2
 
@@ -9019,7 +9031,7 @@ snapshots:
 
   '@babel/parser@7.18.11':
     dependencies:
-      '@babel/types': 7.18.10
+      '@babel/types': 7.26.3
 
   '@babel/parser@7.26.3':
     dependencies:
@@ -9117,6 +9129,15 @@ snapshots:
       '@babel/plugin-syntax-numeric-separator': 7.10.4(@babel/core@7.18.10)
 
   '@babel/plugin-proposal-object-rest-spread@7.18.9(@babel/core@7.18.10)':
+    dependencies:
+      '@babel/compat-data': 7.26.3
+      '@babel/core': 7.18.10
+      '@babel/helper-compilation-targets': 7.25.9
+      '@babel/helper-plugin-utils': 7.25.9
+      '@babel/plugin-syntax-object-rest-spread': 7.8.3(@babel/core@7.18.10)
+      '@babel/plugin-transform-parameters': 7.25.9(@babel/core@7.18.10)
+
+  '@babel/plugin-proposal-object-rest-spread@7.20.7(@babel/core@7.18.10)':
     dependencies:
       '@babel/compat-data': 7.26.3
       '@babel/core': 7.18.10
@@ -9671,7 +9692,7 @@ snapshots:
       '@babel/plugin-proposal-logical-assignment-operators': 7.20.7(@babel/core@7.18.10)
       '@babel/plugin-proposal-nullish-coalescing-operator': 7.18.6(@babel/core@7.18.10)
       '@babel/plugin-proposal-numeric-separator': 7.18.6(@babel/core@7.18.10)
-      '@babel/plugin-proposal-object-rest-spread': 7.18.9(@babel/core@7.18.10)
+      '@babel/plugin-proposal-object-rest-spread': 7.20.7(@babel/core@7.18.10)
       '@babel/plugin-proposal-optional-catch-binding': 7.18.6(@babel/core@7.18.10)
       '@babel/plugin-proposal-optional-chaining': 7.21.0(@babel/core@7.18.10)
       '@babel/plugin-proposal-private-methods': 7.18.6(@babel/core@7.18.10)
@@ -9725,7 +9746,7 @@ snapshots:
       '@babel/plugin-transform-unicode-escapes': 7.25.9(@babel/core@7.18.10)
       '@babel/plugin-transform-unicode-regex': 7.25.9(@babel/core@7.18.10)
       '@babel/preset-modules': 0.1.6(@babel/core@7.18.10)
-      '@babel/types': 7.18.10
+      '@babel/types': 7.26.3
       babel-plugin-polyfill-corejs2: 0.3.3(@babel/core@7.18.10)
       babel-plugin-polyfill-corejs3: 0.5.3(@babel/core@7.18.10)
       babel-plugin-polyfill-regenerator: 0.4.1(@babel/core@7.18.10)
@@ -9767,13 +9788,13 @@ snapshots:
   '@babel/traverse@7.18.11':
     dependencies:
       '@babel/code-frame': 7.26.2
-      '@babel/generator': 7.18.12
+      '@babel/generator': 7.26.3
       '@babel/helper-environment-visitor': 7.24.7
       '@babel/helper-function-name': 7.24.7
       '@babel/helper-hoist-variables': 7.24.7
       '@babel/helper-split-export-declaration': 7.24.7
-      '@babel/parser': 7.18.11
-      '@babel/types': 7.18.10
+      '@babel/parser': 7.26.3
+      '@babel/types': 7.26.3
       debug: 4.4.0
       globals: 11.12.0
     transitivePeerDependencies:
@@ -11400,7 +11421,7 @@ snapshots:
       glob-promise: 4.2.2(glob@7.2.3)
       is-glob: 4.0.3
       lodash: 4.17.21
-      minimist: 1.2.6
+      minimist: 1.2.8
       mkdirp: 1.0.4
       mz: 2.7.0
       prettier: 2.8.8
@@ -14865,6 +14886,10 @@ snapshots:
       string.prototype.includes: 2.0.1
 
   eslint-plugin-react-hooks@5.0.0-canary-7118f5dd7-20230705(eslint@8.0.0):
+    dependencies:
+      eslint: 8.0.0
+
+  eslint-plugin-react-hooks@5.1.0(eslint@8.0.0):
     dependencies:
       eslint: 8.0.0
 
@@ -20047,7 +20072,7 @@ snapshots:
 
   zen-observable@0.8.15: {}
 
-  zod@3.24.0: {}
+  zod@3.24.1: {}
 
   zustand@4.5.2(@types/react@18.2.55)(react@18.0.0):
     dependencies:

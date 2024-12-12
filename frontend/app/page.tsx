@@ -7,6 +7,7 @@ import { Header } from "./_components/header"
 import { XionWallet } from "./walletComponents/XionWallet"
 import TextBox from "./walletComponents/TextBox"
 import MovementUpdateTracker from "./walletComponents/MovementUpdateTracker"
+import { GameDataLoader } from "./game/useGameData"
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
 
       <div className="flex flex-col gap-6">
         <XionWallet />
+        <GameDataLoader />
         <TextBox />
         <MovementUpdateTracker />
       </div>

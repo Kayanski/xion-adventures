@@ -84,6 +84,8 @@ import {
   HubMintMutation,
   useHubIbcTransferMutation,
   HubIbcTransferMutation,
+  useHubPlayerMetadataQuery,
+  useHubMapQuery,
   useHubNextTokenIdQuery,
   useHubConfigQuery,
 } from './cosmwasm-codegen/Hub.react-query'
@@ -1363,6 +1365,54 @@ export const HUB_MODULE_ID = 'xion-adventures:hub'
 
 export const hub = {
   queries: {
+    usePlayerMetadata: ({
+      options,
+      args,
+      ...rest
+    }: Omit<
+      Parameters<
+        typeof useHubPlayerMetadataQuery<HubTypes.XionAdventuresExtension>
+      >[0],
+      'client'
+    > & {
+      accountId: AccountId | undefined
+      chainName: string | undefined
+    }) => {
+      const { data: hubAppQueryClient } = useAbstractModuleQueryClient({
+        moduleId: HUB_MODULE_ID,
+        ...rest,
+        Module: HubAppQueryClient,
+        query: { enabled: options?.enabled },
+      })
+
+      return useHubPlayerMetadataQuery({
+        client: hubAppQueryClient,
+        options,
+        args,
+      })
+    },
+    useMap: ({
+      options,
+      ...rest
+    }: Omit<
+      Parameters<typeof useHubMapQuery<HubTypes.MapResponse>>[0],
+      'client'
+    > & {
+      accountId: AccountId | undefined
+      chainName: string | undefined
+    }) => {
+      const { data: hubAppQueryClient } = useAbstractModuleQueryClient({
+        moduleId: HUB_MODULE_ID,
+        ...rest,
+        Module: HubAppQueryClient,
+        query: { enabled: options?.enabled },
+      })
+
+      return useHubMapQuery({
+        client: hubAppQueryClient,
+        options,
+      })
+    },
     useNextTokenId: ({
       options,
       ...rest

@@ -1,8 +1,9 @@
-use abstract_adapter::{objects::TruncatedChainId, std::objects::AccountId};
-use cosmwasm_schema::QueryResponses;
-use nft::XionAdventuresExtensionMsg;
-
 use crate::contract::Hub;
+use abstract_adapter::{objects::TruncatedChainId, std::objects::AccountId};
+use common::MapOutput;
+use cosmwasm_schema::QueryResponses;
+use nft::XionAdventuresExtension;
+use nft::XionAdventuresExtensionMsg;
 
 // This is used for type safety and re-exporting the contract endpoint structs.
 abstract_adapter::adapter_msg_types!(Hub, HubExecuteMsg, HubQueryMsg);
@@ -67,6 +68,10 @@ pub enum HubQueryMsg {
     Config {},
     #[returns(NextTokenIdResponse)]
     NextTokenId {},
+    #[returns(MapResponse)]
+    Map {},
+    #[returns(XionAdventuresExtension)]
+    PlayerMetadata { token_id: String },
 }
 
 #[cosmwasm_schema::cw_serde]
@@ -81,4 +86,9 @@ pub struct ConfigResponse {
 #[cosmwasm_schema::cw_serde]
 pub struct NextTokenIdResponse {
     pub next_token_id: String,
+}
+
+#[cosmwasm_schema::cw_serde]
+pub struct MapResponse {
+    pub map: MapOutput,
 }

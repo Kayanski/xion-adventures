@@ -2,6 +2,7 @@ import { KAPLAYCtx } from "kaplay";
 import { maxMovementLength, tileScreenSize } from "./constants";
 import { backupMovementsTrackerAtom, currentPositionAtom, movementsTrackerAtom, store } from "./store";
 import { Player } from "./initGame";
+import { saveBackupMovements, saveMovements } from "./localStorage";
 
 export function movementTrackerUpdate(k: KAPLAYCtx, player: Player) {
   ////// *** Computing the movement changes for the blockchain *** //////
@@ -32,13 +33,16 @@ export function movementTrackerUpdate(k: KAPLAYCtx, player: Player) {
     /// If we have not enough data, we save it
     if (movementsTrackerVec.length < maxMovementLength) {
       store.set(movementsTrackerAtom, [...movementsTrackerVec, intMovement]);
+      saveMovements([...movementsTrackerVec, intMovement])
     } else {
       // In the other case, we update the backupMovementsTracker
       let movementsTrackerVec = store.get(backupMovementsTrackerAtom);
       store.set(backupMovementsTrackerAtom, [...movementsTrackerVec, intMovement]);
+      saveBackupMovements([...movementsTrackerVec, intMovement])
     }
 
     store.set(currentPositionAtom, currentPosition.add(intMovement));
+
   }
   // Test, we try to see iof the positions match
   // let playerPosition = player.pos.scale(1 / tileScreenSize);

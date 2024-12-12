@@ -44,6 +44,9 @@ pub enum HubError {
 
     #[error("Tile not available {tile}")]
     TileUnavailable { tile: PlayerLocation },
+
+    #[error("Nft metadata not available {token_id}")]
+    NftMetadataUnavailable { token_id: String },
 }
 
 impl From<HubError> for AbstractSdkError {

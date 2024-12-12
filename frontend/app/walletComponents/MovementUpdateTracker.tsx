@@ -3,12 +3,18 @@ import { useAtom, useAtomValue } from "jotai";
 import { useEffect, useMemo } from "react";
 import { currentPositionAtom, isTextBoxVisibleAtom, movementsTrackerAtom, textBoxContentAtom, walletOpeningCommand } from "../game/store";
 import { maxMovementLength } from "../game/constants";
-import { useAccounts, useAccountAddress, useCreateAccount, useCreateAccountMonarchy, useInstallModules } from "@abstract-money/react";
+import { useAccounts, useAccountAddress, useCreateAccount, useCreateAccountMonarchy, useInstallModules, useModules } from "@abstract-money/react";
 import { useAccount } from "graz";
 import { cw721Base, GAME_HANDLER_MODULE_ID, gameHandler, HUB_MODULE_ID, hub } from "../_generated/generated-abstract";
-import { AccountId, moduleIdToName, moduleIdToNamespace } from "@abstract-money/core";
+import { AccountId, AdapterExecuteMsgFactory, AdapterQueryMsgBuilder, moduleIdToName, moduleIdToNamespace } from "@abstract-money/core";
 import { IbcClientClient } from "@abstract-money/core/codegen/abstract";
-import { abstractAccount, accountDetails, useGameAccountSetup } from "./useAccountSetup";
+import { abstractAccount, accountDetails } from "./useAccountSetup";
+import { gameHandlerQueryKeys, useGameHandlerConfigQuery } from "../_generated/generated-abstract/cosmwasm-codegen/GameHandler.react-query";
+import { useAdapterAuthorizedAddresses } from "./useAdapterAuthorizedAddresses";
+import { useAdapterAddress } from "./useAdapterAddress";
+import { useAuthorizeAddress } from "./useAuthorizeAddress";
+import { cn } from "@/utils";
+import { useConnectedTokenId } from "../game/useGameData";
 
 
 
@@ -25,15 +31,23 @@ export default function MovementUpdateTracker(): JSX.Element {
     //     }
     // })
 
-    let { data: accountAddress, refetch: refectAccountAddress, queryKey } = useAccountAddress(accountDetails);
-    let { data: config } = hub.queries.useConfig(accountDetails);
+    let { data: accountAddress, remove: refectAccountAddress, queryKey } = useAccountAddress(accountDetails);
     let { mutateAsync: createAccount, data: accountCreationResult } = useCreateAccountMonarchy({ chainName: "xiontestnet" })
-    let { createGameAccount } = useGameAccountSetup();
-    let { data: nftOwned } = cw721Base.queries.useTokens({
-        contractAddress: config?.nft, chainName: accountDetails.chainName, args: {
-            owner: accountAddress!
-        }, options: { enabled: !!accountAddress }
-    });
+    let { mutateAsync: createGameAccountMutation } = gameHandler.mutations.useCreateAccount({ ...accountDetails });
+
+    // Nft query
+    let { tokenId, refetchTokens } = useConnectedTokenId({ accountId: abstractAccount });
+
+    // FOr Adapter authorized addresses
+    const { data: authorizedAddress, remove: refetchAuthorizedAddresses } = useAdapterAuthorizedAddresses({ accountId: abstractAccount, moduleId: HUB_MODULE_ID });
+    const { data: gameHandlerAddress, remove: refectGameHandlerAddress } = useAdapterAddress({ accountId: abstractAccount, moduleId: GAME_HANDLER_MODULE_ID });
+    const { mutateAsync: authorizeOnHub } = useAuthorizeAddress({ accountId: abstractAccount, moduleId: HUB_MODULE_ID })
+
+    // For game logic
+
+    const { mutateAsync: movePlayer } = gameHandler.mutations.useMovePlayer({ accountId: abstractAccount, chainName: abstractAccount.chainName });
+
+
 
     useEffect(() => {
         if (movement.length >= maxMovementLength) {
@@ -44,68 +58,92 @@ export default function MovementUpdateTracker(): JSX.Element {
             // We verify the account exists
             if (!accountAddress) {
                 // Else, we create the account, along with the necessary modules
-                console.log("Create account and install modules")
 
-                let createAccountAsync = async () => {
+                createAccount({
+                    fee: 'auto',
+                    args: {
+                        name: 'Xion-adventures-test',
+                        owner: account.bech32Address,
+                        installModules: [{
+                            name: "ibc-client",
+                            namespace: "abstract",
+                            version: 'latest',
+                        }, {
+                            name: moduleIdToName(GAME_HANDLER_MODULE_ID),
+                            namespace: moduleIdToNamespace(GAME_HANDLER_MODULE_ID),
+                            version: 'latest',
+                        }, {
+                            name: moduleIdToName(HUB_MODULE_ID),
+                            namespace: moduleIdToNamespace(HUB_MODULE_ID),
+                            version: 'latest',
+                        }
+                        ]
+                    },
+                }).then((_) => {
+                    refectAccountAddress()
+                    refectGameHandlerAddress()
+                    refetchAuthorizedAddresses()
+                });
 
-                    let accountCreationResult = await createAccount({
-                        fee: 'auto',
-                        args: {
-                            name: 'Xion-adventures-test',
-                            owner: account.bech32Address,
-                            installModules: [{
-                                name: "ibc-client",
-                                namespace: "abstract",
-                                version: 'latest',
-                            }, {
-                                name: moduleIdToName(GAME_HANDLER_MODULE_ID),
-                                namespace: moduleIdToNamespace(GAME_HANDLER_MODULE_ID),
-                                version: 'latest',
-                            }, {
-                                name: moduleIdToName(HUB_MODULE_ID),
-                                namespace: moduleIdToNamespace(HUB_MODULE_ID),
-                                version: 'latest',
-                            }
-                            ]
-                        },
-                    });
-                    console.log(accountCreationResult)
-
-                    refectAccountAddress();
+            } else if (!gameHandlerAddress) {
+                // Query not available yet
+                return
+            } else if (!authorizedAddress) {
+                // Query not available yet
+                return
+            } else if (!authorizedAddress.addresses.includes(gameHandlerAddress)) {
+                if (!authorizeOnHub) {
+                    return
                 }
-                createAccountAsync().then((r) => createGameAccount())
+                // If the account exists and the game handler IS NOT authorized on the HUB
+                authorizeOnHub({
+                    msg: {
+                        toAdd: [gameHandlerAddress],
+                        toRemove: null
+                    }
+                }).then((_) => {
+                    refetchAuthorizedAddresses()
+                })
+
+            } else if (!createGameAccountMutation) {
+                // Query not available yet
+                return
+            } else if (tokenId == undefined) {
+                console.log("We need to create the game account, to get at least 1 NFT")
+                createGameAccountMutation({
+                    msg: {
+                    }, args: {
+                        fee: "auto"
+                    }
+                }).then(() => {
+                    refetchTokens()
+                });
+            } else if (!movePlayer) {
+                // Mutation not available yet
+                return;
             } else {
-                // If the account exist, let's see if the player has an NFT, they can play with
-                if (nftOwned?.tokens.length != 0) {
-                    console.log("Ok, we are able to send data on-chain from the players movements")
-                } else {
-                    console.log("We need to create the game account, to get at least 1 NFT")
-                    createGameAccount();
-                }
+                // Now that everything is created, we are able to send the last movements to the on-chain contracts
+                console.log("Ok, we are able to send data on-chain from the players movements")
 
+                movePlayer({
+                    msg: {
+                        positions: movement,
+                        tokenId,
+                    }
+                }).then(() => {
+                    setMovement([])
+                })
             }
 
-            // We play with the NFT
-
-
-
-            setTimeout(() => {
-                // We send the movement update
-                // TODO
-                // We reset the movement update
-                setMovement([])
-
-            }, 10000)
         }
-    }, [movement.length, accountAddress, createAccount, refectAccountAddress])
+    }, [movement.length, accountAddress, createAccount, refectAccountAddress, gameHandlerAddress, authorizedAddress?.addresses, createGameAccountMutation, tokenId, movePlayer])
 
     return (<>
         <div>
-            Here 's the config data{JSON.stringify(config)} --
+            account address {JSON.stringify(accountAddress)}--
 
-            account creation result {JSON.stringify(accountCreationResult)} --
-
-            account address {JSON.stringify(accountAddress)}</div>
+            authorized addresses {JSON.stringify(authorizedAddress)}
+        </div>
     </>)
 
 }

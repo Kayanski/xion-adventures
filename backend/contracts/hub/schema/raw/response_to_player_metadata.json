@@ -1,0 +1,68 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "XionAdventuresExtension",
+  "type": "object",
+  "required": [
+    "city_map",
+    "location"
+  ],
+  "properties": {
+    "city_map": {
+      "type": "integer",
+      "format": "uint8",
+      "minimum": 0.0
+    },
+    "location": {
+      "$ref": "#/definitions/PlayerLocation"
+    }
+  },
+  "additionalProperties": false,
+  "definitions": {
+    "PlayerLocation": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "city"
+          ],
+          "properties": {
+            "city": {
+              "$ref": "#/definitions/Vec2"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "general_map"
+          ],
+          "properties": {
+            "general_map": {
+              "$ref": "#/definitions/Vec2"
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "Vec2": {
+      "type": "object",
+      "required": [
+        "x",
+        "y"
+      ],
+      "properties": {
+        "x": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "y": {
+          "type": "integer",
+          "format": "int64"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
