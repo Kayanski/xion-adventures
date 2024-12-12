@@ -19,6 +19,9 @@ dependencies:
   '@burnt-labs/abstraxion':
     specifier: 1.0.0-alpha.54
     version: 1.0.0-alpha.54(@types/react@18.2.55)(graphql@16.8.1)(react-dom@18.0.0)(react@18.0.0)(starknet@6.11.0)
+  '@cosmjs/cosmwasm-stargate':
+    specifier: ^0.32.4
+    version: 0.32.4
   '@graphql-codegen/cli':
     specifier: ^5.0.3
     version: 5.0.3(@types/node@20.0.0)(graphql@16.8.1)(typescript@5.0.2)
@@ -46,6 +49,9 @@ dependencies:
   clsx:
     specifier: ^2.1.1
     version: 2.1.1
+  framer-motion:
+    specifier: ^11.13.5
+    version: 11.14.1(react-dom@18.0.0)(react@18.0.0)
   generate:
     specifier: ^0.14.0
     version: 0.14.0
@@ -54,7 +60,7 @@ dependencies:
     version: 5.1.0(graphql@16.8.1)
   graz:
     specifier: ^0.1.25
-    version: 0.1.25(@cosmjs/amino@0.31.3)(@cosmjs/cosmwasm-stargate@0.31.3)(@cosmjs/launchpad@0.27.1)(@cosmjs/proto-signing@0.31.3)(@cosmjs/stargate@0.31.3)(@cosmjs/tendermint-rpc@0.31.3)(@leapwallet/cosmos-social-login-capsule-provider@0.0.41)(@terra-money/feather.js@3.0.0-beta.3)(@types/react@18.2.55)(axios@0.27.2)(react-dom@18.0.0)(react@18.0.0)
+    version: 0.1.25(@cosmjs/amino@0.31.3)(@cosmjs/cosmwasm-stargate@0.32.4)(@cosmjs/launchpad@0.27.1)(@cosmjs/proto-signing@0.31.3)(@cosmjs/stargate@0.31.3)(@cosmjs/tendermint-rpc@0.31.3)(@leapwallet/cosmos-social-login-capsule-provider@0.0.41)(@terra-money/feather.js@3.0.0-beta.3)(@types/react@18.2.55)(axios@0.27.2)(react-dom@18.0.0)(react@18.0.0)
   jotai:
     specifier: ^2.10.1
     version: 2.10.1(@types/react@18.2.55)(react@18.0.0)
@@ -84,6 +90,9 @@ dependencies:
     version: 4.3.0
 
 devDependencies:
+  '@tanstack/react-query-devtools':
+    specifier: ^5.62.7
+    version: 5.62.7(@tanstack/react-query@4.36.1)(react@18.0.0)
   '@types/node':
     specifier: ^20
     version: 20.0.0
@@ -99,6 +108,9 @@ devDependencies:
   eslint-config-next:
     specifier: 14.2.15
     version: 14.2.15(eslint@8.0.0)(typescript@5.0.2)
+  eslint-plugin-react-hooks:
+    specifier: ^5.1.0
+    version: 5.1.0(eslint@8.0.0)
   graphql:
     specifier: ^16.8.1
     version: 16.8.1
@@ -230,7 +242,7 @@ packages:
     dependencies:
       '@abstract-money/core': 3.4.2(graphql@16.8.1)(typescript@5.0.2)
       '@abstract-money/react': 2.3.5(graphql@16.8.1)(react-dom@18.0.0)(react@18.0.0)(typescript@5.0.2)
-      graz: 0.1.25(@cosmjs/amino@0.31.3)(@cosmjs/cosmwasm-stargate@0.31.3)(@cosmjs/launchpad@0.27.1)(@cosmjs/proto-signing@0.31.3)(@cosmjs/stargate@0.31.3)(@cosmjs/tendermint-rpc@0.31.3)(@leapwallet/cosmos-social-login-capsule-provider@0.0.41)(@terra-money/feather.js@3.0.0-beta.3)(@types/react@18.2.55)(axios@0.27.2)(react-dom@18.0.0)(react@18.0.0)
+      graz: 0.1.25(@cosmjs/amino@0.31.3)(@cosmjs/cosmwasm-stargate@0.32.4)(@cosmjs/launchpad@0.27.1)(@cosmjs/proto-signing@0.31.3)(@cosmjs/stargate@0.31.3)(@cosmjs/tendermint-rpc@0.31.3)(@leapwallet/cosmos-social-login-capsule-provider@0.0.41)(@terra-money/feather.js@3.0.0-beta.3)(@types/react@18.2.55)(axios@0.27.2)(react-dom@18.0.0)(react@18.0.0)
       typescript: 5.0.2
     dev: false
 
@@ -2284,26 +2296,6 @@ packages:
       '@cosmjs/encoding': 0.32.4
       '@cosmjs/math': 0.32.4
       '@cosmjs/utils': 0.32.4
-    dev: false
-
-  /@cosmjs/cosmwasm-stargate@0.31.3:
-    resolution: {integrity: sha512-Uv9TmCn3650gdFeZm7SEfUZF3uX3lfJfFhXOk6I2ZLr/FrKximnlb+vwAfZaZnWYvlA7qrKtHIjeRNHvT23zcw==}
-    dependencies:
-      '@cosmjs/amino': 0.31.3
-      '@cosmjs/crypto': 0.31.3
-      '@cosmjs/encoding': 0.31.3
-      '@cosmjs/math': 0.31.3
-      '@cosmjs/proto-signing': 0.31.3
-      '@cosmjs/stargate': 0.31.3
-      '@cosmjs/tendermint-rpc': 0.31.3
-      '@cosmjs/utils': 0.31.3
-      cosmjs-types: 0.8.0
-      long: 4.0.0
-      pako: 2.1.0
-    transitivePeerDependencies:
-      - bufferutil
-      - debug
-      - utf-8-validate
     dev: false
 
   /@cosmjs/cosmwasm-stargate@0.32.4:
@@ -5254,7 +5246,21 @@ packages:
 
   /@tanstack/query-core@4.36.1:
     resolution: {integrity: sha512-DJSilV5+ytBP1FbFcEJovv4rnnm/CokuVvrBEtW/Va9DvuJ3HksbXUJEpI0aV1KtuL4ZoO9AVE6PyNLzF7tLeA==}
-    dev: false
+
+  /@tanstack/query-devtools@5.61.4:
+    resolution: {integrity: sha512-21Tw+u8E3IJJj4A/Bct4H0uBaDTEu7zBrR79FeSyY+mS2gx5/m316oDtJiKkILc819VSTYt+sFzODoJNcpPqZQ==}
+    dev: true
+
+  /@tanstack/react-query-devtools@5.62.7(@tanstack/react-query@4.36.1)(react@18.0.0):
+    resolution: {integrity: sha512-wxXsdTZJRs//hMtJMU5aNlUaTclRFPqLvDNeWbRj8YpGD3aoo4zyu53W55W2DY16+ycg3fti21uCW4N9oyj91w==}
+    peerDependencies:
+      '@tanstack/react-query': ^5.62.7
+      react: ^18 || ^19
+    dependencies:
+      '@tanstack/query-devtools': 5.61.4
+      '@tanstack/react-query': 4.36.1(react-dom@18.0.0)(react@18.0.0)
+      react: 18.0.0
+    dev: true
 
   /@tanstack/react-query@4.36.1(react-dom@18.0.0)(react@18.0.0):
     resolution: {integrity: sha512-y7ySVHFyyQblPl3J3eQBWpXZkliroki3ARnBKsdJchlgt7yJLRDUcf4B8soufgiYt3pEQIkBWBx1N9/ZPIeUWw==}
@@ -5272,7 +5278,6 @@ packages:
       react: 18.0.0
       react-dom: 18.0.0(react@18.0.0)
       use-sync-external-store: 1.4.0(react@18.0.0)
-    dev: false
 
   /@terra-money/feather.js@3.0.0-beta.3:
     resolution: {integrity: sha512-fjXXWO9LJgsV+KDRI92bio7HE5va2eLLzsWgq3uQ5aBM0RtTwrrcRu+l4YSPvcMSgZipQYFT0lTiBLz7ugGYEg==}
@@ -9779,6 +9784,15 @@ packages:
       eslint: 8.0.0
     dev: true
 
+  /eslint-plugin-react-hooks@5.1.0(eslint@8.0.0):
+    resolution: {integrity: sha512-mpJRtPgHN2tNAvZ35AMfqeB3Xqeo273QxrHJsbBEPWODRM4r0yB6jfoROqKEYrOn27UtRPpcpHc2UqyBSuUNTw==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0 || ^9.0.0
+    dependencies:
+      eslint: 8.0.0
+    dev: true
+
   /eslint-plugin-react@7.37.2(eslint@8.0.0):
     resolution: {integrity: sha512-EsTAnj9fLVr/GZleBLFbj/sSuXeWmp1eXIN60ceYnZveqEaUCyW4X+Vh4WTdUhCkW4xutXYqTXCUSyqD4rB75w==}
     engines: {node: '>=4'}
@@ -10660,6 +10674,27 @@ packages:
       map-cache: 0.2.2
     dev: false
 
+  /framer-motion@11.14.1(react-dom@18.0.0)(react@18.0.0):
+    resolution: {integrity: sha512-6B7jC54zgnefmUSa2l4gkc/2CrqclHL9AUbDxxRfbFyWKLd+4guUYtEabzoYMU8G5ICZ6CdJdydOLy74Ekd7ag==}
+    peerDependencies:
+      '@emotion/is-prop-valid': '*'
+      react: ^18.0.0 || ^19.0.0
+      react-dom: ^18.0.0 || ^19.0.0
+    peerDependenciesMeta:
+      '@emotion/is-prop-valid':
+        optional: true
+      react:
+        optional: true
+      react-dom:
+        optional: true
+    dependencies:
+      motion-dom: 11.14.1
+      motion-utils: 11.14.1
+      react: 18.0.0
+      react-dom: 18.0.0(react@18.0.0)
+      tslib: 2.8.1
+    dev: false
+
   /fs-exists-sync@0.1.0:
     resolution: {integrity: sha512-cR/vflFyPZtrN6b38ZyWxpWdhlXrzZEBawlpBQMq7033xVY7/kg0GDMBK5jg8lDYQckdJ5x/YC88lM3C7VMsLg==}
     engines: {node: '>=0.10.0'}
@@ -11250,7 +11285,7 @@ packages:
       strip-bom-string: 1.0.0
     dev: false
 
-  /graz@0.1.25(@cosmjs/amino@0.31.3)(@cosmjs/cosmwasm-stargate@0.31.3)(@cosmjs/launchpad@0.27.1)(@cosmjs/proto-signing@0.31.3)(@cosmjs/stargate@0.31.3)(@cosmjs/tendermint-rpc@0.31.3)(@leapwallet/cosmos-social-login-capsule-provider@0.0.41)(@terra-money/feather.js@3.0.0-beta.3)(@types/react@18.2.55)(axios@0.27.2)(react-dom@18.0.0)(react@18.0.0):
+  /graz@0.1.25(@cosmjs/amino@0.31.3)(@cosmjs/cosmwasm-stargate@0.32.4)(@cosmjs/launchpad@0.27.1)(@cosmjs/proto-signing@0.31.3)(@cosmjs/stargate@0.31.3)(@cosmjs/tendermint-rpc@0.31.3)(@leapwallet/cosmos-social-login-capsule-provider@0.0.41)(@terra-money/feather.js@3.0.0-beta.3)(@types/react@18.2.55)(axios@0.27.2)(react-dom@18.0.0)(react@18.0.0):
     resolution: {integrity: sha512-3xupSgtUae2cr9KL1bsWobndq5h2vyFmk8NXdyueL02NZgBcln6rd+iEmBeH/8RkXheJ9Gdon7iy9ATS/7qahw==}
     hasBin: true
     peerDependencies:
@@ -11264,7 +11299,7 @@ packages:
       react: '>=17'
     dependencies:
       '@cosmjs/amino': 0.31.3
-      '@cosmjs/cosmwasm-stargate': 0.31.3
+      '@cosmjs/cosmwasm-stargate': 0.32.4
       '@cosmjs/launchpad': 0.27.1
       '@cosmjs/proto-signing': 0.31.3
       '@cosmjs/stargate': 0.31.3
@@ -13749,6 +13784,14 @@ packages:
     resolution: {integrity: sha512-/HTWzW2s8J1Gqt+WmUj5Y0mddZk+LInejADc79NJadrWla3rHzmRHki/mnEUH1AvOmbNTZ1BRbKxr8DSgfdjMA==}
     dev: false
 
+  /motion-dom@11.14.1:
+    resolution: {integrity: sha512-Y68tHWR0d2HxHDskNxpeY3pzUdz7L/m5A8TV7VSE6Sq4XUNJdZV8zXco1aeAQ44o48u0i8UKjt8TGIqkZSQ8ew==}
+    dev: false
+
+  /motion-utils@11.14.1:
+    resolution: {integrity: sha512-R6SsehArpkEBUHydkcwQ/8ij8k2PyKWAJ7Y8PN3ztnFwq5RBU3zIamYH6esTp09OgsbwB57mBEZ9DORaN1WTxQ==}
+    dev: false
+
   /motion@10.16.2:
     resolution: {integrity: sha512-p+PurYqfUdcJZvtnmAqu5fJgV2kR0uLFQuBKtLeFVTrYEVllI99tiOTSefVNYuip9ELTEkepIIDftNdze76NAQ==}
     dependencies:
@@ -15181,7 +15224,6 @@ packages:
       loose-envify: 1.4.0
       react: 18.0.0
       scheduler: 0.21.0
-    dev: false
 
   /react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
@@ -15243,7 +15285,6 @@ packages:
     engines: {node: '>=0.10.0'}
     dependencies:
       loose-envify: 1.4.0
-    dev: false
 
   /read-cache@1.0.0:
     resolution: {integrity: sha512-Owdv/Ft7IjOgm/i0xvNDZ1LrRANRfew4b2prF3OWMQLxLfu3bS8FVhCsrSCMK4lR56Y9ya+AThoTpDCTxCmpRA==}
@@ -15815,7 +15856,6 @@ packages:
     resolution: {integrity: sha512-1r87x5fz9MXqswA2ERLo0EbOAU74DpIUO090gIasYTqlVoJeMcl+Z1Rg7WHz+qtPujhS/hGIt9kxZOYBV3faRQ==}
     dependencies:
       loose-envify: 1.4.0
-    dev: false
 
   /scrypt-js@3.0.1:
     resolution: {integrity: sha512-cdwTTnqPu0Hyvf5in5asVdZocVDTNRmR7XEcJuIzMjJeSHybHl7vpB66AzwTaIg6CLSbtjcxc8fqcySfnTkccA==}
@@ -17440,7 +17480,6 @@ packages:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
     dependencies:
       react: 18.0.0
-    dev: false
 
   /use@1.1.2:
     resolution: {integrity: sha512-25Uw2xiVk0m2ySqmnu2GjOIROlImdXMRcpI6Cq7sZeG/zFZgFkSeo2+QwKNWJncfZOVS55eACoinvJ3EtprOBw==}

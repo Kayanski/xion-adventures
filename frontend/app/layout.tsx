@@ -11,6 +11,7 @@ import { ABSTRACT_API_URL } from '@/app/_lib/constants'
 import initGame from "./game/initGame";
 import { Provider } from "jotai";
 import { store } from "./game/store";
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 
 const client = new QueryClient({
@@ -57,6 +58,7 @@ export default function RootLayout({
                 {children}
               </AbstractProvider>
             </GrazProvider>
+            <ReactQueryDevtools client={client} initialIsOpen={false} buttonPosition={'bottom-left'}/>
           </QueryClientProvider>
         </Provider>
       </body>

@@ -49,9 +49,11 @@ export function usePlayerPosition({ accountId }: UseGameMapParams) {
 
     let { tokenId } = useConnectedTokenId({ accountId });
 
+    console.log('usePlayerPosition', {tokenId})
+
     let { data: playerMetadata } = hub.queries.usePlayerMetadata({
         accountId, chainName: accountId?.chainName, args: {
-            tokenId
+            tokenId: tokenId || ''
         }, options: {
             enabled: !!tokenId
         }
@@ -64,24 +66,25 @@ export function usePlayerPosition({ accountId }: UseGameMapParams) {
 export function GameDataLoader() {
 
     // We start by loading the game map
-    let map = useGameMap({ accountId: abstractAccount });
-    let onChainPlayerPosition = usePlayerPosition({ accountId: abstractAccount })
+    const map = useGameMap({ accountId: abstractAccount });
+    const onChainPlayerPosition = usePlayerPosition({ accountId: abstractAccount })
 
-    let [, setMapStore] = useAtom(gameMapAtom)
-    let [, setInitialPosition] = useAtom(initalPositionAtom)
+    console.log('GameDataLoader usePlayerPosition', {map, onChainPlayerPosition})
 
+    const [, setMapStore] = useAtom(gameMapAtom)
+    const [, setInitialPosition] = useAtom(initalPositionAtom)
 
     useEffect(() => {
 
         if (map) {
             // Once the map is loaded, we can save it in state for the game engine to play it
-            console.log(map)
+            console.log('GameDataLoader', {map})
             setMapStore(map.map)
         }
 
         if (onChainPlayerPosition) {
             // Once the onChainPlayer position is loaded, we can save it in state for the game engine to set the character to
-            console.log(onChainPlayerPosition)
+            console.log({onChainPlayerPosition})
             setInitialPosition(onChainPlayerPosition)
         }
 
