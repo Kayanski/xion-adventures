@@ -120,10 +120,6 @@ export function useAuthorizeAddress({ moduleId, accountId }: UseAuthorizeAddress
 
     const {
         data: gameHandlerAppClient,
-        // TODO: figure out what to do with those
-        // isLoading: isGameHandlerAppClientLoading,
-        // isError: isGameHandlerAppClientError,
-        // error: gameHandlerAppClientError,
     } = useAbstractModuleClient({
         moduleId,
         accountId,
