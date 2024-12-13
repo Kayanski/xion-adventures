@@ -22,13 +22,13 @@ importers:
         version: 11.0.2(@abstract-money/core@3.4.2(bufferutil@4.0.8)(graphql@16.8.1)(typescript@5.0.2)(utf-8-validate@5.0.10))(@abstract-money/react@2.3.5(bufferutil@4.0.8)(graphql@16.8.1)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)(typescript@5.0.2)(utf-8-validate@5.0.10))(graz@0.1.25(@cosmjs/amino@0.32.4)(@cosmjs/cosmwasm-stargate@0.32.4(bufferutil@4.0.8)(utf-8-validate@5.0.10))(@cosmjs/launchpad@0.27.1)(@cosmjs/proto-signing@0.32.4)(@cosmjs/stargate@0.32.4(bufferutil@4.0.8)(utf-8-validate@5.0.10))(@cosmjs/tendermint-rpc@0.32.4(bufferutil@4.0.8)(utf-8-validate@5.0.10))(@leapwallet/cosmos-social-login-capsule-provider@0.0.41(@cosmjs/encoding@0.32.4)(@cosmjs/proto-signing@0.32.4)(fp-ts@2.1.1))(@terra-money/feather.js@3.0.0-beta.3)(@types/react@18.2.55)(axios@1.7.9)(bufferutil@4.0.8)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)(utf-8-validate@5.0.10))(typescript@5.0.2)
       '@abstract-money/provider-xion':
         specifier: ^4.1.1
-        version: 4.1.1(@abstract-money/core@3.4.2(bufferutil@4.0.8)(graphql@16.8.1)(typescript@5.0.2)(utf-8-validate@5.0.10))(@abstract-money/react@2.3.5(bufferutil@4.0.8)(graphql@16.8.1)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)(typescript@5.0.2)(utf-8-validate@5.0.10))(@burnt-labs/abstraxion@1.0.0-alpha.54(@types/react@18.2.55)(bufferutil@4.0.8)(graphql-ws@5.16.0(graphql@16.8.1))(graphql@16.8.1)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)(starknet@6.11.0)(utf-8-validate@5.0.10))(@tanstack/react-query@4.36.1(react-dom@18.0.0(react@18.0.0))(react@18.0.0))(esbuild@0.16.17)(typescript@5.0.2)
+        version: 4.1.1(@abstract-money/core@3.4.2(bufferutil@4.0.8)(graphql@16.8.1)(typescript@5.0.2)(utf-8-validate@5.0.10))(@abstract-money/react@2.3.5(bufferutil@4.0.8)(graphql@16.8.1)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)(typescript@5.0.2)(utf-8-validate@5.0.10))(@burnt-labs/abstraxion@1.0.0-alpha.53(@types/react@18.2.55)(bufferutil@4.0.8)(graphql-ws@5.16.0(graphql@16.8.1))(graphql@16.8.1)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)(starknet@6.11.0)(utf-8-validate@5.0.10))(@tanstack/react-query@4.36.1(react-dom@18.0.0(react@18.0.0))(react@18.0.0))(esbuild@0.16.17)(typescript@5.0.2)
       '@abstract-money/react':
         specifier: ^2.3.5
         version: 2.3.5(bufferutil@4.0.8)(graphql@16.8.1)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)(typescript@5.0.2)(utf-8-validate@5.0.10)
       '@burnt-labs/abstraxion':
-        specifier: '=1.0.0-alpha.54'
-        version: 1.0.0-alpha.54(@types/react@18.2.55)(bufferutil@4.0.8)(graphql-ws@5.16.0(graphql@16.8.1))(graphql@16.8.1)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)(starknet@6.11.0)(utf-8-validate@5.0.10)
+        specifier: '=1.0.0-alpha.53'
+        version: 1.0.0-alpha.53(@types/react@18.2.55)(bufferutil@4.0.8)(graphql-ws@5.16.0(graphql@16.8.1))(graphql@16.8.1)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)(starknet@6.11.0)(utf-8-validate@5.0.10)
       '@cosmjs/cosmwasm-stargate':
         specifier: ^0.32.4
         version: 0.32.4(bufferutil@4.0.8)(utf-8-validate@5.0.10)
@@ -876,11 +876,11 @@ packages:
     resolution: {integrity: sha512-vN5p+1kl59GVKMvTHt55NzzmYVxprfJD+ql7U9NFIfKCBkYE55LYtS+WtPlaYOyzydrKI8Nezd+aZextrd+FMA==}
     engines: {node: '>=6.9.0'}
 
-  '@burnt-labs/abstraxion-core@1.0.0-alpha.49':
-    resolution: {integrity: sha512-2aBblhZ1CqDZnx8Hb+6pKS1eRETTc130ZVy+FjlrWz9hOnknj64uqJKCMAoLdcet+lzErYY4OKVs85ZNg68gtQ==}
+  '@burnt-labs/abstraxion-core@1.0.0-alpha.48':
+    resolution: {integrity: sha512-ItgsKYyVVeeMlXjEAxw+HFG10m4NqEDBvbvQu8rU1pjcLS6EQM/d48WzkrFKEZXpLPYQJ4oHcjm3zKoIXE0/oQ==}
 
-  '@burnt-labs/abstraxion@1.0.0-alpha.54':
-    resolution: {integrity: sha512-hAuLwimnE6uAjWx1TtdEFZotMRG6Ss3sJ2WXTSu11tH4rWZhRi52jgtPcsHBQMeODB5F+pmd1rBwMTmcbE54hQ==}
+  '@burnt-labs/abstraxion@1.0.0-alpha.53':
+    resolution: {integrity: sha512-QVVn2jKFjfZ34137AFisloqgQnaiCwOg4Ry37unb7VXNopsNQkjpRDVCLTJGVk6SsZDoOcU983IVjgpkW7lCDQ==}
     peerDependencies:
       react: ^18.2.0
       react-dom: 18.2.0
@@ -8732,11 +8732,11 @@ snapshots:
     optionalDependencies:
       typescript: 5.0.2
 
-  '@abstract-money/provider-xion@4.1.1(@abstract-money/core@3.4.2(bufferutil@4.0.8)(graphql@16.8.1)(typescript@5.0.2)(utf-8-validate@5.0.10))(@abstract-money/react@2.3.5(bufferutil@4.0.8)(graphql@16.8.1)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)(typescript@5.0.2)(utf-8-validate@5.0.10))(@burnt-labs/abstraxion@1.0.0-alpha.54(@types/react@18.2.55)(bufferutil@4.0.8)(graphql-ws@5.16.0(graphql@16.8.1))(graphql@16.8.1)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)(starknet@6.11.0)(utf-8-validate@5.0.10))(@tanstack/react-query@4.36.1(react-dom@18.0.0(react@18.0.0))(react@18.0.0))(esbuild@0.16.17)(typescript@5.0.2)':
+  '@abstract-money/provider-xion@4.1.1(@abstract-money/core@3.4.2(bufferutil@4.0.8)(graphql@16.8.1)(typescript@5.0.2)(utf-8-validate@5.0.10))(@abstract-money/react@2.3.5(bufferutil@4.0.8)(graphql@16.8.1)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)(typescript@5.0.2)(utf-8-validate@5.0.10))(@burnt-labs/abstraxion@1.0.0-alpha.53(@types/react@18.2.55)(bufferutil@4.0.8)(graphql-ws@5.16.0(graphql@16.8.1))(graphql@16.8.1)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)(starknet@6.11.0)(utf-8-validate@5.0.10))(@tanstack/react-query@4.36.1(react-dom@18.0.0(react@18.0.0))(react@18.0.0))(esbuild@0.16.17)(typescript@5.0.2)':
     dependencies:
       '@abstract-money/core': 3.4.2(bufferutil@4.0.8)(graphql@16.8.1)(typescript@5.0.2)(utf-8-validate@5.0.10)
       '@abstract-money/react': 2.3.5(bufferutil@4.0.8)(graphql@16.8.1)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)(typescript@5.0.2)(utf-8-validate@5.0.10)
-      '@burnt-labs/abstraxion': 1.0.0-alpha.54(@types/react@18.2.55)(bufferutil@4.0.8)(graphql-ws@5.16.0(graphql@16.8.1))(graphql@16.8.1)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)(starknet@6.11.0)(utf-8-validate@5.0.10)
+      '@burnt-labs/abstraxion': 1.0.0-alpha.53(@types/react@18.2.55)(bufferutil@4.0.8)(graphql-ws@5.16.0(graphql@16.8.1))(graphql@16.8.1)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)(starknet@6.11.0)(utf-8-validate@5.0.10)
       '@tanstack/react-query': 4.36.1(react-dom@18.0.0(react@18.0.0))(react@18.0.0)
       esbuild-plugin-polyfill-node: 0.3.0(esbuild@0.16.17)
     optionalDependencies:
@@ -9890,7 +9890,7 @@ snapshots:
       '@babel/helper-string-parser': 7.25.9
       '@babel/helper-validator-identifier': 7.25.9
 
-  '@burnt-labs/abstraxion-core@1.0.0-alpha.49(@types/react@18.2.55)(bufferutil@4.0.8)(graphql-ws@5.16.0(graphql@16.8.1))(graphql@16.8.1)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)(starknet@6.11.0)(utf-8-validate@5.0.10)':
+  '@burnt-labs/abstraxion-core@1.0.0-alpha.48(@types/react@18.2.55)(bufferutil@4.0.8)(graphql-ws@5.16.0(graphql@16.8.1))(graphql@16.8.1)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)(starknet@6.11.0)(utf-8-validate@5.0.10)':
     dependencies:
       '@burnt-labs/constants': 0.1.0-alpha.14
       '@burnt-labs/signers': 0.1.0-alpha.13(@types/react@18.2.55)(bufferutil@4.0.8)(graphql-ws@5.16.0(graphql@16.8.1))(graphql@16.8.1)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)(utf-8-validate@5.0.10)
@@ -9918,9 +9918,9 @@ snapshots:
       - subscriptions-transport-ws
       - utf-8-validate
 
-  '@burnt-labs/abstraxion@1.0.0-alpha.54(@types/react@18.2.55)(bufferutil@4.0.8)(graphql-ws@5.16.0(graphql@16.8.1))(graphql@16.8.1)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)(starknet@6.11.0)(utf-8-validate@5.0.10)':
+  '@burnt-labs/abstraxion@1.0.0-alpha.53(@types/react@18.2.55)(bufferutil@4.0.8)(graphql-ws@5.16.0(graphql@16.8.1))(graphql@16.8.1)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)(starknet@6.11.0)(utf-8-validate@5.0.10)':
     dependencies:
-      '@burnt-labs/abstraxion-core': 1.0.0-alpha.49(@types/react@18.2.55)(bufferutil@4.0.8)(graphql-ws@5.16.0(graphql@16.8.1))(graphql@16.8.1)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)(starknet@6.11.0)(utf-8-validate@5.0.10)
+      '@burnt-labs/abstraxion-core': 1.0.0-alpha.48(@types/react@18.2.55)(bufferutil@4.0.8)(graphql-ws@5.16.0(graphql@16.8.1))(graphql@16.8.1)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)(starknet@6.11.0)(utf-8-validate@5.0.10)
       '@burnt-labs/constants': 0.1.0-alpha.14
       '@burnt-labs/signers': 0.1.0-alpha.13(@types/react@18.2.55)(bufferutil@4.0.8)(graphql-ws@5.16.0(graphql@16.8.1))(graphql@16.8.1)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)(utf-8-validate@5.0.10)
       '@burnt-labs/ui': 0.1.0-alpha.15(@types/react@18.2.55)(react-dom@18.0.0(react@18.0.0))(react@18.0.0)

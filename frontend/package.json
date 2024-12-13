@@ -18,7 +18,7 @@
     "@abstract-money/provider-graz": "^11.0.2",
     "@abstract-money/provider-xion": "^4.1.1",
     "@abstract-money/react": "^2.3.5",
-    "@burnt-labs/abstraxion": "=1.0.0-alpha.54",
+    "@burnt-labs/abstraxion": "=1.0.0-alpha.53",
     "@cosmjs/cosmwasm-stargate": "^0.32.4",
     "@graphql-codegen/cli": "^5.0.3",
     "@graphql-codegen/client-preset": "^4.4.0",

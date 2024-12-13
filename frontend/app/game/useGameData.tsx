@@ -1,10 +1,10 @@
 import { AccountId } from "@abstract-money/core";
 import { cw721Base, hub } from "../_generated/generated-abstract";
-import { abstractAccount } from "../walletComponents/useAccountSetup";
 import { useEffect } from "react";
 import { useAccountAddress } from "@abstract-money/react";
 import { useAtom } from "jotai";
 import { gameMapAtom, initialPositionAtom } from "./store";
+import { useConnectedAccountId } from "../walletComponents/useAccountSetup";
 
 
 export type UseGameMapParams = {
@@ -33,9 +33,9 @@ export function useConnectedTokenId({ accountId }: UseGameMapParams) {
     let { data: accountAddress } = useAccountAddress({ accountId, chainName: accountId?.chainName });
 
     let { data: nftOwned, remove: refetchTokens } = cw721Base.queries.useTokens({
-        contractAddress: config?.nft, chainName: accountId!.chainName, args: {
+        contractAddress: config?.nft, chainName: accountId?.chainName, args: {
             owner: accountAddress!
-        }, options: { enabled: !!accountId && !!accountAddress && !!config?.nft }
+        }, options: { enabled: !!accountId && !!accountId.chainName && !!accountAddress && !!config?.nft }
     });
     return {
         tokenId: nftOwned?.tokens[0],
@@ -61,6 +61,7 @@ export function usePlayerMetadata({ accountId }: UseGameMapParams) {
 
 export function GameDataLoader() {
 
+    const abstractAccount = useConnectedAccountId();
     // We start by loading the game map
     let { data: map, isFetched } = useGameMap({ accountId: abstractAccount });
     let { data: onChainPlayerMetadata, isFetched: isMetadataFetched } = usePlayerMetadata({ accountId: abstractAccount })

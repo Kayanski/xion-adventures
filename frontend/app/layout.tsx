@@ -12,6 +12,8 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { AbstraxionProvider } from '@burnt-labs/abstraxion'
 import { AbstractProvider } from './_providers/abstract'
 
+import "@burnt-labs/abstraxion/dist/index.css";
+import "@burnt-labs/ui/dist/index.css";
 
 const client = new QueryClient({
   defaultOptions: {
@@ -43,14 +45,13 @@ export default function RootLayout({
   return (
     <html lang="en" className='h-full w-full'>
       <body className={cn(inter.variable, poppins.variable, 'h-full w-full bg-white')}>
-        <canvas id="game" ></canvas>
         <Provider store={store}>
 
           <QueryClientProvider client={client}>
             <GrazProvider client={client}>
               <AbstraxionProvider
                 config={{
-                  // treasury: 'xion1h82c0efsxxq4pgua754u6xepfu6avglup20fl834gc2ah0ptgn5s2zffe9',
+                  treasury: 'xion1h82c0efsxxq4pgua754u6xepfu6avglup20fl834gc2ah0ptgn5s2zffe9',
 
                   contracts: ["xion1z70cvc08qv5764zeg3dykcyymj5z6nu4sqr7x8vl4zjef2gyp69s9mmdka"],
                 }}

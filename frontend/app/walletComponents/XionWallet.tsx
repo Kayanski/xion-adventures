@@ -47,6 +47,7 @@ export function XionWallet({ children }: XionWalletProps) {
       if (!account?.bech32Address) {
         if (!devMode) {
           console.log("show modal")
+
           setShowModal(true)
         } else {
           // For graz (dev mode)
@@ -73,6 +74,6 @@ export function XionWallet({ children }: XionWalletProps) {
   }, [openModalCommand, setOpenModalCommand, connect, grazDisconnect, walletType, setConnectedWallet, account?.bech32Address, devMode, setShowModal]);
 
 
-  return <div>Nicoco's address {account?.bech32Address}</div>
+  return <div>Nicoco's address {account?.bech32Address}<button onClick={() => setShowModal(true)}> Quoi donc</button></div>
 
 }

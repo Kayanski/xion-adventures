@@ -3,37 +3,35 @@ import { useAtom, useAtomValue } from "jotai";
 import { useEffect, useMemo } from "react";
 import { currentPositionAtom, isTextBoxVisibleAtom, movementsTrackerAtom, textBoxContentAtom, walletOpeningCommand } from "../game/store";
 import { maxMovementLength } from "../game/constants";
-import { useAccounts, useAccountAddress, useCreateAccount, useCreateAccountMonarchy, useInstallModules, useModules } from "@abstract-money/react";
+import { useAccounts, useAccountAddress, useCreateAccount, useCreateAccountMonarchy, useInstallModules, useModules, useSenderAddress } from "@abstract-money/react";
 import { useAccount } from "graz";
 import { cw721Base, GAME_HANDLER_MODULE_ID, gameHandler, HUB_MODULE_ID, hub } from "../_generated/generated-abstract";
 import { AccountId, AdapterExecuteMsgFactory, AdapterQueryMsgBuilder, moduleIdToName, moduleIdToNamespace } from "@abstract-money/core";
 import { IbcClientClient } from "@abstract-money/core/codegen/abstract";
-import { abstractAccount, accountDetails } from "./useAccountSetup";
 import { gameHandlerQueryKeys, useGameHandlerConfigQuery } from "../_generated/generated-abstract/cosmwasm-codegen/GameHandler.react-query";
 import { useAdapterAuthorizedAddresses } from "./useAdapterAuthorizedAddresses";
 import { useAdapterAddress } from "./useAdapterAddress";
 import { useAuthorizeAddress } from "./useAuthorizeAddress";
 import { cn } from "@/utils";
 import { useConnectedTokenId } from "../game/useGameData";
+import { useConnectedAccountId } from "./useAccountSetup";
 
 
 
 export default function MovementUpdateTracker(): JSX.Element {
 
     let [movement, setMovement] = useAtom(movementsTrackerAtom);
-    const { data: account } = useAccount()
+    const { data: account } = useSenderAddress({
+        chainName: "xiontestnet",
+    })
 
-    // This will only work when creating XION accounts
-    // const accountsQuery = useAccounts({
-    //     args: {
-    //         chains: ['xion-testnet-1'],
-    //         owner: account?.bech32Address ?? "",
-    //     }
-    // })
+    const abstractAccount = useConnectedAccountId();
 
-    let { data: accountAddress, remove: refectAccountAddress, queryKey } = useAccountAddress(accountDetails);
+    let { data: accountAddress, remove: refectAccountAddress, queryKey } = useAccountAddress({
+        accountId: abstractAccount, chainName: abstractAccount?.chainName
+    });
     let { mutateAsync: createAccount, data: accountCreationResult } = useCreateAccountMonarchy({ chainName: "xiontestnet" })
-    let { mutateAsync: createGameAccountMutation } = gameHandler.mutations.useCreateAccount({ ...accountDetails });
+    let { mutateAsync: createGameAccountMutation } = gameHandler.mutations.useCreateAccount({ accountId: abstractAccount, chainName: abstractAccount?.chainName });
 
     // Nft query
     let { tokenId, refetchTokens } = useConnectedTokenId({ accountId: abstractAccount });
@@ -45,7 +43,7 @@ export default function MovementUpdateTracker(): JSX.Element {
 
     // For game logic
 
-    const { mutateAsync: movePlayer } = gameHandler.mutations.useMovePlayer({ accountId: abstractAccount, chainName: abstractAccount.chainName });
+    const { mutateAsync: movePlayer } = gameHandler.mutations.useMovePlayer({ accountId: abstractAccount, chainName: abstractAccount?.chainName });
 
 
 
@@ -63,7 +61,7 @@ export default function MovementUpdateTracker(): JSX.Element {
                     fee: 'auto',
                     args: {
                         name: 'Xion-adventures-test',
-                        owner: account.bech32Address,
+                        owner: account,
                         installModules: [{
                             name: "ibc-client",
                             namespace: "abstract",
