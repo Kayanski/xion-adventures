@@ -1,0 +1,154 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "QueryMsg",
+  "oneOf": [
+    {
+      "description": "A query to the base.",
+      "type": "object",
+      "required": [
+        "base"
+      ],
+      "properties": {
+        "base": {
+          "$ref": "#/definitions/BaseQueryMsg"
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "description": "Custom query",
+      "type": "object",
+      "required": [
+        "module"
+      ],
+      "properties": {
+        "module": {
+          "$ref": "#/definitions/HubQueryMsg"
+        }
+      },
+      "additionalProperties": false
+    }
+  ],
+  "definitions": {
+    "BaseQueryMsg": {
+      "description": "Query adapter message",
+      "oneOf": [
+        {
+          "description": "Returns [`AdapterConfigResponse`].",
+          "type": "object",
+          "required": [
+            "base_config"
+          ],
+          "properties": {
+            "base_config": {
+              "type": "object",
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "description": "Returns [`AuthorizedAddressesResponse`].",
+          "type": "object",
+          "required": [
+            "authorized_addresses"
+          ],
+          "properties": {
+            "authorized_addresses": {
+              "type": "object",
+              "required": [
+                "account_address"
+              ],
+              "properties": {
+                "account_address": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "description": "Returns module data Returns [`ModuleDataResponse`].",
+          "type": "object",
+          "required": [
+            "module_data"
+          ],
+          "properties": {
+            "module_data": {
+              "type": "object",
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "HubQueryMsg": {
+      "description": "App query messages",
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "config"
+          ],
+          "properties": {
+            "config": {
+              "type": "object",
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "next_token_id"
+          ],
+          "properties": {
+            "next_token_id": {
+              "type": "object",
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "map"
+          ],
+          "properties": {
+            "map": {
+              "type": "object",
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "player_metadata"
+          ],
+          "properties": {
+            "player_metadata": {
+              "type": "object",
+              "required": [
+                "token_id"
+              ],
+              "properties": {
+                "token_id": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    }
+  }
+}

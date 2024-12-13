@@ -33,7 +33,12 @@ pub fn execute(
 ) -> AccountFactoryResult {
     let config = CONFIG.load(deps.storage)?;
 
-    if let ExecuteMsg::CreateAccount { account_id, salt } = msg {
+    if let ExecuteMsg::CreateAccount {
+        account_id,
+        salt,
+        install_modules,
+    } = msg
+    {
         let create_account_msg = account::InstantiateMsg::<cosmwasm_std::Empty> {
             code_id: config.account_code_id,
             owner: abstract_sdk::std::objects::gov_type::GovernanceDetails::Monarchy {
@@ -44,7 +49,7 @@ pub fn execute(
             link: None,
             // provide the origin chain id
             account_id: account_id.clone(),
-            install_modules: vec![],
+            install_modules,
             namespace: None,
             authenticator: None,
         };

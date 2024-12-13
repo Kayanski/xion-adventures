@@ -180,6 +180,27 @@
           }
         },
         "additionalProperties": false
+      },
+      {
+        "type": "object",
+        "required": [
+          "set_map"
+        ],
+        "properties": {
+          "set_map": {
+            "type": "object",
+            "required": [
+              "map"
+            ],
+            "properties": {
+              "map": {
+                "$ref": "#/definitions/MapOutput"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
       }
     ],
     "definitions": {
@@ -233,6 +254,34 @@
             "additionalProperties": false
           }
         ]
+      },
+      "Binary": {
+        "description": "Binary is a wrapper around Vec<u8> to add base64 de/serialization with serde. It also adds some helper methods to help encode inline.\n\nThis is only needed as serde-json-{core,wasm} has a horrible encoding for Vec<u8>. See also <https://github.com/CosmWasm/cosmwasm/blob/main/docs/MESSAGE_TYPES.md>.",
+        "type": "string"
+      },
+      "MapOutput": {
+        "type": "object",
+        "required": [
+          "data",
+          "height",
+          "width"
+        ],
+        "properties": {
+          "data": {
+            "$ref": "#/definitions/Binary"
+          },
+          "height": {
+            "type": "integer",
+            "format": "uint32",
+            "minimum": 0.0
+          },
+          "width": {
+            "type": "integer",
+            "format": "uint32",
+            "minimum": 0.0
+          }
+        },
+        "additionalProperties": false
       },
       "PlayerLocation": {
         "oneOf": [

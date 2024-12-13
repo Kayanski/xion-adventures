@@ -15,8 +15,12 @@ import { useAuthorizeAddress } from "./useAuthorizeAddress";
 import { cn } from "@/utils";
 import { useConnectedTokenId } from "../game/useGameData";
 import { useConnectedAccountId } from "./useAccountSetup";
-
-
+import { useXionAbstractAccountId } from "./xion/useXionSender";
+import { useXionAbstractAccountExists } from "./xion/useAbstractXionAccountBase";
+import { HOME_CHAIN_NAME } from "./xion";
+import { useAccountFactoryMutation } from "./xion/accountFactory";
+import { useAbstraxionProviderConfig } from "./xion/useAbstractxionProviderConfig";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function MovementUpdateTracker(): JSX.Element {
 
@@ -27,10 +31,45 @@ export default function MovementUpdateTracker(): JSX.Element {
 
     const abstractAccount = useConnectedAccountId();
 
+    // For xion Double authentication (this is a mess)
+    const { data: xionAccountIdQuery } = useXionAbstractAccountId();
+    const { refetch: refetchExistingAccount, data: xionAA } = useXionAbstractAccountExists();
+    const { setContracts } = useAbstraxionProviderConfig();
+    const queryClient = useQueryClient();
+    console.log(xionAA, xionAccountIdQuery)
+
+
+    const { mutateAsync: createAccount } = useAccountFactoryMutation({
+        onSuccess({ accountAddress }) {
+            setContracts([
+                {
+                    address: accountAddress,
+                    amounts: [{ denom: HOME_CHAIN_NAME, amount: "1000000" }],
+                },
+            ]);
+            // setMetaState({ managerAddress });
+        },
+        onError: (e) => {
+            if (
+                // @ts-ignore
+                "message" in e &&
+                (e.message as string).includes("already exists")
+            ) {
+                refetchExistingAccount();
+            }
+        },
+        onSettled: (a, b, c, d) => {
+            refetchExistingAccount();
+            queryClient.defaultMutationOptions().onSettled?.(a, b, c, d);
+        },
+    });
+    // For abstract account address
+
+
     let { data: accountAddress, remove: refectAccountAddress, queryKey } = useAccountAddress({
         accountId: abstractAccount, chainName: abstractAccount?.chainName
     });
-    let { mutateAsync: createAccount, data: accountCreationResult } = useCreateAccountMonarchy({ chainName: "xiontestnet" })
+    // let { mutateAsync: createAccount, data: accountCreationResult } = useCreateAccountMonarchy({ chainName: "xiontestnet" })
     let { mutateAsync: createGameAccountMutation } = gameHandler.mutations.useCreateAccount({ accountId: abstractAccount, chainName: abstractAccount?.chainName });
 
     // Nft query
@@ -54,14 +93,11 @@ export default function MovementUpdateTracker(): JSX.Element {
             }
 
             // We verify the account exists
-            if (!accountAddress) {
+            if (!xionAA) {
                 // Else, we create the account, along with the necessary modules
 
                 createAccount({
-                    fee: 'auto',
-                    args: {
-                        name: 'Xion-adventures-test',
-                        owner: account,
+                    msg: {
                         installModules: [{
                             name: "ibc-client",
                             namespace: "abstract",
@@ -76,7 +112,7 @@ export default function MovementUpdateTracker(): JSX.Element {
                             version: 'latest',
                         }
                         ]
-                    },
+                    }
                 }).then((_) => {
                     refectAccountAddress()
                     refectGameHandlerAddress()

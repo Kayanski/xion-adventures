@@ -24,3 +24,4 @@ env_logger.workspace = true
 game-handler = { workspace = true }
 nft = { workspace = true }
 xion-adventures-hub = { workspace = true }
+account_factory = { workspace = true }

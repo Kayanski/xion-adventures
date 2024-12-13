@@ -1,4 +1,4 @@
-use abstract_sdk::std::objects::AccountId;
+use abstract_sdk::std::{account::ModuleInstallConfig, objects::AccountId};
 use cosmwasm_schema::{cw_serde, QueryResponses};
 use cosmwasm_std::Binary;
 use cw_storage_plus::Item;
@@ -13,6 +13,7 @@ pub enum ExecuteMsg {
     CreateAccount {
         account_id: Option<AccountId>,
         salt: Binary,
+        install_modules: Vec<ModuleInstallConfig>,
     },
     NoMsg {},
 }

@@ -19,7 +19,10 @@
     "@abstract-money/provider-xion": "^4.1.1",
     "@abstract-money/react": "^2.3.5",
     "@burnt-labs/abstraxion": "=1.0.0-alpha.53",
+    "@burnt-labs/signers": "0.1.0-alpha.13",
     "@cosmjs/cosmwasm-stargate": "^0.32.4",
+    "@cosmjs/stargate": "^0.32.4",
+    "@cosmjs/tendermint-rpc": "^0.32.4",
     "@graphql-codegen/cli": "^5.0.3",
     "@graphql-codegen/client-preset": "^4.4.0",
     "@graphql-typed-document-node/core": "^3.2.0",
@@ -30,6 +33,9 @@
     "@types/next": "^9.0.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "cosmes": "=0.0.69",
+    "@noble/hashes": "^1.3.2",
+    "@noble/secp256k1": "^2.0.0",
     "framer-motion": "^11.13.5",
     "generate": "^0.14.0",
     "graphql-request": "^5.1.0",
@@ -42,7 +48,9 @@
     "react": "^18",
     "react-dom": "^18",
     "tailwind-merge": "^2.5.4",
-    "type-fest": "^4.2.6"
+    "type-fest": "^4.2.6",
+    "usehooks-ts": "^3.1.0",
+    "zustand": "^5.0.2"
   },
   "devDependencies": {
     "@tanstack/react-query-devtools": "^5.62.7",

@@ -10,9 +10,23 @@ import {
     useAbstraxionAccount,
     useAbstraxionSigningClient,
 } from '@burnt-labs/abstraxion'
-import { FC, PropsWithChildren, useMemo } from 'react'
+import { FC, PropsWithChildren, useEffect, useMemo } from 'react'
 import { ABSTRACT_API_URL } from '../_lib/constants'
 import { useDevMode } from './dev-mod'
+import { useAbstraxionProviderConfig } from '../walletComponents/xion/useAbstractxionProviderConfig'
+import { useReauthenticate } from '../walletComponents/xion/useReauthenticate'
+import { deepEqual } from '../_lib/deepEqual'
+
+
+function Reauthenticator() {
+    const { contracts, prevContracts } = useAbstraxionProviderConfig();
+    const reauthenticate = useReauthenticate();
+    useEffect(() => {
+        if (contracts.length !== 0 && !deepEqual(contracts, prevContracts))
+            reauthenticate?.();
+    }, [contracts, reauthenticate, prevContracts]);
+    return null;
+}
 
 /**
  * Provides the Abstract context to the application.
@@ -27,12 +41,13 @@ export const AbstractProvider: FC<PropsWithChildren> = ({ children }) => {
             return grazProvider.useCosmWasmClient(args)
         },
         useSigningCosmWasmClient: (args) => {
-            const grazSigningClient = grazProvider.useSigningCosmWasmClient(args)
+            //const grazSigningClient = grazProvider.useSigningCosmWasmClient(args)
             // TODO: why does this not work?
             // const xionSigningClient = xionProvider.useSigningCosmWasmClient(args)
             const { client: xionSigningClient } = useAbstraxionSigningClient()
 
-            return devMode ? grazSigningClient : xionSigningClient
+            // return devMode ? grazSigningClient : xionSigningClient
+            return xionSigningClient
         },
         useSenderAddress: (args) => {
             const grazSenderAddress = grazProvider.useSenderAddress(args)
@@ -53,6 +68,7 @@ export const AbstractProvider: FC<PropsWithChildren> = ({ children }) => {
 
     return (
         <Lib_AbstractProvider config={abstractConfig}>
+            <Reauthenticator />
             {children}
         </Lib_AbstractProvider>
     )

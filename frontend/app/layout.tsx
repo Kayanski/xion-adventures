@@ -14,6 +14,7 @@ import { AbstractProvider } from './_providers/abstract'
 
 import "@burnt-labs/abstraxion/dist/index.css";
 import "@burnt-labs/ui/dist/index.css";
+import { ACCOUNT_FACTORY_ADDRESS } from './walletComponents/xion'
 
 const client = new QueryClient({
   defaultOptions: {
@@ -51,9 +52,9 @@ export default function RootLayout({
             <GrazProvider client={client}>
               <AbstraxionProvider
                 config={{
-                  treasury: 'xion1h82c0efsxxq4pgua754u6xepfu6avglup20fl834gc2ah0ptgn5s2zffe9',
+                  // treasury: 'xion1h82c0efsxxq4pgua754u6xepfu6avglup20fl834gc2ah0ptgn5s2zffe9',
 
-                  contracts: ["xion1z70cvc08qv5764zeg3dykcyymj5z6nu4sqr7x8vl4zjef2gyp69s9mmdka"],
+                  contracts: [ACCOUNT_FACTORY_ADDRESS],
                 }}
               >
                 <AbstractProvider>

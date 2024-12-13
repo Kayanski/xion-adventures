@@ -6174,6 +6174,7 @@ dependencies = [
  "abstract-adapter",
  "abstract-client",
  "abstract-interface",
+ "account_factory",
  "anyhow",
  "clap",
  "common",
