@@ -1,7 +1,8 @@
-import { createMap, seaFrame, terrainFrame, treeFrame } from "./renderMap";
+import { createMap, destroyMap, formatMap, map, seaFrame, terrainFrame, treeFrame } from "./renderMap";
 import {
   backgroundSpritesX,
   backgroundSpritesY,
+  defaultPosition,
   frontZ,
   maxMovementLength,
   playerZ,
@@ -20,12 +21,17 @@ import {
 } from "kaplay";
 import initKaplay from "./kaplayCtx";
 import {
+  gameMapAtom,
+  initialPositionAtom,
   isWalletConnectedAtom,
   store,
   textBoxContentAtom,
   walletOpeningCommand,
 } from "./store";
 import { movementTrackerUpdate } from "./playerUpdate";
+import { QueryClient, useQueryClient } from "@tanstack/react-query";
+import { MapOutput } from "../_generated/generated-abstract/cosmwasm-codegen/Hub.types";
+import { setCamPos } from "./camera";
 
 export type Player = GameObj<
   | PosComp
@@ -41,57 +47,10 @@ export type Player = GameObj<
   }
 >;
 
-type MapType = {
-  width: number;
-  height: number;
-  data: string;
-};
-function stringToBytes(val: string) {
-  const result = [];
-  for (let i = 0; i < val.length; i++) {
-    result.push(val.charCodeAt(i));
-  }
-  return result;
-}
 
 export default async function initGame() {
   const DIAGONAL_FACTOR = 1 / Math.sqrt(2);
   const k = initKaplay();
-
-  let map = k.load(
-    fetch("/mapTest.json")
-      .then((res) => res.json())
-      .then((json: MapType) => {
-        const mapArr = [];
-        let dataArray = stringToBytes(atob(json.data));
-        while (dataArray.length) mapArr.push(dataArray.splice(0, json.width));
-        let maxRow = mapArr.map(function (row) {
-          return Math.max.apply(Math, row);
-        });
-        let max = Math.max.apply(null, maxRow);
-        let minRow = mapArr.map(function (row) {
-          return Math.min.apply(Math, row);
-        });
-        let min = Math.min.apply(null, minRow);
-
-        let third = (max - min) / 3;
-
-        for (let i = 0; i < mapArr.length; i++) {
-          for (let j = 0; j < mapArr[i].length; j++) {
-            let item_byte = mapArr[i][j];
-            if (item_byte < min + third) {
-              mapArr[i][j] = seaFrame;
-            } else if (item_byte < min + 2 * third) {
-              mapArr[i][j] = terrainFrame;
-            } else {
-              mapArr[i][j] = treeFrame;
-            }
-          }
-        }
-
-        return mapArr;
-      })
-  );
 
   k.loadSprite("background", "./background.png", {
     sliceY: backgroundSpritesY,
@@ -118,15 +77,12 @@ export default async function initGame() {
     },
   });
 
-  let mapAwaited = await map;
-  createMap(k, mapAwaited);
-
   const player: Player = k.add([
     k.sprite("characters", { anim: "down-idle" }),
     k.area(),
     k.body(),
-    k.anchor("center"),
-    k.pos(k.center()),
+    k.anchor("topleft"),
+    k.pos(defaultPosition[0], defaultPosition[1]),
     k.scale(8),
     k.z(playerZ),
     "player",
@@ -135,15 +91,42 @@ export default async function initGame() {
       direction: k.vec2(0, 0),
     },
   ]);
+  // Register the map on the player
+
+  // We update the game map once it's fetched from chain
+  store.sub(gameMapAtom, () => {
+    let newMap = store.get(gameMapAtom);
+    if (!newMap) {
+      return
+    }
+    destroyMap(k)
+    createMap(k, formatMap(newMap))
+
+    setCamPos(k, player, map);
+  })
+
+  // We update the player map once it's fetched from chain
+  store.sub(initialPositionAtom, () => {
+    let position = store.get(initialPositionAtom)
+    if (!position) {
+      return
+    }
+    if ("general_map" in position.location) {
+      console.log("on-chain pos", position)
+      player.pos = k.vec2(position.location.general_map.x * tileScreenSize, position.location.general_map.y * tileScreenSize)
+    }
+  })
 
   player.onUpdate(() => {
     player.direction.x = 0;
     player.direction.y = 0;
 
-    if (k.isKeyDown("left")) player.direction.x = -1;
-    if (k.isKeyDown("right")) player.direction.x = 1;
-    if (k.isKeyDown("up")) player.direction.y = -1;
-    if (k.isKeyDown("down")) player.direction.y = 1;
+    if (document.hasFocus()) {
+      if (k.isKeyDown("left")) player.direction.x = -1;
+      if (k.isKeyDown("right")) player.direction.x = 1;
+      if (k.isKeyDown("up")) player.direction.y = -1;
+      if (k.isKeyDown("down")) player.direction.y = 1;
+    }
 
     if (
       player.direction.eq(k.vec2(-1, 0)) &&
@@ -192,24 +175,9 @@ export default async function initGame() {
       playerMovement = player.direction.scale(player.speed);
     }
 
-    // We update the camera position and block if we reach the limit
-    let camPosLowerLimit = k.center().sub(k.vec2(tileScreenSize, tileScreenSize));
-    let camPosHigherLimit = k.vec2(mapAwaited.length + 1, mapAwaited[0].length + 1).scale(tileScreenSize).sub(k.center());
-    k.camPos(player.pos);
-    if (k.camPos().x < camPosLowerLimit.x) {
-      k.camPos(camPosLowerLimit.x, k.camPos().y)
-    }
-    if (k.camPos().y < camPosLowerLimit.y) {
-      k.camPos(k.camPos().x, camPosLowerLimit.y)
-    }
-    if (k.camPos().x > camPosHigherLimit.x) {
-      k.camPos(camPosHigherLimit.x, k.camPos().y)
-    }
-    if (k.camPos().y > camPosHigherLimit.y) {
-      k.camPos(k.camPos().x, camPosHigherLimit.y)
-    }
-
     player.move(playerMovement);
+
+    setCamPos(k, player, map);
 
     movementTrackerUpdate(k, player);
   });

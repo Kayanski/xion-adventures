@@ -51,7 +51,10 @@ pub fn instantiate_handler(
     store_map(deps.storage, &map)?;
     MAP_OUTPUT.save(deps.storage, &map)?;
 
-    let config: Config = Config { next_token_id: 0 };
+    let config: Config = Config {
+        next_token_id: 0,
+        admin_account: msg.admin_account,
+    };
     CONFIG.save(deps.storage, &config)?;
 
     // Example instantiation that doesn't do anything

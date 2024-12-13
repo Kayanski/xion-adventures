@@ -6,7 +6,8 @@ import { AccountId } from "@abstract-money/core";
 // We use this to get the abstractAccount associated with the connected wallet
 // Hardcoded for testing
 export const abstractAccount: AccountId = {
-    seq: 36,
+    // seq: 37,
+    seq: 39,
     trace: "local",
     chainName: "xiontestnet",
 }

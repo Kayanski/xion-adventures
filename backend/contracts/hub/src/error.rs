@@ -47,6 +47,9 @@ pub enum HubError {
 
     #[error("Nft metadata not available {token_id}")]
     NftMetadataUnavailable { token_id: String },
+
+    #[error("Can't update the map, because players have started to play")]
+    MapNotEmpty {},
 }
 
 impl From<HubError> for AbstractSdkError {

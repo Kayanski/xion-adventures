@@ -42,6 +42,12 @@ pub enum HubExecuteMsg {
         token_id: String,
         metadata: XionAdventuresExtensionMsg,
     },
+
+    // Admin function
+    // Be able to set a map on the adapter if the generated map is shit
+    SetMap {
+        map: MapOutput,
+    },
 }
 
 #[cosmwasm_schema::cw_serde]

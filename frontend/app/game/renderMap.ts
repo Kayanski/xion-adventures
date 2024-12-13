@@ -20,20 +20,28 @@ import {
   chunkFactor,
   chunkSize,
   scale,
+  seaCutoff,
   spriteSize,
   terrainZ,
   tileScreenSize,
+  treeCutoff,
 } from "./constants";
+import { MapOutput } from "../_generated/generated-abstract/cosmwasm-codegen/Hub.types";
+import { gameMapAtom, store } from "./store";
+import { setEngine } from "crypto";
 
 type MapObjectType = GameObj<PosComp>;
 
 let coveredChunks: Set<string> = new Set();
+
+export let map: number[][] = [[]]
 
 export function createMap(
   k: KAPLAYCtx,
   mapData: number[][]
 ): MapObjectType {
   let mapObject = k.add([k.pos(0, 0), "map"]);
+  map = mapData
 
   mapObject.onUpdate(() => {
     // We need to make sure enough chunks are loaded
@@ -63,10 +71,18 @@ export function createMap(
         }
       }
     }
-
     // If not, we create them (and they destroy themselves)
   });
   return mapObject;
+}
+
+export function destroyMap(
+  k: KAPLAYCtx) {
+  // Destroy the map object
+  let maps = k.get("map");
+  maps[0]?.destroy()
+  // Restore the global map Rendering state
+  coveredChunks.clear()
 }
 
 export async function createMapChunk(
@@ -159,3 +175,38 @@ function outOfScreen(k: KAPLAYCtx, chunkPos: Vec2) {
     current_pos.x + k.width() / 2 + 2 * chunkFactor ||
     chunkPos.y > current_pos.y + k.height() / 2 + 2 * chunkFactor
 }
+
+function stringToBytes(val: string) {
+  const result = [];
+  for (let i = 0; i < val.length; i++) {
+    result.push(val.charCodeAt(i));
+  }
+  return result;
+}
+
+
+// We want first index to be width and second index to be height
+export function formatMap(mapJson: MapOutput) {
+
+  let dataArray = stringToBytes(atob(mapJson.data));
+  const mapArr = Array.from({ length: mapJson.width }, () => Array(mapJson.height).fill(undefined));
+  console.log(dataArray)
+
+  dataArray.forEach((el, index) => {
+
+    let row_index = index % mapJson.width;
+    let line_index = index / mapJson.height;
+
+    // Each element is compared to an enum and stored separately
+    if (el < seaCutoff) {
+      mapArr[row_index][line_index] = seaFrame
+    } else if (el < treeCutoff) {
+      mapArr[row_index][line_index] = terrainFrame
+    } else {
+      mapArr[row_index][line_index] = treeFrame
+    };
+  })
+  return mapArr;
+
+}
+

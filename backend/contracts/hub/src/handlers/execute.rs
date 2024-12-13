@@ -1,8 +1,9 @@
 use crate::contract::{Hub, HubResult};
 use crate::error::HubError;
+use crate::handlers::instantiate::store_map;
 use crate::helpers::next_token_id_mut;
 use crate::msg::{HubExecuteMsg, HubIbcCallbackMsg, HubIbcMsg};
-use crate::state::NFT;
+use crate::state::{CONFIG, MAP_OUTPUT, NFT};
 use abstract_adapter::objects::{AccountId, TruncatedChainId};
 use abstract_adapter::std::ibc::Callback;
 use abstract_adapter::std::objects::module::ModuleInfo;
@@ -11,9 +12,9 @@ use abstract_sdk::features::{AccountIdentification, ModuleIdentification};
 use abstract_sdk::{
     AbstractResponse, AccountAction, AccountVerification, Execution, ModuleInterface,
 };
-use common::NAMESPACE;
-use cosmwasm_std::{ensure_eq, to_json_binary, wasm_execute, DepsMut, Env, MessageInfo};
-use cw721::msg::{NftInfoResponse, OwnerOfResponse};
+use common::{MapOutput, NAMESPACE};
+use cosmwasm_std::{ensure, ensure_eq, to_json_binary, wasm_execute, DepsMut, Env, MessageInfo};
+use cw721::msg::{NftInfoResponse, OwnerOfResponse, TokensResponse};
 use nft::msg::{ExecuteMsg, QueryMsg};
 use nft::{XionAdventuresExtension, XionAdventuresExtensionMsg};
 
@@ -42,6 +43,7 @@ pub fn execute_handler(
             token_id,
             metadata,
         } => modify_metadata(deps, env, info, adapter, module_id, token_id, metadata),
+        HubExecuteMsg::SetMap { map } => set_map(deps, adapter, map),
     }
 }
 
@@ -134,7 +136,7 @@ fn mint(
 
     let account = if let Some(recipient) = recipient {
         adapter
-            .account_registry(deps.as_ref(),)?
+            .account_registry(deps.as_ref())?
             .account(&recipient)?
     } else {
         adapter.account(deps.as_ref())?
@@ -184,4 +186,29 @@ fn modify_metadata(
     )?;
 
     Ok(adapter.response("modify-metadata").add_message(modify_msg))
+}
+
+#[allow(clippy::too_many_arguments)]
+fn set_map(deps: DepsMut, hub: Hub, map: MapOutput) -> HubResult {
+    let config = CONFIG.load(deps.storage)?;
+    ensure_eq!(
+        hub.account_id(deps.as_ref())?,
+        config.admin_account,
+        HubError::Unauthorized {}
+    );
+
+    // We can only modify the map if there's no minted tokens
+    let tokens: TokensResponse = deps.querier.query_wasm_smart(
+        NFT.load(deps.storage)?,
+        &QueryMsg::AllTokens {
+            start_after: None,
+            limit: Some(1),
+        },
+    )?;
+    ensure!(tokens.tokens.is_empty(), HubError::MapNotEmpty {});
+
+    store_map(deps.storage, &map)?;
+    MAP_OUTPUT.save(deps.storage, &map)?;
+
+    Ok(hub.response("modify-map"))
 }

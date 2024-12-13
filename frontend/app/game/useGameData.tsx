@@ -1,10 +1,10 @@
 import { AccountId } from "@abstract-money/core";
 import { cw721Base, hub } from "../_generated/generated-abstract";
-import { abstractAccount, accountDetails } from "../walletComponents/useAccountSetup";
+import { abstractAccount } from "../walletComponents/useAccountSetup";
 import { useEffect } from "react";
 import { useAccountAddress } from "@abstract-money/react";
 import { useAtom } from "jotai";
-import { gameMapAtom, initalPositionAtom } from "./store";
+import { gameMapAtom, initialPositionAtom } from "./store";
 
 
 export type UseGameMapParams = {
@@ -22,21 +22,20 @@ export function useGameMap({ accountId }: UseGameMapParams) {
         }
     }
 
-    let { data: map } = hub.queries.useMap({ accountId, chainName: accountId?.chainName });
-
-    return map
+    return hub.queries.useMap({ accountId, chainName: accountId?.chainName })
 
 }
 
 export function useConnectedTokenId({ accountId }: UseGameMapParams) {
 
-    let { data: config } = hub.queries.useConfig(accountDetails);
-    let { data: accountAddress } = useAccountAddress(accountDetails);
+
+    let { data: config } = hub.queries.useConfig({ accountId, chainName: accountId?.chainName });
+    let { data: accountAddress } = useAccountAddress({ accountId, chainName: accountId?.chainName });
 
     let { data: nftOwned, remove: refetchTokens } = cw721Base.queries.useTokens({
-        contractAddress: config?.nft, chainName: accountDetails.chainName, args: {
+        contractAddress: config?.nft, chainName: accountId!.chainName, args: {
             owner: accountAddress!
-        }, options: { enabled: !!accountAddress && !!config?.nft }
+        }, options: { enabled: !!accountId && !!accountAddress && !!config?.nft }
     });
     return {
         tokenId: nftOwned?.tokens[0],
@@ -45,18 +44,17 @@ export function useConnectedTokenId({ accountId }: UseGameMapParams) {
 }
 
 
-export function usePlayerPosition({ accountId }: UseGameMapParams) {
+export function usePlayerMetadata({ accountId }: UseGameMapParams) {
 
     let { tokenId } = useConnectedTokenId({ accountId });
 
-    let { data: playerMetadata } = hub.queries.usePlayerMetadata({
+    return hub.queries.usePlayerMetadata({
         accountId, chainName: accountId?.chainName, args: {
-            tokenId
+            tokenId: tokenId!
         }, options: {
-            enabled: !!tokenId
+            enabled: !!tokenId && !!accountId
         }
     },);
-    return playerMetadata?.location
 }
 
 
@@ -64,30 +62,25 @@ export function usePlayerPosition({ accountId }: UseGameMapParams) {
 export function GameDataLoader() {
 
     // We start by loading the game map
-    let map = useGameMap({ accountId: abstractAccount });
-    let onChainPlayerPosition = usePlayerPosition({ accountId: abstractAccount })
+    let { data: map, isFetched } = useGameMap({ accountId: abstractAccount });
+    let { data: onChainPlayerMetadata, isFetched: isMetadataFetched } = usePlayerMetadata({ accountId: abstractAccount })
 
     let [, setMapStore] = useAtom(gameMapAtom)
-    let [, setInitialPosition] = useAtom(initalPositionAtom)
-
+    let [, setInitialPosition] = useAtom(initialPositionAtom)
 
     useEffect(() => {
+        console.log("query is fetched", isFetched, isMetadataFetched)
 
         if (map) {
             // Once the map is loaded, we can save it in state for the game engine to play it
-            console.log(map)
             setMapStore(map.map)
         }
 
-        if (onChainPlayerPosition) {
+        if (onChainPlayerMetadata) {
             // Once the onChainPlayer position is loaded, we can save it in state for the game engine to set the character to
-            console.log(onChainPlayerPosition)
-            setInitialPosition(onChainPlayerPosition)
+            setInitialPosition(onChainPlayerMetadata)
         }
-
-
-
-    }, [map, onChainPlayerPosition])
+    }, [map, onChainPlayerMetadata])
 
 
     return (<></>)

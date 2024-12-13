@@ -78,7 +78,7 @@ pub fn publish_bundle<Chain: CwEnv>(abs: &AbstractClient<Chain>) -> anyhow::Resu
     // We upload the nft
     let nft = nft::NftInterface::new(chain.clone());
     // We publish the Hub
-    nft.upload()?;
+    nft.upload_if_needed()?;
     publisher.publish_adapter::<HubInstantiateMsg, HubInterface<Chain>>(HubInstantiateMsg {
         admin_account: publisher.account().id()?,
         nft_code_id: nft.code_id()?,

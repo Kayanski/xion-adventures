@@ -17,7 +17,7 @@ export function movementTrackerUpdate(k: KAPLAYCtx, player: Player) {
 
   let movement = new_tile.sub(currentPosition);
   if (Math.abs(movement.x) >= 1 || Math.abs(movement.y) >= 1) {
-    let intMovement = k.vec2(Math.floor(movement.x), Math.floor(movement.y));
+    let intMovement = k.vec2(Math.trunc(movement.x), Math.trunc(movement.y));
     // We move the backup to the actual array of it was reset
     {
       let movementsTrackerVec = store.get(movementsTrackerAtom);

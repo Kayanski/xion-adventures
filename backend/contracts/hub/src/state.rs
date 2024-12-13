@@ -1,3 +1,4 @@
+use abstract_adapter::objects::AccountId;
 use common::MapOutput;
 
 use cosmwasm_std::Addr;
@@ -6,6 +7,7 @@ use cw_storage_plus::{Item, Map};
 #[cosmwasm_schema::cw_serde]
 pub struct Config {
     pub next_token_id: u64,
+    pub admin_account: AccountId,
 }
 
 pub const CONFIG: Item<Config> = Item::new("config");

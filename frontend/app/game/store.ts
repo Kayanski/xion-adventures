@@ -1,6 +1,6 @@
 import { atom, createStore, PrimitiveAtom } from "jotai";
 import { Vec2 } from "kaplay";
-import { MapOutput, PlayerLocation } from "../_generated/generated-abstract/cosmwasm-codegen/Hub.types";
+import { MapOutput, PlayerLocation, XionAdventuresExtension } from "../_generated/generated-abstract/cosmwasm-codegen/Hub.types";
 
 export const isTextBoxVisibleAtom = atom(false);
 export const textBoxContentAtom = atom("");
@@ -16,5 +16,5 @@ export const backupMovementsTrackerAtom = atom<Vec2[]>([]);
 
 // Initial position is needed to load the game
 // If not present, the game cannot start
-export const initalPositionAtom = atom<PlayerLocation>();
+export const initialPositionAtom = atom<XionAdventuresExtension>();
 export const gameMapAtom = atom<MapOutput>();

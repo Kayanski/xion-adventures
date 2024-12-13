@@ -1,10 +1,11 @@
-import { AccountId, AdapterAuthorizedAddressesResponse, AdapterQueryMsgBuilder } from "@abstract-money/core";
-import { useAbstractModuleQueryClient, useAccountAddress, useCosmWasmClient } from "@abstract-money/react";
+import { AccountId, AccountPublicClient, AdapterAuthorizedAddressesResponse, AdapterQueryMsgBuilder } from "@abstract-money/core";
+import { useAbstractModuleQueryClient, useAccountAddress, useConfig, useCosmWasmClient } from "@abstract-money/react";
 import { GameHandlerAppQueryClient } from "../_generated/generated-abstract/cosmwasm-codegen/GameHandler.client";
 import { useCallback } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, UseQueryOptions } from "@tanstack/react-query";
 import { gameHandlerQueryKeys, GameHandlerReactQuery } from "../_generated/generated-abstract/cosmwasm-codegen/GameHandler.react-query";
 import { CosmWasmClient } from "@abstract-money/cli/cosmjs";
+import { useAdapterAddress } from "./useAdapterAddress";
 
 
 export function authorizedAddressQueryKey(moduleId: string | undefined, moduleAddress: string | undefined, args?: Record<string, unknown>) {
@@ -16,33 +17,45 @@ export function authorizedAddressQueryKey(moduleId: string | undefined, moduleAd
     }] as const)
 }
 
-export interface AdapterAuthorizedAddressesQuery<TData> extends GameHandlerReactQuery<AdapterAuthorizedAddressesResponse, TData> {
+export interface AdapterAuthorizedAddressesQuery<TData> {
+
+    client: AccountPublicClient | undefined,
+    moduleId: string | undefined,
+    accountId: AccountId | undefined,
     args: undefined | {
         accountAddress: string
     },
-    cosmWasmClient: undefined | CosmWasmClient
+    options?: Omit<UseQueryOptions<TData, Error, TData>, "'queryKey' | 'queryFn' | 'initialData'"> & {
+        initialData?: undefined;
+    }
 }
-export function useAdapterAuthorizedAddressesQuery<TData = AdapterAuthorizedAddressesResponse>({
+export function useAdapterAuthorizedAddressesQuery({
     client,
+    accountId,
+    moduleId,
     args,
     options,
-    cosmWasmClient
-}: AdapterAuthorizedAddressesQuery<TData>) {
+}: AdapterAuthorizedAddressesQuery<AdapterAuthorizedAddressesResponse>) {
+
+    const { data: moduleAddress } = useAdapterAddress({ accountId, moduleId });
+
+    let { data: cosmWasmClient } = useCosmWasmClient({
+        chainName: accountId?.chainName,
+    });
 
 
-    return useQuery<AdapterAuthorizedAddressesResponse, Error, TData>(authorizedAddressQueryKey(client?.moduleId, client?._moduleAddress, args), async () => {
+    return useQuery<AdapterAuthorizedAddressesResponse, Error, AdapterAuthorizedAddressesResponse>(authorizedAddressQueryKey(moduleId, moduleAddress ?? undefined, args), async () => {
         if (!client || !args || !cosmWasmClient) {
             return Promise.reject(new Error("Invalid client"))
         }
         let queryMsg = AdapterQueryMsgBuilder.authorizedAddresses(args.accountAddress);
 
-        let moduleAddress = await client.getAddress();
-        let queryResult = await cosmWasmClient.queryContractSmart(moduleAddress, queryMsg)
+        let queryResult = await cosmWasmClient.queryContractSmart(moduleAddress!, queryMsg)
 
         return queryResult as unknown as AdapterAuthorizedAddressesResponse;
     }, {
         ...options,
-        enabled: !!client && !!args && !!cosmWasmClient && (options?.enabled != undefined ? options.enabled : true)
+        enabled: !!client && !!args && !!cosmWasmClient && !!moduleAddress && (options?.enabled != undefined ? options.enabled : true)
     });
 }
 
@@ -54,24 +67,20 @@ export type UseAdapterAuthorizedAddressesParams = {
 export function useAdapterAuthorizedAddresses({ accountId, moduleId }: UseAdapterAuthorizedAddressesParams) {
 
     let { data: accountAddress } = useAccountAddress({ accountId, chainName: accountId?.chainName });
-    const { data: adapterQueryClient } = useAbstractModuleQueryClient({
-        moduleId: moduleId,
+
+    const { useAccountPublicClient } = useConfig()
+    const accountPublicClient = useAccountPublicClient({
         accountId,
         chainName: accountId?.chainName,
-        Module: GameHandlerAppQueryClient, // Here we use the gameHandler Client, but we should get a default adapter client
-        query: { enabled: !!accountAddress },
     })
-
-    let { data: cosmWasmClient } = useCosmWasmClient({
-        chainName: accountId?.chainName,
-    });
 
     return useAdapterAuthorizedAddressesQuery({
         args: accountAddress ? {
             accountAddress
         } : undefined,
-        client: adapterQueryClient,
-        cosmWasmClient
+        moduleId,
+        accountId,
+        client: accountPublicClient,
     })
 
 }
