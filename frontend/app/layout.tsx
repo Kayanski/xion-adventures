@@ -58,8 +58,7 @@ export default function RootLayout({
                 {children}
               </AbstractProvider>
             </GrazProvider>
-            <ReactQueryDevtools initialIsOpen={false} />
-
+            <ReactQueryDevtools client={client} initialIsOpen={false} buttonPosition={'bottom-left'} />
           </QueryClientProvider>
         </Provider>
       </body>
