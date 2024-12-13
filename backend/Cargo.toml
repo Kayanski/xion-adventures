@@ -3,6 +3,7 @@ members = [
     "contracts/hub",
     "contracts/modules/*",
     "contracts/nft",
+    "contracts/account_factory",
     "packages/*",
 ]
 resolver = "2"
@@ -13,6 +14,7 @@ package.version = "0.2.2"
 # Internal
 xion-adventures-hub = { path = "./contracts/hub", default-features = false }
 nft = { path = "./contracts/nft" }
+account_factory = { path = "./contracts/account_factory" }
 game-handler = { path = "./contracts/modules/game_handler", default-features = false }
 map-generation = { path = "./packages/map-generation" }
 common = { path = "./packages/common" }
