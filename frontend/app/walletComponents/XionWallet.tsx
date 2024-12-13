@@ -10,6 +10,7 @@ import { useActiveChains } from "graz";
 import { useAccount } from "graz";
 import { useSenderAddress } from "@abstract-money/react";
 import { useDisconnect } from "graz";
+import { useDevMode } from "../_providers/dev-mod";
 
 
 interface XionWalletProps {
@@ -17,31 +18,47 @@ interface XionWalletProps {
 }
 
 export function XionWallet({ children }: XionWalletProps) {
-
+  const { devMode } = useDevMode();
+  const [modalShown, setShowModal] = useModal()
 
   const [openModalCommand, setOpenModalCommand] = useAtom(walletOpeningCommand);
   const walletType = useActiveWalletType()
 
   const { suggestAndConnect: connect, isLoading } = useSuggestChainAndConnect()
-  const { disconnect } = useDisconnect()
+  const { disconnect: grazDisconnect } = useDisconnect()
+  const { logout: xionDisconnect } = useAbstraxionSigningClient()
 
   const infos = useChainInfos({ chainId: ["xion-testnet-1"] });
   const { data: account } = useAccount()
 
   const [connectedWallet, setConnectedWallet] = useAtom(isWalletConnectedAtom);
 
+  const disconnect = () => {
+    grazDisconnect()
+    xionDisconnect?.()
+  }
+
+
   useEffect(() => {
+    console.log(openModalCommand, devMode, account)
     if (openModalCommand) {
-      if (!walletType || !infos?.[0]) return
+      // For xion (no dev mode)
 
       if (!account?.bech32Address) {
-        // For connection
-        connect({
-          chainInfo: infos[0],
-          walletType: walletType.walletType,
-        })
+        if (!devMode) {
+          console.log("show modal")
+          setShowModal(true)
+        } else {
+          // For graz (dev mode)
+          if (!walletType || !infos?.[0]) return
+
+          // For connection
+          connect({
+            chainInfo: infos[0],
+            walletType: walletType.walletType,
+          })
+        }
       } else {
-        // For dis-connection
         disconnect()
       }
       setOpenModalCommand(false)
@@ -53,7 +70,7 @@ export function XionWallet({ children }: XionWalletProps) {
       setConnectedWallet(false)
     }
 
-  }, [openModalCommand, setOpenModalCommand, connect, disconnect, walletType, setConnectedWallet, account?.bech32Address]);
+  }, [openModalCommand, setOpenModalCommand, connect, grazDisconnect, walletType, setConnectedWallet, account?.bech32Address, devMode, setShowModal]);
 
 
   return <div>Nicoco's address {account?.bech32Address}</div>

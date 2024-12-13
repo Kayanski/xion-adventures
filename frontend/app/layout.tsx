@@ -2,16 +2,15 @@
 
 import { cn } from '../utils'
 import { GrazProvider } from './_providers/graz'
-import { grazProvider } from '@abstract-money/provider-graz'
-import { AbstractProvider, createConfig } from '@abstract-money/react'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Inter, Poppins } from 'next/font/google'
 import "./globals.css";
-import { ABSTRACT_API_URL } from '@/app/_lib/constants'
 import initGame from "./game/initGame";
 import { Provider } from "jotai";
 import { store } from "./game/store";
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { AbstraxionProvider } from '@burnt-labs/abstraxion'
+import { AbstractProvider } from './_providers/abstract'
 
 
 const client = new QueryClient({
@@ -36,11 +35,6 @@ const poppins = Poppins({
   variable: '--font-display',
 })
 
-const abstractConfig = createConfig({
-  provider: grazProvider,
-  apiUrl: process.env.NEXT_PUBLIC_ABSTRACT_API_URL || ABSTRACT_API_URL
-})
-
 export default function RootLayout({
   children,
 }: {
@@ -54,11 +48,19 @@ export default function RootLayout({
 
           <QueryClientProvider client={client}>
             <GrazProvider client={client}>
-              <AbstractProvider config={abstractConfig}>
-                {children}
-              </AbstractProvider>
+              <AbstraxionProvider
+                config={{
+                  // treasury: 'xion1h82c0efsxxq4pgua754u6xepfu6avglup20fl834gc2ah0ptgn5s2zffe9',
+
+                  contracts: ["xion1z70cvc08qv5764zeg3dykcyymj5z6nu4sqr7x8vl4zjef2gyp69s9mmdka"],
+                }}
+              >
+                <AbstractProvider>
+                  {children}
+                </AbstractProvider>
+              </AbstraxionProvider>
             </GrazProvider>
-            <ReactQueryDevtools client={client} initialIsOpen={false} buttonPosition={'bottom-left'} />
+            <ReactQueryDevtools initialIsOpen={false} />
           </QueryClientProvider>
         </Provider>
       </body>
