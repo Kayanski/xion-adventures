@@ -190,7 +190,6 @@ export function formatMap(mapJson: MapOutput) {
 
   let dataArray = stringToBytes(atob(mapJson.data));
   const mapArr = Array.from({ length: mapJson.width }, () => Array(mapJson.height).fill(undefined));
-  console.log(dataArray)
 
   dataArray.forEach((el, index) => {
 

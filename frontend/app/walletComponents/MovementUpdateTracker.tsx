@@ -107,7 +107,6 @@ export default function MovementUpdateTracker(): JSX.Element {
                 // Query not available yet
                 return
             } else if (tokenId == undefined) {
-                console.log("We need to create the game account, to get at least 1 NFT")
                 createGameAccountMutation({
                     msg: {
                     }, args: {
@@ -121,7 +120,6 @@ export default function MovementUpdateTracker(): JSX.Element {
                 return;
             } else {
                 // Now that everything is created, we are able to send the last movements to the on-chain contracts
-                console.log("Ok, we are able to send data on-chain from the players movements")
 
                 movePlayer({
                     msg: {

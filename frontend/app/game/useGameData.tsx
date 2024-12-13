@@ -70,7 +70,6 @@ export function GameDataLoader() {
     let [, setInitialPosition] = useAtom(initialPositionAtom)
 
     useEffect(() => {
-        console.log("query is fetched", isFetched, isMetadataFetched)
 
         if (map) {
             // Once the map is loaded, we can save it in state for the game engine to play it

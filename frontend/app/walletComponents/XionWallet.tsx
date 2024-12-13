@@ -29,7 +29,7 @@ export function XionWallet({ children }: XionWalletProps) {
   const { logout: xionDisconnect } = useAbstraxionSigningClient()
 
   const infos = useChainInfos({ chainId: ["xion-testnet-1"] });
-  const { data: account } = useAccount()
+  const { data: account } = useSenderAddress({})
 
   const [connectedWallet, setConnectedWallet] = useAtom(isWalletConnectedAtom);
 
@@ -40,13 +40,11 @@ export function XionWallet({ children }: XionWalletProps) {
 
 
   useEffect(() => {
-    console.log(openModalCommand, devMode, account)
     if (openModalCommand) {
       // For xion (no dev mode)
 
-      if (!account?.bech32Address) {
+      if (!account) {
         if (!devMode) {
-          console.log("show modal")
 
           setShowModal(true)
         } else {
@@ -65,15 +63,15 @@ export function XionWallet({ children }: XionWalletProps) {
       setOpenModalCommand(false)
     }
 
-    if (account?.bech32Address) {
+    if (account) {
       setConnectedWallet(true)
     } else {
       setConnectedWallet(false)
     }
 
-  }, [openModalCommand, setOpenModalCommand, connect, grazDisconnect, walletType, setConnectedWallet, account?.bech32Address, devMode, setShowModal]);
+  }, [openModalCommand, setOpenModalCommand, connect, grazDisconnect, walletType, setConnectedWallet, account, devMode, setShowModal]);
 
 
-  return <div>Nicoco's address {account?.bech32Address}<button onClick={() => setShowModal(true)}> Quoi donc</button></div>
+  return <div>Nicoco's address {account}<button onClick={() => setShowModal(true)}> Quoi donc</button></div>
 
 }

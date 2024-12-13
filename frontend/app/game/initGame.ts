@@ -112,7 +112,6 @@ export default async function initGame() {
       return
     }
     if ("general_map" in position.location) {
-      console.log("on-chain pos", position)
       player.pos = k.vec2(position.location.general_map.x * tileScreenSize, position.location.general_map.y * tileScreenSize)
     }
   })
