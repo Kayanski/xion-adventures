@@ -290,6 +290,8 @@ export class Cw721BaseQueryClient implements Cw721BaseReadOnlyInterface {
     });
   };
 }
+
+
 export interface Cw721BaseInterface extends Cw721BaseReadOnlyInterface {
   contractAddress: string;
   sender: string;
