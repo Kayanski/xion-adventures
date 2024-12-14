@@ -13,7 +13,9 @@ export var chunkSize = 4;
 export var chunkFactor = spriteSize * chunkSize * scale;
 export var maxMovementLength = 5;
 
+export const DIAGONAL_FACTOR = 1 / Math.sqrt(2);
+
 export var seaCutoff = 50;
-export var treeCutoff = 150
+export var terrainCutoff = 150
 
 export var defaultPosition = [0, 0];

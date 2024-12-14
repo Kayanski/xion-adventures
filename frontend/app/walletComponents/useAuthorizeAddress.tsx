@@ -94,8 +94,8 @@ export function useAuthorizeAddressMutation(options?: Omit<UseMutationOptions<Ex
             funds
         } = {}
     }) => {
-        let signingCosmWasmClient = client.accountWalletClient.getSigningCosmWasmClient();
-        let accountAddress = await client.accountPublicClient.getAccountAddress();
+        const signingCosmWasmClient = client.accountWalletClient.getSigningCosmWasmClient();
+        const accountAddress = await client.accountPublicClient.getAccountAddress();
         return authorizeAddress({
             signingCosmWasmClient,
             updateAuthorizedAddresses: msg,

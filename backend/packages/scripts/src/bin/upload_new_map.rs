@@ -7,18 +7,20 @@
 //! ```bash
 //! $ just publish uni-6 osmo-test-5
 //! ```
-use std::{fs::File, io::BufReader};
 
 use abstract_client::{AbstractClient, Namespace};
 use clap::Parser;
-use common::MapOutput;
 use cw_orch::{
     anyhow,
-    core::serde_json,
     daemon::Daemon,
     prelude::{networks::parse_network, ChainInfo},
 };
-use xion_adventures_hub::{HubExecuteMsgFns, HubInterface};
+use map_generation::generate_map;
+use xion_adventures_hub::{
+    contract::HUB_ID,
+    msg::{ExecuteMsg, HubExecuteMsg},
+    HubInterface, HubQueryMsgFns,
+};
 
 fn publish(networks: Vec<ChainInfo>) -> anyhow::Result<()> {
     // run for each requested network
@@ -33,10 +35,18 @@ fn publish(networks: Vec<ChainInfo>) -> anyhow::Result<()> {
         let account = abstract_client
             .fetch_or_build_account(namespace.clone(), |b| b.namespace(namespace))?;
         let adapter = account.application::<HubInterface<Daemon>>()?;
-        let file = File::create("../../mapTest.json")?;
-        let reader = BufReader::new(file);
-        let map_output: MapOutput = serde_json::from_reader(reader)?;
-        adapter.set_map(map_output)?;
+        let map = adapter.map()?;
+
+        let map = generate_map(5u32, map.map.width);
+
+        account.as_ref().execute_on_module(
+            HUB_ID,
+            ExecuteMsg::Module(abstract_adapter::std::adapter::AdapterRequestMsg {
+                account_address: None,
+                request: HubExecuteMsg::SetMap { map },
+            }),
+            vec![],
+        )?;
     }
     Ok(())
 }

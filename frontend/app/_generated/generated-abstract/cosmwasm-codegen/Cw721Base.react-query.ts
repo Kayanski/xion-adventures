@@ -83,7 +83,7 @@ export interface Cw721BaseReactQuery<TResponse, TData = TResponse> {
     initialData?: undefined;
   };
 }
-export interface Cw721BaseOwnershipQuery<TData> extends Cw721BaseReactQuery<OwnershipForString, TData> {}
+export type Cw721BaseOwnershipQuery<TData> = Cw721BaseReactQuery<OwnershipForString, TData>
 export function useCw721BaseOwnershipQuery<TData = OwnershipForString>({
   client,
   options
@@ -92,7 +92,7 @@ export function useCw721BaseOwnershipQuery<TData = OwnershipForString>({
     enabled: !!client && (options?.enabled != undefined ? options.enabled : true)
   });
 }
-export interface Cw721BaseGetWithdrawAddressQuery<TData> extends Cw721BaseReactQuery<NullableString, TData> {}
+export type Cw721BaseGetWithdrawAddressQuery<TData> = Cw721BaseReactQuery<NullableString, TData>
 export function useCw721BaseGetWithdrawAddressQuery<TData = NullableString>({
   client,
   options
@@ -116,7 +116,7 @@ export function useCw721BaseExtensionQuery<TData = Null>({
   }) : Promise.reject(new Error("Invalid client or args")), { ...options, enabled: !!args &&  !!client && (options?.enabled != undefined ? options.enabled : true)
   });
 }
-export interface Cw721BaseMinterQuery<TData> extends Cw721BaseReactQuery<MinterResponse, TData> {}
+export type Cw721BaseMinterQuery<TData> = Cw721BaseReactQuery<MinterResponse, TData>
 export function useCw721BaseMinterQuery<TData = MinterResponse>({
   client,
   options
@@ -193,7 +193,7 @@ export function useCw721BaseNftInfoQuery<TData = NftInfoResponseForEmpty>({
   }) : Promise.reject(new Error("Invalid client or args")), { ...options, enabled: !!args &&  !!client && (options?.enabled != undefined ? options.enabled : true)
   });
 }
-export interface Cw721BaseContractInfoQuery<TData> extends Cw721BaseReactQuery<ContractInfoResponse, TData> {}
+export type Cw721BaseContractInfoQuery<TData> = Cw721BaseReactQuery<ContractInfoResponse, TData>
 export function useCw721BaseContractInfoQuery<TData = ContractInfoResponse>({
   client,
   options
@@ -202,7 +202,7 @@ export function useCw721BaseContractInfoQuery<TData = ContractInfoResponse>({
     enabled: !!client && (options?.enabled != undefined ? options.enabled : true)
   });
 }
-export interface Cw721BaseNumTokensQuery<TData> extends Cw721BaseReactQuery<NumTokensResponse, TData> {}
+export type Cw721BaseNumTokensQuery<TData> = Cw721BaseReactQuery<NumTokensResponse, TData>
 export function useCw721BaseNumTokensQuery<TData = NumTokensResponse>({
   client,
   options

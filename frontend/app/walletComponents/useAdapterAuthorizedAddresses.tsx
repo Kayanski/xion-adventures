@@ -39,7 +39,7 @@ export function useAdapterAuthorizedAddressesQuery({
 
     const { data: moduleAddress } = useAdapterAddress({ accountId, moduleId });
 
-    let { data: cosmWasmClient } = useCosmWasmClient({
+    const { data: cosmWasmClient } = useCosmWasmClient({
         chainName: accountId?.chainName,
     });
 
@@ -48,9 +48,9 @@ export function useAdapterAuthorizedAddressesQuery({
         if (!client || !args || !cosmWasmClient) {
             return Promise.reject(new Error("Invalid client"))
         }
-        let queryMsg = AdapterQueryMsgBuilder.authorizedAddresses(args.accountAddress);
+        const queryMsg = AdapterQueryMsgBuilder.authorizedAddresses(args.accountAddress);
 
-        let queryResult = await cosmWasmClient.queryContractSmart(moduleAddress!, queryMsg)
+        const queryResult = await cosmWasmClient.queryContractSmart(moduleAddress!, queryMsg)
 
         return queryResult as unknown as AdapterAuthorizedAddressesResponse;
     }, {
@@ -66,7 +66,7 @@ export type UseAdapterAuthorizedAddressesParams = {
 
 export function useAdapterAuthorizedAddresses({ accountId, moduleId }: UseAdapterAuthorizedAddressesParams) {
 
-    let { data: accountAddress } = useAccountAddress({ accountId, chainName: accountId?.chainName });
+    const { data: accountAddress } = useAccountAddress({ accountId, chainName: accountId?.chainName });
 
     const { useAccountPublicClient } = useConfig()
     const accountPublicClient = useAccountPublicClient({

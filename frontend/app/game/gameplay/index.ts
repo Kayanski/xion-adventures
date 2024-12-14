@@ -3,23 +3,24 @@ import {
   backgroundSpritesX,
   backgroundSpritesY,
   defaultPosition,
+  DIAGONAL_FACTOR,
   frontZ,
   maxMovementLength,
   playerZ,
   tileScreenSize,
-} from "./constants";
+} from "../constants";
 import {
   AnchorComp,
   AreaComp,
   BodyComp,
   GameObj,
+  KAPLAYCtx,
   PosComp,
   ScaleComp,
   SpriteComp,
   Vec2,
   ZComp,
 } from "kaplay";
-import initKaplay from "./kaplayCtx";
 import {
   gameMapAtom,
   initialPositionAtom,
@@ -27,11 +28,12 @@ import {
   store,
   textBoxContentAtom,
   walletOpeningCommand,
-} from "./store";
+} from "../store";
 import { movementTrackerUpdate } from "./playerUpdate";
 import { QueryClient, useQueryClient } from "@tanstack/react-query";
-import { MapOutput } from "../_generated/generated-abstract/cosmwasm-codegen/Hub.types";
+import { MapOutput } from "../../_generated/generated-abstract/cosmwasm-codegen/Hub.types";
 import { setCamPos } from "./camera";
+import { setCursorDefault, setCursorPointer } from "../utils";
 
 export type Player = GameObj<
   | PosComp
@@ -47,10 +49,7 @@ export type Player = GameObj<
   }
 >;
 
-
-export default async function initGame() {
-  const DIAGONAL_FACTOR = 1 / Math.sqrt(2);
-  const k = initKaplay();
+export function gamePlayScene(k: KAPLAYCtx, map: number[][], initialPosition: number[][] | undefined) {
 
   k.loadSprite("background", "./background.png", {
     sliceY: backgroundSpritesY,
@@ -77,6 +76,9 @@ export default async function initGame() {
     },
   });
 
+  // we create the map
+  createMap(k, map)
+
   const player: Player = k.add([
     k.sprite("characters", { anim: "down-idle" }),
     k.area(),
@@ -91,30 +93,7 @@ export default async function initGame() {
       direction: k.vec2(0, 0),
     },
   ]);
-  // Register the map on the player
 
-  // We update the game map once it's fetched from chain
-  store.sub(gameMapAtom, () => {
-    let newMap = store.get(gameMapAtom);
-    if (!newMap) {
-      return
-    }
-    destroyMap(k)
-    createMap(k, formatMap(newMap))
-
-    setCamPos(k, player, map);
-  })
-
-  // We update the player map once it's fetched from chain
-  store.sub(initialPositionAtom, () => {
-    let position = store.get(initialPositionAtom)
-    if (!position) {
-      return
-    }
-    if ("general_map" in position.location) {
-      player.pos = k.vec2(position.location.general_map.x * tileScreenSize, position.location.general_map.y * tileScreenSize)
-    }
-  })
 
   player.onUpdate(() => {
     player.direction.x = 0;
@@ -156,7 +135,7 @@ export default async function initGame() {
     }
 
     if (
-      player.direction.eq(k.vec2(0, 0)) &&
+      player.direction.eq(k.vec2(0, 0)) && player.getCurAnim() &&
       !player.getCurAnim()?.name.includes("idle")
     ) {
       player.play(`${player.getCurAnim()?.name}-idle`);
@@ -180,6 +159,7 @@ export default async function initGame() {
 
     movementTrackerUpdate(k, player);
   });
+  setCamPos(k, player, map);
 
   k.onClick("player", () => {
     // store.set(isTextBoxVisibleAtom, true);
@@ -224,7 +204,7 @@ export default async function initGame() {
 
   /// Drawing the wallet button (menu) in the future
 
-  let walletArea = k.add([
+  const walletArea = k.add([
     k.rect(walletRectSize, walletRectSize, {
       radius: [walletRadius, walletRadius, walletRadius, walletRadius],
     }),
@@ -235,7 +215,7 @@ export default async function initGame() {
     k.area(),
     "wallet",
   ]);
-  let walletImage = k.add([
+  const walletImage = k.add([
     k.sprite("wallet"),
     k.scale(1),
     k.pos(
@@ -259,16 +239,10 @@ export default async function initGame() {
     }
   })
   walletArea.onHover(() => {
-    let canvas = document.querySelector("canvas");
-    if (canvas) {
-      canvas.style.cursor = "pointer"; // Change to pointer cursor
-    }
+    setCursorPointer()
   });
   walletArea.onHoverEnd(() => {
-    let canvas = document.querySelector("canvas");
-    if (canvas) {
-      canvas.style.cursor = "default"; // Reset to default cursor
-    }
+    setCursorDefault()
   })
 
   k.onClick("wallet", () => {

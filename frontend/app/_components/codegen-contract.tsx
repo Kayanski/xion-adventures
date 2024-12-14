@@ -1,6 +1,5 @@
 'use client'
 
-import { cw20Base } from '../_generated/generated-abstract'
 import { useAccounts } from '@abstract-money/react'
 import { useAccount } from 'graz'
 import { useAccountsMetadataGraphQLQuery } from '../_hooks/useQueryAccountsById'

@@ -14,8 +14,14 @@ export function GrazProvider(
       grazOptions={{
         chains: [...mainnetChainsArray, testnetChains.osmosistestnet, {
           ...testnetChains.xiontestnet, feeCurrencies: [
-            { ...testnetChains.neutrontestnet.feeCurrencies[0], coinGeckoId: undefined },
-            ...testnetChains.neutrontestnet.feeCurrencies.slice(1),
+            {
+              ...testnetChains.xiontestnet.feeCurrencies[0], coinGeckoId: undefined, gasPriceStep: {
+                low: 0.000,
+                average: 0.000,
+                high: 0.00
+              }
+            },
+            ...testnetChains.xiontestnet.feeCurrencies.slice(1),
           ],
         }, {
           ...testnetChains.neutrontestnet, feeCurrencies: [
@@ -38,7 +44,7 @@ export function GrazProvider(
           },
           [testnetChains.xiontestnet.chainId]: {
             gas: {
-              price: '0.001',
+              price: '0.000',
               denom: 'uxion',
             },
           },

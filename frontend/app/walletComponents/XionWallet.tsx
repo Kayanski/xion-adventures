@@ -72,6 +72,6 @@ export function XionWallet({ children }: XionWalletProps) {
   }, [openModalCommand, setOpenModalCommand, connect, grazDisconnect, walletType, setConnectedWallet, account, devMode, setShowModal]);
 
 
-  return <div>Nicoco's address {account}<button onClick={() => setShowModal(true)}> Quoi donc</button></div>
+  return <div>Nicoco address {account}<button onClick={() => setShowModal(true)}> Quoi donc</button></div>
 
 }

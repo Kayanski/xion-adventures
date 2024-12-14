@@ -49,7 +49,7 @@ export async function accountFactory({
     }
     // AdapterExecuteMsgFactory is faulty, using Module base instead
     // const adapterMsg = AdapterExecuteMsgFactory.updateAuthorizedAddresses({ ...updateAuthorizedAddresses })
-    console.log(sender)
+    console.log(sender, fee, funds)
     const result = await signingCosmWasmClient.execute(
         sender,
         accountFactoryAddress,

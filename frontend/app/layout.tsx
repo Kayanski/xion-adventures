@@ -5,7 +5,6 @@ import { GrazProvider } from './_providers/graz'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Inter, Poppins } from 'next/font/google'
 import "./globals.css";
-import initGame from "./game/initGame";
 import { Provider } from "jotai";
 import { store } from "./game/store";
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
@@ -15,6 +14,7 @@ import { AbstractProvider } from './_providers/abstract'
 import "@burnt-labs/abstraxion/dist/index.css";
 import "@burnt-labs/ui/dist/index.css";
 import { ACCOUNT_FACTORY_ADDRESS } from './walletComponents/xion'
+import initGame from './game'
 
 const client = new QueryClient({
   defaultOptions: {

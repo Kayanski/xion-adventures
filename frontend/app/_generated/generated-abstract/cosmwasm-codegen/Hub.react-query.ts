@@ -60,7 +60,7 @@ export function useHubPlayerMetadataQuery<TData = XionAdventuresExtension>({
     ...options, enabled: !!args && !!client && (options?.enabled != undefined ? options.enabled : true)
   });
 }
-export interface HubMapQuery<TData> extends HubReactQuery<MapResponse, TData> { }
+export type HubMapQuery<TData> = HubReactQuery<MapResponse, TData>
 export function useHubMapQuery<TData = MapResponse>({
   client,
   options
@@ -70,7 +70,7 @@ export function useHubMapQuery<TData = MapResponse>({
     enabled: !!client && (options?.enabled != undefined ? options.enabled : true)
   });
 }
-export interface HubNextTokenIdQuery<TData> extends HubReactQuery<NextTokenIdResponse, TData> { }
+export type HubNextTokenIdQuery<TData> = HubReactQuery<NextTokenIdResponse, TData>
 export function useHubNextTokenIdQuery<TData = NextTokenIdResponse>({
   client,
   options
@@ -80,7 +80,7 @@ export function useHubNextTokenIdQuery<TData = NextTokenIdResponse>({
     enabled: !!client && (options?.enabled != undefined ? options.enabled : true)
   });
 }
-export interface HubConfigQuery<TData> extends HubReactQuery<ConfigResponse, TData> { }
+export type HubConfigQuery<TData> = HubReactQuery<ConfigResponse, TData>
 export function useHubConfigQuery<TData = ConfigResponse>({
   client,
   options

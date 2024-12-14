@@ -7,14 +7,16 @@
 //! ```bash
 //! $ just publish uni-6 osmo-test-5
 //! ```
-use abstract_client::AbstractClient;
+use abstract_client::{AbstractClient, Namespace};
 use clap::Parser;
 use cw_orch::{
     anyhow,
     daemon::Daemon,
     prelude::{networks::parse_network, ChainInfo},
 };
+use game_handler::contract::interface::GameHandlerInterface;
 use scripts::publish_bundle;
+use xion_adventures_hub::{contract::HUB_ID, HubInterface};
 
 fn publish(networks: Vec<ChainInfo>) -> anyhow::Result<()> {
     // run for each requested network
@@ -25,6 +27,15 @@ fn publish(networks: Vec<ChainInfo>) -> anyhow::Result<()> {
         // Create an [`AbstractClient`]
         let abstract_client = AbstractClient::new(chain.clone())?;
         publish_bundle(&abstract_client)?;
+
+        // We install the adapter on the publisher account to be able to have a base for the deployment
+        let namespace = Namespace::new(common::NAMESPACE)?;
+        let account = abstract_client
+            .fetch_or_build_account(namespace.clone(), |b| b.namespace(namespace))?;
+        account.set_ibc_status(true)?;
+        account.install_adapter::<HubInterface<Daemon>>(&[])?;
+        let game_handler = account.install_adapter::<GameHandlerInterface<Daemon>>(&[])?;
+        game_handler.authorize_on_adapters(&[HUB_ID])?;
     }
     Ok(())
 }

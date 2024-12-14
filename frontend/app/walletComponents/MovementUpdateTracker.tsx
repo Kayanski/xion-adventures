@@ -24,7 +24,7 @@ import { useQueryClient } from "@tanstack/react-query";
 
 export default function MovementUpdateTracker(): JSX.Element {
 
-    let [movement, setMovement] = useAtom(movementsTrackerAtom);
+    const [movement, setMovement] = useAtom(movementsTrackerAtom);
     const { data: account } = useSenderAddress({
         chainName: "xiontestnet",
     })
@@ -51,7 +51,6 @@ export default function MovementUpdateTracker(): JSX.Element {
         },
         onError: (e) => {
             if (
-                // @ts-ignore
                 "message" in e &&
                 (e.message as string).includes("already exists")
             ) {
@@ -66,14 +65,14 @@ export default function MovementUpdateTracker(): JSX.Element {
     // For abstract account address
 
 
-    let { data: accountAddress, remove: refectAccountAddress, queryKey } = useAccountAddress({
+    const { data: accountAddress, remove: refectAccountAddress, queryKey } = useAccountAddress({
         accountId: abstractAccount, chainName: abstractAccount?.chainName
     });
     // let { mutateAsync: createAccount, data: accountCreationResult } = useCreateAccountMonarchy({ chainName: "xiontestnet" })
-    let { mutateAsync: createGameAccountMutation } = gameHandler.mutations.useCreateAccount({ accountId: abstractAccount, chainName: abstractAccount?.chainName });
+    const { mutateAsync: createGameAccountMutation } = gameHandler.mutations.useCreateAccount({ accountId: abstractAccount, chainName: abstractAccount?.chainName });
 
     // Nft query
-    let { tokenId, refetchTokens } = useConnectedTokenId({ accountId: abstractAccount });
+    const { tokenId, refetchTokens } = useConnectedTokenId({ accountId: abstractAccount });
 
     // FOr Adapter authorized addresses
     const { data: authorizedAddress, remove: refetchAuthorizedAddresses } = useAdapterAuthorizedAddresses({ accountId: abstractAccount, moduleId: HUB_MODULE_ID });

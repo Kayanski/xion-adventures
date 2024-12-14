@@ -1,8 +1,8 @@
 import { KAPLAYCtx } from "kaplay";
-import { maxMovementLength, tileScreenSize } from "./constants";
-import { backupMovementsTrackerAtom, currentPositionAtom, movementsTrackerAtom, store } from "./store";
-import { Player } from "./initGame";
-import { saveBackupMovements, saveMovements } from "./localStorage";
+import { maxMovementLength, tileScreenSize } from "../constants";
+import { backupMovementsTrackerAtom, currentPositionAtom, movementsTrackerAtom, store } from "../store";
+import { Player } from "./index";
+import { saveBackupMovements, saveMovements } from "../localStorage";
 
 export function movementTrackerUpdate(k: KAPLAYCtx, player: Player) {
   ////// *** Computing the movement changes for the blockchain *** //////
@@ -13,22 +13,22 @@ export function movementTrackerUpdate(k: KAPLAYCtx, player: Player) {
     currentPosition = player.pos.scale(1 / tileScreenSize);
     store.set(currentPositionAtom, currentPosition);
   }
-  let new_tile = player.pos.scale(1 / tileScreenSize);
+  const new_tile = player.pos.scale(1 / tileScreenSize);
 
-  let movement = new_tile.sub(currentPosition);
+  const movement = new_tile.sub(currentPosition);
   if (Math.abs(movement.x) >= 1 || Math.abs(movement.y) >= 1) {
-    let intMovement = k.vec2(Math.trunc(movement.x), Math.trunc(movement.y));
+    const intMovement = k.vec2(Math.trunc(movement.x), Math.trunc(movement.y));
     // We move the backup to the actual array of it was reset
     {
       let movementsTrackerVec = store.get(movementsTrackerAtom);
-      let backupMovementsTrackerVec = store.get(backupMovementsTrackerAtom);
+      const backupMovementsTrackerVec = store.get(backupMovementsTrackerAtom);
       if (movementsTrackerVec.length == 0 && backupMovementsTrackerVec.length > 0) {
         movementsTrackerVec = backupMovementsTrackerVec
         store.set(movementsTrackerAtom, movementsTrackerVec);
         store.set(backupMovementsTrackerAtom, []);
       }
     }
-    let movementsTrackerVec = store.get(movementsTrackerAtom);
+    const movementsTrackerVec = store.get(movementsTrackerAtom);
 
     /// If we have not enough data, we save it
     if (movementsTrackerVec.length < maxMovementLength) {
@@ -36,7 +36,7 @@ export function movementTrackerUpdate(k: KAPLAYCtx, player: Player) {
       saveMovements([...movementsTrackerVec, intMovement])
     } else {
       // In the other case, we update the backupMovementsTracker
-      let movementsTrackerVec = store.get(backupMovementsTrackerAtom);
+      const movementsTrackerVec = store.get(backupMovementsTrackerAtom);
       store.set(backupMovementsTrackerAtom, [...movementsTrackerVec, intMovement]);
       saveBackupMovements([...movementsTrackerVec, intMovement])
     }

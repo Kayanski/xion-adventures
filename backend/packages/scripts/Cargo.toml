@@ -25,3 +25,4 @@ game-handler = { workspace = true }
 nft = { workspace = true }
 xion-adventures-hub = { workspace = true }
 account_factory = { workspace = true }
+map-generation = { workspace = true }

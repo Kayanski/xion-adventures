@@ -11,15 +11,13 @@ export type UseGameMapParams = {
     accountId: AccountId | undefined
 }
 
-export function useGameMap({ accountId }: UseGameMapParams) {
+export function useGameMap() {
 
-    // If accountId is not defined, we use the default ID where the app is installed, to make sure we always get the map
-    if (!accountId) {
-        accountId = {
-            chainName: "xiontestnet",
-            seq: 36,
-            trace: "local"
-        }
+    // For the game map, we need to load a game from default account Id
+    const accountId: AccountId = {
+        chainName: "xiontestnet",
+        seq: 18,
+        trace: "local"
     }
 
     return hub.queries.useMap({ accountId, chainName: accountId?.chainName })
@@ -29,10 +27,10 @@ export function useGameMap({ accountId }: UseGameMapParams) {
 export function useConnectedTokenId({ accountId }: UseGameMapParams) {
 
 
-    let { data: config } = hub.queries.useConfig({ accountId, chainName: accountId?.chainName });
-    let { data: accountAddress } = useAccountAddress({ accountId, chainName: accountId?.chainName });
+    const { data: config } = hub.queries.useConfig({ accountId, chainName: accountId?.chainName });
+    const { data: accountAddress } = useAccountAddress({ accountId, chainName: accountId?.chainName });
 
-    let { data: nftOwned, remove: refetchTokens } = cw721Base.queries.useTokens({
+    const { data: nftOwned, remove: refetchTokens } = cw721Base.queries.useTokens({
         contractAddress: config?.nft, chainName: accountId?.chainName, args: {
             owner: accountAddress!
         }, options: { enabled: !!accountId && !!accountId.chainName && !!accountAddress && !!config?.nft }
@@ -46,7 +44,7 @@ export function useConnectedTokenId({ accountId }: UseGameMapParams) {
 
 export function usePlayerMetadata({ accountId }: UseGameMapParams) {
 
-    let { tokenId } = useConnectedTokenId({ accountId });
+    const { tokenId } = useConnectedTokenId({ accountId });
 
     return hub.queries.usePlayerMetadata({
         accountId, chainName: accountId?.chainName, args: {
@@ -63,11 +61,11 @@ export function GameDataLoader() {
 
     const abstractAccount = useConnectedAccountId();
     // We start by loading the game map
-    let { data: map, isFetched } = useGameMap({ accountId: abstractAccount });
-    let { data: onChainPlayerMetadata, isFetched: isMetadataFetched } = usePlayerMetadata({ accountId: abstractAccount })
+    const { data: map, isFetched } = useGameMap({ accountId: abstractAccount });
+    const { data: onChainPlayerMetadata, isFetched: isMetadataFetched } = usePlayerMetadata({ accountId: abstractAccount })
 
-    let [, setMapStore] = useAtom(gameMapAtom)
-    let [, setInitialPosition] = useAtom(initialPositionAtom)
+    const [, setMapStore] = useAtom(gameMapAtom)
+    const [, setInitialPosition] = useAtom(initialPositionAtom)
 
     useEffect(() => {
 
