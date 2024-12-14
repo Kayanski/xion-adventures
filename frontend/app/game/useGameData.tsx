@@ -61,7 +61,7 @@ export function GameDataLoader() {
 
     const abstractAccount = useConnectedAccountId();
     // We start by loading the game map
-    const { data: map, isFetched } = useGameMap({ accountId: abstractAccount });
+    const { data: map, isFetched } = useGameMap();
     const { data: onChainPlayerMetadata, isFetched: isMetadataFetched } = usePlayerMetadata({ accountId: abstractAccount })
 
     const [, setMapStore] = useAtom(gameMapAtom)

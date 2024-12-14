@@ -353,7 +353,7 @@ export interface Cw721BaseInterface extends Cw721BaseReadOnlyInterface {
   }: {
     tokenId: string;
   }, fee_?: number | StdFee | "auto", memo_?: string, funds_?: Coin[]) => Promise<ExecuteResult>;
-  extension: ({
+  extension_exec: ({
     msg
   }: {
     msg: Empty;
@@ -389,7 +389,7 @@ export class Cw721BaseClient extends Cw721BaseQueryClient implements Cw721BaseIn
     this.revokeAll = this.revokeAll.bind(this);
     this.mint = this.mint.bind(this);
     this.burn = this.burn.bind(this);
-    this.extension = this.extension.bind(this);
+    this.extension_exec = this.extension_exec.bind(this);
     this.setWithdrawAddress = this.setWithdrawAddress.bind(this);
     this.removeWithdrawAddress = this.removeWithdrawAddress.bind(this);
     this.withdrawFunds = this.withdrawFunds.bind(this);
@@ -514,7 +514,7 @@ export class Cw721BaseClient extends Cw721BaseQueryClient implements Cw721BaseIn
       }
     }, fee_, memo_, funds_);
   };
-  extension = async ({
+  extension_exec = async ({
     msg
   }: {
     msg: Empty;

@@ -1,21 +1,21 @@
-export var playerZ = 3;
-export var terrainZ = 1;
-export var rockZ = 2;
-export var frontZ = 10;
+export const playerZ = 3;
+export const terrainZ = 1;
+export const rockZ = 2;
+export const frontZ = 10;
 
 // Map
-export var backgroundSpritesX = 23;
-export var backgroundSpritesY = 12;
-export var spriteSize = 16;
-export var scale = 12;
-export var tileScreenSize = spriteSize * scale;
-export var chunkSize = 4;
-export var chunkFactor = spriteSize * chunkSize * scale;
-export var maxMovementLength = 5;
+export const backgroundSpritesX = 23;
+export const backgroundSpritesY = 12;
+export const spriteSize = 16;
+export const scale = 12;
+export const tileScreenSize = spriteSize * scale;
+export const chunkSize = 4;
+export const chunkFactor = spriteSize * chunkSize * scale;
+export const maxMovementLength = 5;
 
 export const DIAGONAL_FACTOR = 1 / Math.sqrt(2);
 
-export var seaCutoff = 50;
-export var terrainCutoff = 150
+export const seaCutoff = 50;
+export const terrainCutoff = 150
 
-export var defaultPosition = [0, 0];
+export const defaultPosition = [0, 0];

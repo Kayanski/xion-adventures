@@ -22,7 +22,7 @@ export default function TextBox() {
   };
 
   useEffect(() => {
-    const closeHandler = (e) => {
+    const closeHandler = (e: KeyboardEvent) => {
       if (!isVisible) return;
       if (e.code === "Space") {
         setIsCloseRequest(true);
@@ -37,7 +37,7 @@ export default function TextBox() {
   }, [isVisible, setIsVisible]);
 
   return (
-    isVisible && (
+    isVisible ? (
       <motion.div
         className="text-box"
         initial={{ opacity: 0, scale: 0.5 }}
@@ -48,6 +48,6 @@ export default function TextBox() {
       >
         <p>{content}</p>
       </motion.div>
-    )
+    ) : <div></div>
   );
 }

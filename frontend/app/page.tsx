@@ -2,7 +2,6 @@
 
 import { CreateAbstractAccount } from "./_components/create-abstract-account"
 import { QueryAbstractSubgraph } from "./_components/query-abstract-subgraph"
-import { CodegenContract } from "./_components/codegen-contract"
 import { Header } from "./_components/header"
 import { XionWallet } from "./walletComponents/XionWallet"
 import TextBox from "./walletComponents/TextBox"
