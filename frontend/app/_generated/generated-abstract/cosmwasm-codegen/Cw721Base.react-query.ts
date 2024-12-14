@@ -99,7 +99,7 @@ export interface Cw721BaseReactQuery<TResponse, TData = TResponse> {
     initialData?: undefined;
   };
 }
-export type Cw721BaseOwnershipQuery<TData> = Cw721BaseReactQuery<OwnershipForString, TData>
+export interface Cw721BaseOwnershipQuery<TData> extends Cw721BaseReactQuery<OwnershipForString, TData> { }
 export function useCw721BaseOwnershipQuery<TData = OwnershipForString>({
   client,
   options
@@ -109,7 +109,7 @@ export function useCw721BaseOwnershipQuery<TData = OwnershipForString>({
     enabled: !!client && (options?.enabled != undefined ? options.enabled : true)
   });
 }
-export type Cw721BaseGetWithdrawAddressQuery<TData> = Cw721BaseReactQuery<NullableString, TData>
+export interface Cw721BaseGetWithdrawAddressQuery<TData> extends Cw721BaseReactQuery<NullableString, TData> { }
 export function useCw721BaseGetWithdrawAddressQuery<TData = NullableString>({
   client,
   options
@@ -135,7 +135,7 @@ export function useCw721BaseExtensionQuery<TData = Null>({
     ...options, enabled: !!args && !!client && (options?.enabled != undefined ? options.enabled : true)
   });
 }
-export type Cw721BaseMinterQuery<TData> = Cw721BaseReactQuery<MinterResponse, TData>
+export interface Cw721BaseMinterQuery<TData> extends Cw721BaseReactQuery<MinterResponse, TData> { }
 export function useCw721BaseMinterQuery<TData = MinterResponse>({
   client,
   options
@@ -217,7 +217,7 @@ export function useCw721BaseNftInfoQuery<TData = NftInfoResponseForEmpty>({
     ...options, enabled: !!args && !!client && (options?.enabled != undefined ? options.enabled : true)
   });
 }
-export type Cw721BaseContractInfoQuery<TData> = Cw721BaseReactQuery<ContractInfoResponse, TData>
+export interface Cw721BaseContractInfoQuery<TData> extends Cw721BaseReactQuery<ContractInfoResponse, TData> { }
 export function useCw721BaseContractInfoQuery<TData = ContractInfoResponse>({
   client,
   options
@@ -227,7 +227,7 @@ export function useCw721BaseContractInfoQuery<TData = ContractInfoResponse>({
     enabled: !!client && (options?.enabled != undefined ? options.enabled : true)
   });
 }
-export type Cw721BaseNumTokensQuery<TData> = Cw721BaseReactQuery<NumTokensResponse, TData>
+export interface Cw721BaseNumTokensQuery<TData> extends Cw721BaseReactQuery<NumTokensResponse, TData> { }
 export function useCw721BaseNumTokensQuery<TData = NumTokensResponse>({
   client,
   options

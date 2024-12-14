@@ -13,27 +13,22 @@ export const hubQueryKeys = {
   contract: ([{
     contract: "hub"
   }] as const),
-  address: (contractAddress: string | undefined) => ([{
-    ...hubQueryKeys.contract[0],
+  address: (contractAddress: string | undefined) => ([{ ...hubQueryKeys.contract[0],
     address: contractAddress
   }] as const),
-  config: (contractAddress: string | undefined, args?: Record<string, unknown>) => ([{
-    ...hubQueryKeys.address(contractAddress)[0],
+  config: (contractAddress: string | undefined, args?: Record<string, unknown>) => ([{ ...hubQueryKeys.address(contractAddress)[0],
     method: "config",
     args
   }] as const),
-  nextTokenId: (contractAddress: string | undefined, args?: Record<string, unknown>) => ([{
-    ...hubQueryKeys.address(contractAddress)[0],
+  nextTokenId: (contractAddress: string | undefined, args?: Record<string, unknown>) => ([{ ...hubQueryKeys.address(contractAddress)[0],
     method: "next_token_id",
     args
   }] as const),
-  map: (contractAddress: string | undefined, args?: Record<string, unknown>) => ([{
-    ...hubQueryKeys.address(contractAddress)[0],
+  map: (contractAddress: string | undefined, args?: Record<string, unknown>) => ([{ ...hubQueryKeys.address(contractAddress)[0],
     method: "map",
     args
   }] as const),
-  playerMetadata: (contractAddress: string | undefined, args?: Record<string, unknown>) => ([{
-    ...hubQueryKeys.address(contractAddress)[0],
+  playerMetadata: (contractAddress: string | undefined, args?: Record<string, unknown>) => ([{ ...hubQueryKeys.address(contractAddress)[0],
     method: "player_metadata",
     args
   }] as const)
@@ -56,37 +51,33 @@ export function useHubPlayerMetadataQuery<TData = XionAdventuresExtension>({
 }: HubPlayerMetadataQuery<TData>) {
   return useQuery<XionAdventuresExtension, Error, TData>(hubQueryKeys.playerMetadata(client?._moduleAddress, args), () => client && args ? client.playerMetadata({
     tokenId: args.tokenId
-  }) : Promise.reject(new Error("Invalid client or args")), {
-    ...options, enabled: !!args && !!client && (options?.enabled != undefined ? options.enabled : true)
+  }) : Promise.reject(new Error("Invalid client or args")), { ...options, enabled: !!args &&  !!client && (options?.enabled != undefined ? options.enabled : true)
   });
 }
-export type HubMapQuery<TData> = HubReactQuery<MapResponse, TData>
+export interface HubMapQuery<TData> extends HubReactQuery<MapResponse, TData> {}
 export function useHubMapQuery<TData = MapResponse>({
   client,
   options
 }: HubMapQuery<TData>) {
-  return useQuery<MapResponse, Error, TData>(hubQueryKeys.map(client?._moduleAddress), () => client ? client.map() : Promise.reject(new Error("Invalid client")), {
-    ...options,
+  return useQuery<MapResponse, Error, TData>(hubQueryKeys.map(client?._moduleAddress), () => client ? client.map() : Promise.reject(new Error("Invalid client")), { ...options,
     enabled: !!client && (options?.enabled != undefined ? options.enabled : true)
   });
 }
-export type HubNextTokenIdQuery<TData> = HubReactQuery<NextTokenIdResponse, TData>
+export interface HubNextTokenIdQuery<TData> extends HubReactQuery<NextTokenIdResponse, TData> {}
 export function useHubNextTokenIdQuery<TData = NextTokenIdResponse>({
   client,
   options
 }: HubNextTokenIdQuery<TData>) {
-  return useQuery<NextTokenIdResponse, Error, TData>(hubQueryKeys.nextTokenId(client?._moduleAddress), () => client ? client.nextTokenId() : Promise.reject(new Error("Invalid client")), {
-    ...options,
+  return useQuery<NextTokenIdResponse, Error, TData>(hubQueryKeys.nextTokenId(client?._moduleAddress), () => client ? client.nextTokenId() : Promise.reject(new Error("Invalid client")), { ...options,
     enabled: !!client && (options?.enabled != undefined ? options.enabled : true)
   });
 }
-export type HubConfigQuery<TData> = HubReactQuery<ConfigResponse, TData>
+export interface HubConfigQuery<TData> extends HubReactQuery<ConfigResponse, TData> {}
 export function useHubConfigQuery<TData = ConfigResponse>({
   client,
   options
 }: HubConfigQuery<TData>) {
-  return useQuery<ConfigResponse, Error, TData>(hubQueryKeys.config(client?._moduleAddress), () => client ? client.config() : Promise.reject(new Error("Invalid client")), {
-    ...options,
+  return useQuery<ConfigResponse, Error, TData>(hubQueryKeys.config(client?._moduleAddress), () => client ? client.config() : Promise.reject(new Error("Invalid client")), { ...options,
     enabled: !!client && (options?.enabled != undefined ? options.enabled : true)
   });
 }

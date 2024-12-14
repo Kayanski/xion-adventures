@@ -27,7 +27,7 @@ export interface GameHandlerReactQuery<TResponse, TData = TResponse> {
     initialData?: undefined;
   };
 }
-export type GameHandlerConfigQuery<TData> = GameHandlerReactQuery<ConfigResponse, TData>
+export interface GameHandlerConfigQuery<TData> extends GameHandlerReactQuery<ConfigResponse, TData> {}
 export function useGameHandlerConfigQuery<TData = ConfigResponse>({
   client,
   options

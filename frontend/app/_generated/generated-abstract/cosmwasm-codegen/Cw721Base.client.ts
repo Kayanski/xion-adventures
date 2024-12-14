@@ -391,7 +391,7 @@ export class Cw721BaseClient extends Cw721BaseQueryClient implements Cw721BaseIn
     this.revokeAll = this.revokeAll.bind(this);
     this.mint = this.mint.bind(this);
     this.burn = this.burn.bind(this);
-    this.extension_exec = this.extension_exec.bind(this);
+    this.extension = this.extension.bind(this);
     this.setWithdrawAddress = this.setWithdrawAddress.bind(this);
     this.removeWithdrawAddress = this.removeWithdrawAddress.bind(this);
     this.withdrawFunds = this.withdrawFunds.bind(this);
