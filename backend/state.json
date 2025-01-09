@@ -1,0 +1,9 @@
+{
+  "xion-testnet-1": {
+    "code_ids": {},
+    "default": {
+      "abstract:account-local-18": "xion1p73l04xlpy33drj296zqcwrl8j3636zm8h058fksprvywwl5ja9sqpkc5y",
+      "xion-adventures:hub-local-18": "xion1uwwrkqq0whn6c466gq7gnks5m6hn2cexrpevn2w8xluzzqhwrl8q7kl8fc"
+    }
+  }
+}

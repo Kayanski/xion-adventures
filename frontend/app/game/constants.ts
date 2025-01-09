@@ -11,7 +11,7 @@ export const scale = 12;
 export const tileScreenSize = spriteSize * scale;
 export const chunkSize = 4;
 export const chunkFactor = spriteSize * chunkSize * scale;
-export const maxMovementLength = 5;
+export const maxMovementLength = 50;
 
 export const DIAGONAL_FACTOR = 1 / Math.sqrt(2);
 

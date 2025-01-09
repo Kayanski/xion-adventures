@@ -1,13 +1,8 @@
-import { Abstraxion, useAbstraxionAccount, useAbstraxionSigningClient, useModal } from "@burnt-labs/abstraxion";
+import { useAbstraxionSigningClient, useModal } from "@burnt-labs/abstraxion";
 import { useAtom } from "jotai";
-import { useCallback, useEffect } from "react";
-import { isTextBoxVisibleAtom, isWalletConnectedAtom, textBoxContentAtom, walletOpeningCommand } from "../game/store";
-import { useActiveWalletType, useChainInfos, useSuggestChainAndConnect, WalletType } from "graz";
-import { proxyChainEndpoints } from "@/utils/chains";
-import { testnetChains } from "graz/chains";
-import { APP_CHAIN } from "@/app/_lib/constants";
-import { useActiveChains } from "graz";
-import { useAccount } from "graz";
+import { useEffect } from "react";
+import { isWalletConnectedAtom, walletOpeningCommand } from "../game/store";
+import { useActiveWalletType, useChainInfos, useSuggestChainAndConnect } from "graz";
 import { useSenderAddress } from "@abstract-money/react";
 import { useDisconnect } from "graz";
 import { useDevMode } from "../_providers/dev-mod";
@@ -37,7 +32,6 @@ export function XionWallet({ children }: XionWalletProps) {
     grazDisconnect()
     xionDisconnect?.()
   }
-
 
   useEffect(() => {
     if (openModalCommand) {
@@ -71,7 +65,6 @@ export function XionWallet({ children }: XionWalletProps) {
 
   }, [openModalCommand, setOpenModalCommand, connect, grazDisconnect, walletType, setConnectedWallet, account, devMode, setShowModal]);
 
-
-  return <div>Nicoco address {account}<button onClick={() => setShowModal(true)}> Quoi donc</button></div>
+  return <></>
 
 }

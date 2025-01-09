@@ -1,26 +1,25 @@
-import { Abstraxion, useAbstraxionAccount, useAbstraxionSigningClient, useModal } from "@burnt-labs/abstraxion";
-import { useAtom, useAtomValue } from "jotai";
-import { useEffect, useMemo } from "react";
-import { currentPositionAtom, isTextBoxVisibleAtom, movementsTrackerAtom, textBoxContentAtom, walletOpeningCommand } from "../game/store";
+import { } from "@burnt-labs/abstraxion";
+import { useAtom } from "jotai";
+import { useEffect } from "react";
+import { movementsTrackerAtom } from "../game/store";
 import { maxMovementLength } from "../game/constants";
-import { useAccounts, useAccountAddress, useCreateAccount, useCreateAccountMonarchy, useInstallModules, useModules, useSenderAddress } from "@abstract-money/react";
-import { useAccount } from "graz";
-import { cw721Base, GAME_HANDLER_MODULE_ID, gameHandler, HUB_MODULE_ID, hub } from "../_generated/generated-abstract";
-import { AccountId, AdapterExecuteMsgFactory, AdapterQueryMsgBuilder, moduleIdToName, moduleIdToNamespace } from "@abstract-money/core";
-import { IbcClientClient } from "@abstract-money/core/codegen/abstract";
-import { gameHandlerQueryKeys, useGameHandlerConfigQuery } from "../_generated/generated-abstract/cosmwasm-codegen/GameHandler.react-query";
+import { useAccountAddress, useSenderAddress } from "@abstract-money/react";
+import { useChainInfo } from "graz";
+import { GAME_HANDLER_MODULE_ID, gameHandler, HUB_MODULE_ID, hub } from "../_generated/generated-abstract";
+import { moduleIdToName, moduleIdToNamespace } from "@abstract-money/core";
 import { useAdapterAuthorizedAddresses } from "./useAdapterAuthorizedAddresses";
 import { useAdapterAddress } from "./useAdapterAddress";
 import { useAuthorizeAddress } from "./useAuthorizeAddress";
-import { cn } from "@/utils";
 import { useConnectedTokenId } from "../game/useGameData";
 import { useConnectedAccountId } from "./useAccountSetup";
 import { useXionAbstractAccountId } from "./xion/useXionSender";
 import { useXionAbstractAccountExists } from "./xion/useAbstractXionAccountBase";
-import { HOME_CHAIN_NAME } from "./xion";
 import { useAccountFactoryMutation } from "./xion/accountFactory";
-import { useAbstraxionProviderConfig } from "./xion/useAbstractxionProviderConfig";
 import { useQueryClient } from "@tanstack/react-query";
+import { FIXED_FEES, TREASURY } from "./constants";
+import { calculateFee, GasPrice } from "@cosmjs/stargate";
+import { useSimulateMovePlayer } from "./useSimulatePlayerMovement";
+import { toast } from "react-toastify";
 
 export default function MovementUpdateTracker(): JSX.Element {
 
@@ -34,20 +33,15 @@ export default function MovementUpdateTracker(): JSX.Element {
     // For xion Double authentication (this is a mess)
     const { data: xionAccountIdQuery } = useXionAbstractAccountId();
     const { refetch: refetchExistingAccount, data: xionAA } = useXionAbstractAccountExists();
-    const { setContracts } = useAbstraxionProviderConfig();
     const queryClient = useQueryClient();
-    console.log(xionAA, xionAccountIdQuery)
 
+    const chainInfo = useChainInfo({
+        chainId: "xion-testnet-1"
+    });
 
     const { mutateAsync: createAccount } = useAccountFactoryMutation({
         onSuccess({ accountAddress }) {
-            setContracts([
-                {
-                    address: accountAddress,
-                    amounts: [{ denom: HOME_CHAIN_NAME, amount: "1000000" }],
-                },
-            ]);
-            // setMetaState({ managerAddress });
+            console.log("new account address")
         },
         onError: (e) => {
             if (
@@ -63,8 +57,6 @@ export default function MovementUpdateTracker(): JSX.Element {
         },
     });
     // For abstract account address
-
-
     const { data: accountAddress, remove: refectAccountAddress, queryKey } = useAccountAddress({
         accountId: abstractAccount, chainName: abstractAccount?.chainName
     });
@@ -80,10 +72,10 @@ export default function MovementUpdateTracker(): JSX.Element {
     const { mutateAsync: authorizeOnHub } = useAuthorizeAddress({ accountId: abstractAccount, moduleId: HUB_MODULE_ID })
 
     // For game logic
-
     const { mutateAsync: movePlayer } = gameHandler.mutations.useMovePlayer({ accountId: abstractAccount, chainName: abstractAccount?.chainName });
-
-
+    const { mutateAsync: movePlayerSimulation } = useSimulateMovePlayer({
+        accountId: abstractAccount
+    })
 
     useEffect(() => {
         if (movement.length >= maxMovementLength) {
@@ -111,6 +103,9 @@ export default function MovementUpdateTracker(): JSX.Element {
                             version: 'latest',
                         }
                         ]
+                    },
+                    args: {
+                        fee: FIXED_FEES.accountCreation,
                     }
                 }).then((_) => {
                     refectAccountAddress()
@@ -119,6 +114,7 @@ export default function MovementUpdateTracker(): JSX.Element {
                 });
 
             } else if (!gameHandlerAddress) {
+                console.log("No game handler Address, returning")
                 // Query not available yet
                 return
             } else if (!authorizedAddress) {
@@ -133,6 +129,8 @@ export default function MovementUpdateTracker(): JSX.Element {
                     msg: {
                         toAdd: [gameHandlerAddress],
                         toRemove: null
+                    }, args: {
+                        fee: FIXED_FEES.authorizeOnHub,
                     }
                 }).then((_) => {
                     refetchAuthorizedAddresses()
@@ -145,36 +143,50 @@ export default function MovementUpdateTracker(): JSX.Element {
                 createGameAccountMutation({
                     msg: {
                     }, args: {
-                        fee: "auto"
+                        fee: FIXED_FEES.createGameAccount,
                     }
                 }).then(() => {
                     refetchTokens()
                 });
-            } else if (!movePlayer) {
+            } else if (!movePlayer || !movePlayerSimulation || !chainInfo) {
                 // Mutation not available yet
                 return;
             } else {
                 // Now that everything is created, we are able to send the last movements to the on-chain contracts
 
-                movePlayer({
+                toast("Saving your movements on-chain")
+
+                movePlayerSimulation({
                     msg: {
                         positions: movement,
                         tokenId,
-                    }
+                    },
+                }).then((gasCost) => {
+                    const totalGasCost = Math.round(gasCost * 1.4);
+                    const feeCurrencies = chainInfo.feeCurrencies[0];
+                    const computedFee = calculateFee(totalGasCost, GasPrice.fromString(`${feeCurrencies.gasPriceStep?.average.toString()}${feeCurrencies.coinMinimalDenom}`))
+                    return movePlayer({
+                        msg: {
+                            positions: movement,
+                            tokenId,
+                        },
+                        args: {
+                            fee: {
+                                amount: computedFee.amount,
+                                gas: computedFee.gas,
+                                granter: TREASURY
+                            }
+                        }
+                    })
                 }).then(() => {
                     setMovement([])
                 })
             }
 
         }
-    }, [movement.length, accountAddress, createAccount, refectAccountAddress, gameHandlerAddress, authorizedAddress?.addresses, createGameAccountMutation, tokenId, movePlayer])
+    }, [movement.length, accountAddress, createAccount, refectAccountAddress, gameHandlerAddress, authorizedAddress?.addresses, createGameAccountMutation, tokenId, movePlayer, movePlayerSimulation, account, authorizeOnHub])
 
     return (<>
-        <div>
-            account address {JSON.stringify(accountAddress)}--
-
-            authorized addresses {JSON.stringify(authorizedAddress)}
-        </div>
     </>)
 
 }

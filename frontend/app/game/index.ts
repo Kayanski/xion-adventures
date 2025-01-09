@@ -5,6 +5,9 @@ import { menuScene } from "./menu";
 export default async function initGame() {
     const k = initKaplay();
 
+    k.loadSprite("wallet", "./wallet.png", {});
+    k.loadSprite("wallet-connected", "./wallet-connected.png", {});
+
     k.scene("gameplay", (map, initialPosition) => {
         gamePlayScene(k, map, initialPosition)
     })

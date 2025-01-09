@@ -78,7 +78,7 @@ export function GameDataLoader() {
             // Once the onChainPlayer position is loaded, we can save it in state for the game engine to set the character to
             setInitialPosition(onChainPlayerMetadata)
         }
-    }, [map, onChainPlayerMetadata])
+    }, [map, onChainPlayerMetadata, setInitialPosition, setMapStore])
 
 
     return (<></>)

@@ -1,0 +1,17 @@
+{
+    "xion-testnet-1": {
+        "code_ids": {
+            "account_factory": 1607,
+            "xion-adventures:game-handler": 1609,
+            "xion-adventures:hub": 1608,
+            "xion_adventures_nft": 1586
+        },
+        "default": {
+            "account_factory": "xion1v5hlsyk38ejztyezcw993nmwnsvagl04pexck9f56my7tnly4zqqx24lfz",
+            "xion-adventures:game-handler": "xion158cngpeqsxrn4fzmk50q0s7pymxs4762e803gc9pdd0p3ax6fj8q4ngjcl",
+            "xion-adventures:game-handler-local-18": "xion158cngpeqsxrn4fzmk50q0s7pymxs4762e803gc9pdd0p3ax6fj8q4ngjcl",
+            "xion-adventures:hub": "xion1uwwrkqq0whn6c466gq7gnks5m6hn2cexrpevn2w8xluzzqhwrl8q7kl8fc",
+            "xion-adventures:hub-local-18": "xion1uwwrkqq0whn6c466gq7gnks5m6hn2cexrpevn2w8xluzzqhwrl8q7kl8fc"
+        }
+    }
+}

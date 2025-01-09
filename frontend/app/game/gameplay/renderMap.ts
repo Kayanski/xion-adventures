@@ -142,11 +142,11 @@ export async function createMapChunk(
 
   // We render the chunk
   chunk.forEach((row, row_index) => {
-    row.forEach((item, columnIndex) => {
+    row.forEach((item, col_index) => {
       if (item != terrainFrame) {
         chunkObject.add([
           k.sprite("background", { frame: item }),
-          k.pos(scale * spriteSize * columnIndex, scale * spriteSize * row_index),
+          k.pos(scale * spriteSize * row_index, scale * spriteSize * col_index),
           k.scale(scale),
           k.z(terrainZ),
           k.area(),
@@ -155,7 +155,7 @@ export async function createMapChunk(
       } else {
         chunkObject.add([
           k.sprite("background", { frame: item }),
-          k.pos(scale * spriteSize * columnIndex, scale * spriteSize * row_index),
+          k.pos(scale * spriteSize * row_index, scale * spriteSize * col_index),
           k.scale(scale),
           k.z(terrainZ),
           k.area(),
@@ -192,10 +192,9 @@ export function formatMap(mapJson: MapOutput) {
   const dataArray = stringToBytes(atob(mapJson.data));
   const mapArr = Array.from({ length: mapJson.width }, () => Array(mapJson.height).fill(undefined));
 
-  console.log(dataArray)
   dataArray.forEach((el, index) => {
 
-    const row_index = index % mapJson.width;
+    const row_index = Math.trunc(index % mapJson.width);
     const line_index = Math.trunc(index / mapJson.height);
 
     // Each element is compared to an enum and stored separately
@@ -206,12 +205,7 @@ export function formatMap(mapJson: MapOutput) {
     } else {
       mapArr[row_index][line_index] = treeFrame
     }
-    console.log(row_index, line_index, el, mapArr[row_index][line_index])
-    if (el > 50) {
-      return;
-    }
   })
   return mapArr;
-
 }
 

@@ -433,7 +433,8 @@ export function useCw721BaseExtensionMutation(options?: Omit<UseMutationOptions<
     client,
     msg,
     args: {
-      fee, memo,
+      fee,
+      memo,
       funds
     } = {}
   }) => client.extension_exec(msg, fee, memo, funds), options);

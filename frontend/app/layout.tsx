@@ -15,6 +15,9 @@ import "@burnt-labs/abstraxion/dist/index.css";
 import "@burnt-labs/ui/dist/index.css";
 import { ACCOUNT_FACTORY_ADDRESS } from './walletComponents/xion'
 import initGame from './game'
+import { TREASURY } from './walletComponents/constants'
+import { init } from 'next/dist/compiled/webpack/webpack'
+import { ToastContainer } from 'react-toastify'
 
 const client = new QueryClient({
   defaultOptions: {
@@ -38,6 +41,10 @@ const poppins = Poppins({
   variable: '--font-display',
 })
 
+
+
+
+
 export default function RootLayout({
   children,
 }: {
@@ -52,13 +59,12 @@ export default function RootLayout({
             <GrazProvider client={client}>
               <AbstraxionProvider
                 config={{
-                  // treasury: 'xion1h82c0efsxxq4pgua754u6xepfu6avglup20fl834gc2ah0ptgn5s2zffe9',
-
-                  contracts: [ACCOUNT_FACTORY_ADDRESS],
+                  treasury: TREASURY,
                 }}
               >
                 <AbstractProvider>
                   {children}
+                  <ToastContainer />
                 </AbstractProvider>
               </AbstraxionProvider>
             </GrazProvider>
@@ -69,6 +75,3 @@ export default function RootLayout({
     </html>
   )
 }
-
-
-initGame();

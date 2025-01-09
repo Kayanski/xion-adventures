@@ -55,7 +55,7 @@ export const AbstractProvider: FC<PropsWithChildren> = ({ children }) => {
             // const xionSenderAddress = xionProvider.useSenderAddress(args)
             const xionSenderAddress = useAbstraxionAccount().data?.bech32Address
 
-            return devMode ? grazSenderAddress : xionSenderAddress
+            return xionSenderAddress
         },
     } satisfies typeof xionProvider
 

@@ -10,7 +10,8 @@ export const walletOpeningCommand = atom(false);
 export const isWalletConnectedAtom = atom(false);
 
 // Position store
-export const currentPositionAtom = atom<Vec2>();
+// This is the current position in terms of tiles. So it should always be integers
+export const currentTilePositionAtom = atom<Vec2>();
 export const movementsTrackerAtom = atom<Vec2[]>([]);
 export const backupMovementsTrackerAtom = atom<Vec2[]>([]);
 

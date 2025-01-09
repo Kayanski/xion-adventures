@@ -1,5 +1,7 @@
-import { ExecuteResult, SigningCosmWasmClient } from '@cosmjs/cosmwasm-stargate'
+import { ExecuteResult, MsgExecuteContractEncodeObject, SigningCosmWasmClient } from '@cosmjs/cosmwasm-stargate'
+import { toHex, toUtf8 } from "@cosmjs/encoding";
 import { CamelCasedProperties, CamelCasedPropertiesDeep } from 'type-fest'
+import { MsgExecuteContract } from "cosmjs-types/cosmwasm/wasm/v1/tx";
 
 
 import { AccountId, accountIdToParameter, AdapterBaseExecuteMsg, AdapterExecuteMsgFactory, MergedModuleInstallConfig, ModuleExecuteMsgFactory, moduleInstallConfig, parseCreateAccountExecuteResult, WithCosmWasmSignOptions } from '@abstract-money/core'
@@ -11,6 +13,10 @@ import { useXionAbstractAccountId } from './useXionSender'
 import { AccountTrace } from '@/app/_generated/generated-abstract/cosmwasm-codegen/Hub.types'
 import { randomBytes } from 'crypto'
 import { ACCOUNT_FACTORY_ADDRESS, HOME_CHAIN_NAME } from '.'
+import { FIXED_FEES, TREASURY } from '../constants';
+import { calculateFee, coins, GasPrice } from '@cosmjs/stargate';
+import { testnetChains } from 'graz/chains';
+import { useAbstraxionAccount, useAbstraxionSigningClient } from '@burnt-labs/abstraxion';
 
 
 export type AuthorizeAddressArguments = {
@@ -39,6 +45,7 @@ export async function accountFactory({
 }: AccountFactoryParameters) {
 
     const chainId = await signingCosmWasmClient.getChainId()
+    console.log("Sender", sender);
 
     const account_factory_msg = {
         create_account: {
@@ -49,7 +56,9 @@ export async function accountFactory({
     }
     // AdapterExecuteMsgFactory is faulty, using Module base instead
     // const adapterMsg = AdapterExecuteMsgFactory.updateAuthorizedAddresses({ ...updateAuthorizedAddresses })
-    console.log(sender, fee, funds)
+
+
+    // We need fixed Fee for this because the account still doesn't exist on-chain and we can't use the simulate function
     const result = await signingCosmWasmClient.execute(
         sender,
         accountFactoryAddress,
@@ -81,8 +90,12 @@ export interface AuthorizeAddressMutation {
 
 export function useAccountFactoryMutation(options?: Omit<UseMutationOptions<{ accountId: AccountId, accountAddress: string }, Error, AuthorizeAddressMutation>, "mutationFn">) {
 
-    const { data: signingCosmWasmClient } = useSigningCosmWasmClient({});
+    const { data: signingCosmWasmClienté } = useSigningCosmWasmClient({});
     const { data: address } = useSenderAddress({})
+    const { data: account } = useAbstraxionAccount();
+    const { client: signingCosmWasmClient } = useAbstraxionSigningClient();
+
+
 
     const { data: xionAaId, isSuccess: xionAaSuccess } =
         useXionAbstractAccountId();
@@ -92,7 +105,7 @@ export function useAccountFactoryMutation(options?: Omit<UseMutationOptions<{ ac
         args: {
             fee,
             memo,
-            funds
+            funds,
         } = {}
     }) => {
         if (!signingCosmWasmClient) {

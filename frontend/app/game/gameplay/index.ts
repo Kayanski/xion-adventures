@@ -1,11 +1,9 @@
-import { createMap, destroyMap, formatMap, map, seaFrame, terrainFrame, treeFrame } from "./renderMap";
+import { createMap } from "./renderMap";
 import {
   backgroundSpritesX,
   backgroundSpritesY,
   defaultPosition,
   DIAGONAL_FACTOR,
-  frontZ,
-  maxMovementLength,
   playerZ,
   tileScreenSize,
 } from "../constants";
@@ -22,18 +20,13 @@ import {
   ZComp,
 } from "kaplay";
 import {
-  gameMapAtom,
-  initialPositionAtom,
-  isWalletConnectedAtom,
   store,
   textBoxContentAtom,
-  walletOpeningCommand,
 } from "../store";
 import { movementTrackerUpdate } from "./playerUpdate";
-import { QueryClient, useQueryClient } from "@tanstack/react-query";
-import { MapOutput } from "../../_generated/generated-abstract/cosmwasm-codegen/Hub.types";
+import { XionAdventuresExtension } from "../../_generated/generated-abstract/cosmwasm-codegen/Hub.types";
 import { setCamPos } from "./camera";
-import { setCursorDefault, setCursorPointer } from "../utils";
+import { walletIcon } from "../wallet";
 
 export type Player = GameObj<
   | PosComp
@@ -49,14 +42,12 @@ export type Player = GameObj<
   }
 >;
 
-export function gamePlayScene(k: KAPLAYCtx, map: number[][], initialPosition: number[][] | undefined) {
+export function gamePlayScene(k: KAPLAYCtx, map: number[][], initialNftMetadata: XionAdventuresExtension | undefined) {
 
   k.loadSprite("background", "./background.png", {
     sliceY: backgroundSpritesY,
     sliceX: backgroundSpritesX,
   });
-  k.loadSprite("wallet", "./wallet.png", {});
-  k.loadSprite("wallet-connected", "./wallet-connected.png", {});
   k.loadSprite("characters", "./characters.png", {
     sliceY: 2,
     sliceX: 8,
@@ -79,12 +70,25 @@ export function gamePlayScene(k: KAPLAYCtx, map: number[][], initialPosition: nu
   // we create the map
   createMap(k, map)
 
+  let initialPosition;
+  // We compute the initial position
+  if (initialNftMetadata && "general_map" in initialNftMetadata.location) {
+    const generalMapPosition = initialNftMetadata.location["general_map"];
+    initialPosition = k.vec2(generalMapPosition.x, generalMapPosition.y).scale(tileScreenSize);
+  } else {
+    initialPosition = k.vec2(defaultPosition[0], defaultPosition[1])
+  }
+  // The player anchor is at the center, whereas the tile anchors are at the topleft. 
+  // This is on purpose (for position detection and saving on-chain)
+  // We need to add half of the tile to the initialPosition
+  initialPosition = initialPosition.add(tileScreenSize / 2, tileScreenSize / 2)
+
   const player: Player = k.add([
     k.sprite("characters", { anim: "down-idle" }),
     k.area(),
     k.body(),
-    k.anchor("topleft"),
-    k.pos(defaultPosition[0], defaultPosition[1]),
+    k.anchor("center"),
+    k.pos(initialPosition),
     k.scale(8),
     k.z(playerZ),
     "player",
@@ -157,7 +161,7 @@ export function gamePlayScene(k: KAPLAYCtx, map: number[][], initialPosition: nu
 
     setCamPos(k, player, map);
 
-    movementTrackerUpdate(k, player);
+    movementTrackerUpdate(k, player, map);
   });
   setCamPos(k, player, map);
 
@@ -168,6 +172,8 @@ export function gamePlayScene(k: KAPLAYCtx, map: number[][], initialPosition: nu
       `This text box is made with React.js!${player.pos}`
     );
   });
+
+  walletIcon(k)
 
   // const npc = mapObject.add([
   //   k.sprite("characters", { anim: "npc-left" }),
@@ -202,54 +208,4 @@ export function gamePlayScene(k: KAPLAYCtx, map: number[][], initialPosition: nu
   //   store.set(isTextBoxVisibleAtom, true);
   // });
 
-  /// Drawing the wallet button (menu) in the future
-
-  const walletArea = k.add([
-    k.rect(walletRectSize, walletRectSize, {
-      radius: [walletRadius, walletRadius, walletRadius, walletRadius],
-    }),
-    k.fixed(),
-    k.pos(12, 12),
-    k.outline(1, k.Color.BLACK),
-    k.z(frontZ),
-    k.area(),
-    "wallet",
-  ]);
-  const walletImage = k.add([
-    k.sprite("wallet"),
-    k.scale(1),
-    k.pos(
-      k.vec2(
-        12 + (walletRectSize - walletSize) / 2,
-        12 + (walletRectSize - walletSize) / 2
-      )
-    ),
-    k.fixed(),
-    k.z(frontZ),
-  ]);
-
-
-  walletImage.onUpdate(() => {
-    // We change the wallet image on change
-    if (store.get(isWalletConnectedAtom)) {
-      walletImage.use(k.sprite("wallet-connected"))
-    } else {
-
-      walletImage.use(k.sprite("wallet"))
-    }
-  })
-  walletArea.onHover(() => {
-    setCursorPointer()
-  });
-  walletArea.onHoverEnd(() => {
-    setCursorDefault()
-  })
-
-  k.onClick("wallet", () => {
-    store.set(walletOpeningCommand, true);
-  });
 }
-
-const walletSize = 50;
-const walletRectSize = 60;
-const walletRadius = 20;

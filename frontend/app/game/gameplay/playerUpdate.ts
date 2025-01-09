@@ -1,22 +1,25 @@
 import { KAPLAYCtx } from "kaplay";
 import { maxMovementLength, tileScreenSize } from "../constants";
-import { backupMovementsTrackerAtom, currentPositionAtom, movementsTrackerAtom, store } from "../store";
+import { backupMovementsTrackerAtom, currentTilePositionAtom, movementsTrackerAtom, store } from "../store";
 import { Player } from "./index";
 import { saveBackupMovements, saveMovements } from "../localStorage";
 
-export function movementTrackerUpdate(k: KAPLAYCtx, player: Player) {
+export function movementTrackerUpdate(k: KAPLAYCtx, player: Player, map?: number[][]) {
   ////// *** Computing the movement changes for the blockchain *** //////
 
-  let currentPosition = store.get(currentPositionAtom);
+  let currentTilePosition = store.get(currentTilePositionAtom);
 
-  if (currentPosition == undefined) {
-    currentPosition = player.pos.scale(1 / tileScreenSize);
-    store.set(currentPositionAtom, currentPosition);
+  if (currentTilePosition == undefined) {
+    const currentPlayerPosition = player.pos.scale(1 / tileScreenSize);
+    currentTilePosition = k.vec2(Math.trunc(currentPlayerPosition.x), Math.trunc(currentPlayerPosition.y))
+    store.set(currentTilePositionAtom, currentTilePosition);
   }
-  const new_tile = player.pos.scale(1 / tileScreenSize);
+  const newPlayerPosition = player.pos.scale(1 / tileScreenSize);
+  const newTile = k.vec2(Math.trunc(newPlayerPosition.x), Math.trunc(newPlayerPosition.y))
 
-  const movement = new_tile.sub(currentPosition);
+  const movement = newTile.sub(currentTilePosition);
   if (Math.abs(movement.x) >= 1 || Math.abs(movement.y) >= 1) {
+
     const intMovement = k.vec2(Math.trunc(movement.x), Math.trunc(movement.y));
     // We move the backup to the actual array of it was reset
     {
@@ -41,7 +44,7 @@ export function movementTrackerUpdate(k: KAPLAYCtx, player: Player) {
       saveBackupMovements([...movementsTrackerVec, intMovement])
     }
 
-    store.set(currentPositionAtom, currentPosition.add(intMovement));
+    store.set(currentTilePositionAtom, currentTilePosition.add(intMovement));
 
   }
   // Test, we try to see iof the positions match

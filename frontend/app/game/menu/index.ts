@@ -5,6 +5,7 @@ import { Color, KAPLAYCtx } from "kaplay";
 import { gameMapAtom, initialPositionAtom, store } from "../store";
 import { setCursorDefault, setCursorPointer } from "../utils"
 import { formatMap } from "../gameplay/renderMap";
+import { walletIcon } from "../wallet";
 
 export async function menuScene(k: KAPLAYCtx) {
 
@@ -67,22 +68,23 @@ export async function menuScene(k: KAPLAYCtx) {
         k.anchor("center"),
     ])
 
-    const resume = k.add([
+    const resumeGameButton = k.add([
         k.rect(width, height, { radius: RADIUS }),
         k.color(disabledColor),
         k.pos((k.width() - width) / 2, 5 * (k.height() - height) / 6),
-        k.area()
+        k.area(),
+        "resume_game_button"
     ])
 
-    resume.onHover(() => {
-        if (resume.color.eq(color)) {
-            resume.color = moreColor
+    resumeGameButton.onHover(() => {
+        if (resumeGameButton.color.eq(color)) {
+            resumeGameButton.color = moreColor
             setCursorPointer()
         }
     })
-    resume.onHoverEnd(() => {
-        if (resume.color.eq(moreColor)) {
-            resume.color = color
+    resumeGameButton.onHoverEnd(() => {
+        if (resumeGameButton.color.eq(moreColor)) {
+            resumeGameButton.color = color
             setCursorDefault()
         }
     })
@@ -112,14 +114,23 @@ export async function menuScene(k: KAPLAYCtx) {
         if (!position) {
             return
         }
-        // We set the initial Position, we're ready to resume game
-        // TODO
+        resumeGameButton.color = color
     })
     k.onClick("new_game_button", () => {
         const newMap = store.get(gameMapAtom);
         if (!newMap) {
             return
         }
+        k.go("gameplay", formatMap(newMap), undefined)
+    });
+
+    k.onClick("resume_game_button", () => {
+        const newMap = store.get(gameMapAtom);
+        if (!newMap) {
+            return
+        }
         k.go("gameplay", formatMap(newMap), store.get(initialPositionAtom))
     });
+
+    walletIcon(k)
 }
