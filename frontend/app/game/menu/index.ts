@@ -129,7 +129,7 @@ export async function menuScene(k: KAPLAYCtx) {
                 initialPosition.x += movement.x
                 initialPosition.y += movement.y
             }
-            toast("Your are connected, game has been resumed !")
+            toast("You are connected, game has been resumed !")
             startGamePlayScene(k, formatMap(newMap), {
                 tokenId: undefined,
                 nft: {

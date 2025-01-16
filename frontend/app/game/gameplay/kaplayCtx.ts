@@ -9,6 +9,6 @@ export default function initKaplay() {
     debug: true, // put back to false in prod
     debugKey: "a",
     canvas: undefined,
-    pixelDensity: devicePixelRatio ?? 1,
+    pixelDensity: window.devicePixelRatio,
   });
 }
