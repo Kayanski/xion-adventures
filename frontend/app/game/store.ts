@@ -17,5 +17,11 @@ export const backupMovementsTrackerAtom = atom<Vec2[]>([]);
 
 // Initial position is needed to load the game
 // If not present, the game cannot start
-export const initialPositionAtom = atom<XionAdventuresExtension>();
+export const accountDescriptionAtom = atom<AccountDescription>();
 export const gameMapAtom = atom<MapOutput>();
+
+
+export interface AccountDescription {
+    tokenId: string | undefined,
+    nft: XionAdventuresExtension
+}

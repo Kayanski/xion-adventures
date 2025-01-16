@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useCallback, useEffect, useRef, useState } from "react";
 import { useAtom, useAtomValue } from "jotai";
 import { motion } from "framer-motion";
 import { isTextBoxVisibleAtom, textBoxContentAtom } from "../game/store";
@@ -9,10 +9,40 @@ const variants = {
   closed: { opacity: 0, scale: 0.5 },
 };
 
-export default function TextBox() {
-  const [isVisible, setIsVisible] = useAtom(isTextBoxVisibleAtom);
+export function useTextBox<T>() {
+
+  const [isVisible, setIsVisible] = useState(false);
+  const [content, setContent] = useState(<></>);
+  const resolvePromiseRef = useRef<((value: T) => void) | null>(null);
+
+
+  const showTextBox = useCallback((textBoxContent: JSX.Element) => {
+    setIsVisible(true);
+    setContent(textBoxContent);
+
+    return new Promise((resolve) => {
+      resolvePromiseRef.current = resolve;
+    });
+
+  }, [setIsVisible, setContent])
+  const closeTextBox = useCallback((value: T) => {
+    if (resolvePromiseRef.current) resolvePromiseRef.current(value); // Resolve the Promise
+    setIsVisible(false); // Hide the modal
+    setContent(<></>); // Clear content
+  }, [setIsVisible, setContent]);
+
+
+  return {
+    setTextBoxVisible: setIsVisible,
+    setTextBoxContent: setContent,
+    showTextBox,
+    closeTextBox,
+    textBox: <TextBox content={content} isVisible={isVisible} setIsVisible={setIsVisible} />
+  }
+}
+
+export default function TextBox({ content, isVisible, setIsVisible }: { content: JSX.Element, isVisible: boolean, setIsVisible: Dispatch<SetStateAction<boolean>> }) {
   const [isCloseRequest, setIsCloseRequest] = useState(false);
-  const content = useAtomValue(textBoxContentAtom);
 
   const handleAnimationComplete = () => {
     if (isCloseRequest) {
@@ -46,7 +76,7 @@ export default function TextBox() {
         transition={{ duration: 0.2 }}
         onAnimationComplete={handleAnimationComplete}
       >
-        <p>{content}</p>
+        {content}
       </motion.div>
     ) : <div></div>
   );

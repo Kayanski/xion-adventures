@@ -4,7 +4,7 @@ import { backupMovementsTrackerAtom, currentTilePositionAtom, movementsTrackerAt
 import { Player } from "./index";
 import { saveBackupMovements, saveMovements } from "../localStorage";
 
-export function movementTrackerUpdate(k: KAPLAYCtx, player: Player, map?: number[][]) {
+export function movementTrackerUpdate(k: KAPLAYCtx, player: Player, tokenId: string | undefined) {
   ////// *** Computing the movement changes for the blockchain *** //////
 
   let currentTilePosition = store.get(currentTilePositionAtom);
@@ -36,21 +36,17 @@ export function movementTrackerUpdate(k: KAPLAYCtx, player: Player, map?: number
     /// If we have not enough data, we save it
     if (movementsTrackerVec.length < maxMovementLength) {
       store.set(movementsTrackerAtom, [...movementsTrackerVec, intMovement]);
-      saveMovements([...movementsTrackerVec, intMovement])
+      if (!tokenId) {
+        saveMovements([...movementsTrackerVec, intMovement])
+      }
     } else {
       // In the other case, we update the backupMovementsTracker
       const movementsTrackerVec = store.get(backupMovementsTrackerAtom);
       store.set(backupMovementsTrackerAtom, [...movementsTrackerVec, intMovement]);
-      saveBackupMovements([...movementsTrackerVec, intMovement])
+      if (!tokenId) {
+        saveBackupMovements([...movementsTrackerVec, intMovement])
+      }
     }
-
     store.set(currentTilePositionAtom, currentTilePosition.add(intMovement));
-
   }
-  // Test, we try to see iof the positions match
-  // let playerPosition = player.pos.scale(1 / tileScreenSize);
-  // let movemensTrackerTotal = store.get(movementsTrackerAtom).reduce(
-  //   (pr, c) => c.add(pr),
-  //   k.center().scale(1 / tileScreenSize) // this is the starting position
-  // );
 }

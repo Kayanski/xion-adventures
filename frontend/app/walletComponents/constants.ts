@@ -10,7 +10,6 @@ const HUB = "xion1uwwrkqq0whn6c466gq7gnks5m6hn2cexrpevn2w8xluzzqhwrl8q7kl8fc"
 export const TREASURY = "xion1kmmku7v6dasxc6wxnc39rftajltcsg9zrm90uhe2esf30xv09mrq4305wf"
 
 
-
 export const FIXED_FEES = {
     accountCreation: {
         amount: coins(1162, "uxion"),

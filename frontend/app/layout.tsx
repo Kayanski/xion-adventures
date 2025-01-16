@@ -52,7 +52,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className='h-full w-full'>
-      <body className={cn(inter.variable, poppins.variable, 'h-full w-full bg-white')}>
+      <body className={cn(inter.variable, poppins.variable, 'h-full w-full bg-black')}>
         <Provider store={store}>
 
           <QueryClientProvider client={client}>

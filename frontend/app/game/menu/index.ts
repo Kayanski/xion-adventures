@@ -1,11 +1,14 @@
 
 // IN this file, we define the kaplay menu which is the first scene players will land o
 
-import { Color, KAPLAYCtx } from "kaplay";
-import { gameMapAtom, initialPositionAtom, store } from "../store";
+import { KAPLAYCtx } from "kaplay";
+import { accountDescriptionAtom, backupMovementsTrackerAtom, gameMapAtom, movementsTrackerAtom, store } from "../store";
 import { setCursorDefault, setCursorPointer } from "../utils"
 import { formatMap } from "../gameplay/renderMap";
 import { walletIcon } from "../wallet";
+import { getBackupMovements, getMovements } from "../localStorage";
+import { toast } from "react-toastify";
+import { startGamePlayScene } from "../gameplay";
 
 export async function menuScene(k: KAPLAYCtx) {
 
@@ -106,12 +109,43 @@ export async function menuScene(k: KAPLAYCtx) {
         // We set the local new Map, we're ready to play
         newGameText.color = color
         newGameOutline.outline.color = color
+
+        // If there is local storage present, we get to the game immediately
+        const movements = getMovements()
+        if (movements && !store.get(accountDescriptionAtom)) {
+            // We store the movements and the backup movements
+            store.set(movementsTrackerAtom, movements);
+            const backupMovements = getBackupMovements();
+            if (backupMovements) {
+                store.set(backupMovementsTrackerAtom, backupMovements);
+            }
+            // We compute the initialPosition
+            const initialPosition = k.vec2(0, 0);
+            for (const movement of movements) {
+                initialPosition.x += movement.x
+                initialPosition.y += movement.y
+            }
+            for (const movement of backupMovements ?? []) {
+                initialPosition.x += movement.x
+                initialPosition.y += movement.y
+            }
+            toast("Your are connected, game has been resumed !")
+            startGamePlayScene(k, formatMap(newMap), {
+                tokenId: undefined,
+                nft: {
+                    city_map: 0,
+                    location: {
+                        general_map: initialPosition
+                    }
+                }
+            })
+        }
     })
 
     // We update the player map once it's fetched from chain
-    store.sub(initialPositionAtom, () => {
-        const position = store.get(initialPositionAtom)
-        if (!position) {
+    store.sub(accountDescriptionAtom, () => {
+        const account = store.get(accountDescriptionAtom)
+        if (!account) {
             return
         }
         resumeGameButton.color = color
@@ -121,7 +155,9 @@ export async function menuScene(k: KAPLAYCtx) {
         if (!newMap) {
             return
         }
-        k.go("gameplay", formatMap(newMap), undefined)
+        // Clear local storage, we start from scratch
+        localStorage.clear()
+        startGamePlayScene(k, formatMap(newMap), undefined)
     });
 
     k.onClick("resume_game_button", () => {
@@ -129,8 +165,11 @@ export async function menuScene(k: KAPLAYCtx) {
         if (!newMap) {
             return
         }
-        k.go("gameplay", formatMap(newMap), store.get(initialPositionAtom))
+        // Clear local storage, we start from an on-chain position
+        localStorage.clear()
+        startGamePlayScene(k, formatMap(newMap), store.get(accountDescriptionAtom))
     });
 
     walletIcon(k)
+
 }

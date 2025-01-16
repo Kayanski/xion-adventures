@@ -21,7 +21,7 @@ export function useConnectedAccountId() {
         chainName: "xiontestnet",
     })
     // This will only work when creating XION accounts
-    const { data: accountsQueryResult } = useAccounts({
+    const { data: accountsQueryResult, refetch } = useAccounts({
         args: {
             chains: ['xion-testnet-1'],
             owner: account ?? "",
@@ -31,5 +31,8 @@ export function useConnectedAccountId() {
         return accountsQueryResult?.[0];
     }, [accountsQueryResult])
 
-    return devMode ? abstractAccountDevMode : abstractAccount
+    return {
+        data: devMode ? abstractAccountDevMode : abstractAccount,
+        refetch
+    }
 }

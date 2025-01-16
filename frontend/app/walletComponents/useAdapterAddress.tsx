@@ -22,6 +22,7 @@ export function useAdapterAddressQuery({
     return useQuery<string | null, Error, string | null>(([{
         moduleId,
         accountId,
+        method: "authorized_addresses",
     }] as const), () => {
         if (!client) {
             return Promise.reject(new Error("Invalid client"))

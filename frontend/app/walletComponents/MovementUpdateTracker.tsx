@@ -15,24 +15,26 @@ import { useConnectedAccountId } from "./useAccountSetup";
 import { useXionAbstractAccountId } from "./xion/useXionSender";
 import { useXionAbstractAccountExists } from "./xion/useAbstractXionAccountBase";
 import { useAccountFactoryMutation } from "./xion/accountFactory";
-import { useQueryClient } from "@tanstack/react-query";
+import { QueryObserverResult, useQueryClient } from "@tanstack/react-query";
 import { FIXED_FEES, TREASURY } from "./constants";
 import { calculateFee, GasPrice } from "@cosmjs/stargate";
 import { useSimulateMovePlayer } from "./useSimulatePlayerMovement";
 import { toast } from "react-toastify";
+import { eraseAllMovements, getBackupMovements, getMovements } from "../game/localStorage";
 
 export default function MovementUpdateTracker(): JSX.Element {
 
     const [movement, setMovement] = useAtom(movementsTrackerAtom);
-    const { data: account } = useSenderAddress({
+
+    const { data: account, } = useSenderAddress({
         chainName: "xiontestnet",
     })
 
-    const abstractAccount = useConnectedAccountId();
+    const { data: abstractAccount, refetch: refetchConnectedAccountId } = useConnectedAccountId();
 
     // For xion Double authentication (this is a mess)
     const { data: xionAccountIdQuery } = useXionAbstractAccountId();
-    const { refetch: refetchExistingAccount, data: xionAA } = useXionAbstractAccountExists();
+    const { refetch: refetchExistingAccount, data: xionAA, isFetched: isXionAAFecthed } = useXionAbstractAccountExists();
     const queryClient = useQueryClient();
 
     const chainInfo = useChainInfo({
@@ -84,9 +86,10 @@ export default function MovementUpdateTracker(): JSX.Element {
             }
 
             // We verify the account exists
-            if (!xionAA) {
+            if (!xionAA && isXionAAFecthed) {
                 // Else, we create the account, along with the necessary modules
 
+                toast("Creating an Abstract account")
                 createAccount({
                     msg: {
                         installModules: [{
@@ -108,9 +111,19 @@ export default function MovementUpdateTracker(): JSX.Element {
                         fee: FIXED_FEES.accountCreation,
                     }
                 }).then((_) => {
-                    refectAccountAddress()
-                    refectGameHandlerAddress()
-                    refetchAuthorizedAddresses()
+                    setTimeout(() => {
+                        // We refetch the connected Account id every 2 seconds until we have a result, the API is a little behind the chain
+                        const refetchAccountIdUntilOne = async () => {
+                            const result = await refetchConnectedAccountId();
+                            if (result.data?.length == 0) {
+                                setTimeout(refetchAccountIdUntilOne, 1000)
+                            }
+                            refectAccountAddress()
+                            refectGameHandlerAddress()
+                            refetchAuthorizedAddresses()
+                        };
+                        refetchAccountIdUntilOne()
+                    }, 1000)
                 });
 
             } else if (!gameHandlerAddress) {
@@ -148,13 +161,13 @@ export default function MovementUpdateTracker(): JSX.Element {
                 }).then(() => {
                     refetchTokens()
                 });
+                toast("Game Account craeted !")
             } else if (!movePlayer || !movePlayerSimulation || !chainInfo) {
                 // Mutation not available yet
                 return;
             } else {
                 // Now that everything is created, we are able to send the last movements to the on-chain contracts
 
-                toast("Saving your movements on-chain")
 
                 movePlayerSimulation({
                     msg: {
@@ -180,11 +193,13 @@ export default function MovementUpdateTracker(): JSX.Element {
                     })
                 }).then(() => {
                     setMovement([])
+                    eraseAllMovements()
+                    toast("Movements saved on-chain !")
                 })
             }
 
         }
-    }, [movement.length, accountAddress, createAccount, refectAccountAddress, gameHandlerAddress, authorizedAddress?.addresses, createGameAccountMutation, tokenId, movePlayer, movePlayerSimulation, account, authorizeOnHub])
+    }, [movement.length, accountAddress, createAccount, refectAccountAddress, gameHandlerAddress, authorizedAddress?.addresses, createGameAccountMutation, tokenId, movePlayer, movePlayerSimulation, account, authorizeOnHub, movement, xionAA, isXionAAFecthed, authorizedAddress, chainInfo, refectGameHandlerAddress, refetchAuthorizedAddresses, refetchTokens, setMovement])
 
     return (<>
     </>)

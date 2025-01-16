@@ -13,16 +13,10 @@ export default function Home() {
 
   return (
     <>
-      <div className="h-full w-full text-black space-y-4" >
-        <div className="h-full w-full flex flex-col gap-6">
-          <TextBox />
-          <canvas id="game" className="absolute"></canvas>
-          <Abstraxion onClose={() => { setShowModal(false) }} />
-          <XionWallet />
-          <GameDataLoader />
-          <MovementUpdateTracker />
-        </div>
-      </div>
+      <Abstraxion onClose={() => { setShowModal(false) }} />
+      <XionWallet />
+      <GameDataLoader />
+      <MovementUpdateTracker />
     </>
   )
 }

@@ -1,9 +1,9 @@
 import { AccountId } from "@abstract-money/core";
 import { cw721Base, hub } from "../_generated/generated-abstract";
 import { useEffect } from "react";
-import { useAccountAddress } from "@abstract-money/react";
+import { useAccountAddress, useSenderAddress } from "@abstract-money/react";
 import { useAtom } from "jotai";
-import { gameMapAtom, initialPositionAtom } from "./store";
+import { gameMapAtom, accountDescriptionAtom } from "./store";
 import { useConnectedAccountId } from "../walletComponents/useAccountSetup";
 
 
@@ -59,13 +59,14 @@ export function usePlayerMetadata({ accountId }: UseGameMapParams) {
 
 export function GameDataLoader() {
 
-    const abstractAccount = useConnectedAccountId();
+    const { data: abstractAccount } = useConnectedAccountId();
     // We start by loading the game map
-    const { data: map, isFetched } = useGameMap();
-    const { data: onChainPlayerMetadata, isFetched: isMetadataFetched } = usePlayerMetadata({ accountId: abstractAccount })
+    const { data: map } = useGameMap();
+    const { data: onChainPlayerMetadata } = usePlayerMetadata({ accountId: abstractAccount })
+    const { tokenId } = useConnectedTokenId({ accountId: abstractAccount });
 
     const [, setMapStore] = useAtom(gameMapAtom)
-    const [, setInitialPosition] = useAtom(initialPositionAtom)
+    const [, setInitialPosition] = useAtom(accountDescriptionAtom)
 
     useEffect(() => {
 
@@ -74,11 +75,14 @@ export function GameDataLoader() {
             setMapStore(map.map)
         }
 
-        if (onChainPlayerMetadata) {
+        if (onChainPlayerMetadata && tokenId) {
             // Once the onChainPlayer position is loaded, we can save it in state for the game engine to set the character to
-            setInitialPosition(onChainPlayerMetadata)
+            setInitialPosition({
+                tokenId,
+                nft: onChainPlayerMetadata
+            })
         }
-    }, [map, onChainPlayerMetadata, setInitialPosition, setMapStore])
+    }, [map, onChainPlayerMetadata, setInitialPosition, setMapStore, tokenId])
 
 
     return (<></>)

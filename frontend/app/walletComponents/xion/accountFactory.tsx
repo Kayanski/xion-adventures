@@ -45,7 +45,6 @@ export async function accountFactory({
 }: AccountFactoryParameters) {
 
     const chainId = await signingCosmWasmClient.getChainId()
-    console.log("Sender", sender);
 
     const account_factory_msg = {
         create_account: {
@@ -90,7 +89,6 @@ export interface AuthorizeAddressMutation {
 
 export function useAccountFactoryMutation(options?: Omit<UseMutationOptions<{ accountId: AccountId, accountAddress: string }, Error, AuthorizeAddressMutation>, "mutationFn">) {
 
-    const { data: signingCosmWasmClienté } = useSigningCosmWasmClient({});
     const { data: address } = useSenderAddress({})
     const { data: account } = useAbstraxionAccount();
     const { client: signingCosmWasmClient } = useAbstraxionSigningClient();

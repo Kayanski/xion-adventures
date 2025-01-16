@@ -20,11 +20,11 @@ import {
   ZComp,
 } from "kaplay";
 import {
+  AccountDescription,
   store,
   textBoxContentAtom,
 } from "../store";
 import { movementTrackerUpdate } from "./playerUpdate";
-import { XionAdventuresExtension } from "../../_generated/generated-abstract/cosmwasm-codegen/Hub.types";
 import { setCamPos } from "./camera";
 import { walletIcon } from "../wallet";
 
@@ -42,7 +42,7 @@ export type Player = GameObj<
   }
 >;
 
-export function gamePlayScene(k: KAPLAYCtx, map: number[][], initialNftMetadata: XionAdventuresExtension | undefined) {
+export function gamePlayScene(k: KAPLAYCtx, map: number[][], account: AccountDescription | undefined) {
 
   k.loadSprite("background", "./background.png", {
     sliceY: backgroundSpritesY,
@@ -72,8 +72,8 @@ export function gamePlayScene(k: KAPLAYCtx, map: number[][], initialNftMetadata:
 
   let initialPosition;
   // We compute the initial position
-  if (initialNftMetadata && "general_map" in initialNftMetadata.location) {
-    const generalMapPosition = initialNftMetadata.location["general_map"];
+  if (account && account.nft && "general_map" in account.nft.location) {
+    const generalMapPosition = account.nft.location["general_map"];
     initialPosition = k.vec2(generalMapPosition.x, generalMapPosition.y).scale(tileScreenSize);
   } else {
     initialPosition = k.vec2(defaultPosition[0], defaultPosition[1])
@@ -161,7 +161,7 @@ export function gamePlayScene(k: KAPLAYCtx, map: number[][], initialNftMetadata:
 
     setCamPos(k, player, map);
 
-    movementTrackerUpdate(k, player, map);
+    movementTrackerUpdate(k, player, account?.tokenId);
   });
   setCamPos(k, player, map);
 
@@ -208,4 +208,8 @@ export function gamePlayScene(k: KAPLAYCtx, map: number[][], initialNftMetadata:
   //   store.set(isTextBoxVisibleAtom, true);
   // });
 
+}
+
+export function startGamePlayScene(k: KAPLAYCtx, map: number[][], account: AccountDescription | undefined) {
+  k.go("gameplay", map, account)
 }
