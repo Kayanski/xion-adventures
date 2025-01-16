@@ -9,7 +9,7 @@ import { useDevMode } from "../_providers/dev-mod";
 import { useTextBox } from "./TextBox";
 import { Button } from "@/components/button";
 import { LogOut } from "lucide-react";
-import { eraseAllMovements, saveBackupMovements } from "../game/localStorage";
+import { eraseAllMovements, getMovements, saveBackupMovements } from "../game/localStorage";
 
 
 interface XionWalletProps {
@@ -53,7 +53,7 @@ export function XionWallet({ children }: XionWalletProps) {
               <Button style={{ fontSize: "25px" }} onClick={() => closeTextBox(true)}>Login</Button>
               <Button style={{ fontSize: "25px" }} onClick={() => closeTextBox(false)}>Cancel</Button>
             </div>
-            <div style={{ fontSize: "14px" }}>Your game is saved !</div>
+            <div style={{ fontSize: "14px" }}>{getMovements() && "Your game is saved !"}</div>
           </div>)
 
           if (!isLogin) {
