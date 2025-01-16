@@ -21,6 +21,8 @@ import { calculateFee, GasPrice } from "@cosmjs/stargate";
 import { useSimulateMovePlayer } from "./useSimulatePlayerMovement";
 import { toast } from "react-toastify";
 import { eraseAllMovements, getBackupMovements, getMovements } from "../game/localStorage";
+import { useTextBox } from "./TextBox";
+import { Button } from "@/components/button";
 
 export default function MovementUpdateTracker(): JSX.Element {
 
@@ -82,6 +84,15 @@ export default function MovementUpdateTracker(): JSX.Element {
     useEffect(() => {
         if (movement.length >= maxMovementLength) {
             if (!account) {
+                showTextBox(<div style={{ display: "flex", flexDirection: "column", gap: "4px", textAlign: "center", alignItems: "center", margin: "30px 30px " }}>
+                    <div>
+                        There is not much to do right ?</div>
+                    <div style={{ display: "flex", flexDirection: "row", gap: "4px", textAlign: "center" }}>
+                        <Button style={{ fontSize: "25px" }} onClick={() => closeTextBox(true)}>Right</Button>
+                        <Button style={{ fontSize: "25px" }} onClick={() => closeTextBox(false)}>Left</Button>
+                    </div>
+                    <div style={{ fontSize: "14px" }}>Try clicking the wallet button to save your game !</div>
+                </div>)
                 return
             }
 
@@ -201,7 +212,9 @@ export default function MovementUpdateTracker(): JSX.Element {
         }
     }, [movement.length, accountAddress, createAccount, refectAccountAddress, gameHandlerAddress, authorizedAddress?.addresses, createGameAccountMutation, tokenId, movePlayer, movePlayerSimulation, account, authorizeOnHub, movement, xionAA, isXionAAFecthed, authorizedAddress, chainInfo, refectGameHandlerAddress, refetchAuthorizedAddresses, refetchTokens, setMovement])
 
-    return (<>
-    </>)
+    const { textBox, showTextBox, closeTextBox } = useTextBox<boolean>();
+
+
+    return (<>{textBox}</>)
 
 }

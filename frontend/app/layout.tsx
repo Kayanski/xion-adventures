@@ -52,6 +52,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className='h-full w-full'>
+      <head>
+        <title>Xion Adventures</title>
+      </head>
       <body className={cn(inter.variable, poppins.variable, 'h-full w-full bg-black')}>
         <Provider store={store}>
 
