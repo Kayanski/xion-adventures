@@ -1,6 +1,6 @@
 import { } from "@burnt-labs/abstraxion";
 import { useAtom } from "jotai";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { movementsTrackerAtom } from "../game/store";
 import { maxMovementLength } from "../game/constants";
 import { useAccountAddress, useSenderAddress } from "@abstract-money/react";
@@ -81,6 +81,8 @@ export default function MovementUpdateTracker(): JSX.Element {
         accountId: abstractAccount
     })
 
+    const isBroadcastingTransaction = useRef(false);
+
     useEffect(() => {
         if (movement.length >= maxMovementLength) {
             if (!account) {
@@ -99,8 +101,12 @@ export default function MovementUpdateTracker(): JSX.Element {
             // We verify the account exists
             if (!xionAA && isXionAAFecthed) {
                 // Else, we create the account, along with the necessary modules
-
+                if (isBroadcastingTransaction.current) {
+                    return;
+                }
+                isBroadcastingTransaction.current = true
                 toast("Creating an Abstract account")
+                isBroadcastingTransaction.current = true
                 createAccount({
                     msg: {
                         installModules: [{
@@ -122,6 +128,7 @@ export default function MovementUpdateTracker(): JSX.Element {
                         fee: FIXED_FEES.accountCreation,
                     }
                 }).then((_) => {
+                    isBroadcastingTransaction.current = false
                     setTimeout(() => {
                         // We refetch the connected Account id every 2 seconds until we have a result, the API is a little behind the chain
                         const refetchAccountIdUntilOne = async () => {
@@ -147,7 +154,10 @@ export default function MovementUpdateTracker(): JSX.Element {
             } else if (!authorizedAddress.addresses.includes(gameHandlerAddress)) {
                 if (!authorizeOnHub) {
                     return
+                } if (isBroadcastingTransaction.current) {
+                    return;
                 }
+                isBroadcastingTransaction.current = true
                 // If the account exists and the game handler IS NOT authorized on the HUB
                 authorizeOnHub({
                     msg: {
@@ -158,12 +168,17 @@ export default function MovementUpdateTracker(): JSX.Element {
                     }
                 }).then((_) => {
                     refetchAuthorizedAddresses()
+                    isBroadcastingTransaction.current = false
                 })
 
             } else if (!createGameAccountMutation) {
                 // Query not available yet
                 return
             } else if (tokenId == undefined) {
+                if (isBroadcastingTransaction.current) {
+                    return;
+                }
+                isBroadcastingTransaction.current = true
                 createGameAccountMutation({
                     msg: {
                     }, args: {
@@ -171,6 +186,7 @@ export default function MovementUpdateTracker(): JSX.Element {
                     }
                 }).then(() => {
                     refetchTokens()
+                    isBroadcastingTransaction.current = false
                 });
                 toast("Game Account craeted !")
             } else if (!movePlayer || !movePlayerSimulation || !chainInfo) {
@@ -179,7 +195,10 @@ export default function MovementUpdateTracker(): JSX.Element {
             } else {
                 // Now that everything is created, we are able to send the last movements to the on-chain contracts
 
-
+                if (isBroadcastingTransaction.current) {
+                    return;
+                }
+                isBroadcastingTransaction.current = true
                 movePlayerSimulation({
                     msg: {
                         positions: movement,
@@ -203,6 +222,7 @@ export default function MovementUpdateTracker(): JSX.Element {
                         }
                     })
                 }).then(() => {
+                    isBroadcastingTransaction.current = false
                     setMovement([])
                     eraseAllMovements()
                     toast("Movements saved on-chain !")
