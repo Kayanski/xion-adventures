@@ -188,7 +188,7 @@ export default function MovementUpdateTracker(): JSX.Element {
                     refetchTokens()
                     isBroadcastingTransaction.current = false
                 });
-                toast("Game Account craeted !")
+                toast("Game Account created !")
             } else if (!movePlayer || !movePlayerSimulation || !chainInfo) {
                 // Mutation not available yet
                 return;
